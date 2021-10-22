@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "outDir": "./src-umd",
+        "target": "es5",
+        "module": "umd",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "noEmitOnError": false,
+        "noUnusedLocals": true,
+        "strictNullChecks": false,
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "dom",
+            "es5",
+            "es2015.promise",
+            "es2015.iterable"
+        ],
+        "types": [],
+        "paths": {
+            "@hpcc-js/*": [
+                "./node_modules/@hpcc-js/*",
+                "../../packages/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}
