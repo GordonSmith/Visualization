@@ -1445,8 +1445,7 @@ var config = {
             "type": "file",
             "imports": {
               "@hpcc-js/graph": [
-                "Sankey",
-                "SankeyColumn"
+                "SankeyGraph"
               ]
             }
           },
@@ -1456,8 +1455,7 @@ var config = {
             "type": "file",
             "imports": {
               "@hpcc-js/graph": [
-                "Sankey",
-                "SankeyColumn"
+                "SankeyGraph"
               ]
             }
           },

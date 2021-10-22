@@ -35,6 +35,6 @@
         "bundle-watch": "npm run bundle -- -w",
         "watch": "npm-run-all compile-es6 -p compile-es6-watch bundle-watch",
         "build": "npm run compile-es6 && npm run bundle && npm run copy-resources",
-        "test-skip": "mocha-chrome ./test.html"
+        "test": "mocha-chrome ./test.html"
     }
 }
