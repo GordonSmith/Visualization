@@ -1,5 +1,5 @@
 ﻿import { d3Event, drag as d3Drag, Palette, select as d3Select, Selection, Spacer, SVGGlowFilter, SVGZoomWidget, ToggleButton, Utility, Widget } from "@hpcc-js/common";
-import { IconEx, Icons, React, render, Subgraph, Vertex, IVertex3 } from "@hpcc-js/react";
+import { IconEx, Icons, React, render, Subgraph, Vertex, VertexProps, Vertex3Props } from "@hpcc-js/react";
 import { getScriptSrc, Graph2 as GraphCollection, hashSum } from "@hpcc-js/util";
 import { HTMLTooltip } from "@hpcc-js/html";
 import "d3-transition";
@@ -709,7 +709,7 @@ export class Graph2 extends SVGZoomWidget {
         return this;
     }
 
-    private _centroidRenderer: React.FunctionComponent<Vertex> = Vertex;
+    private _centroidRenderer: React.FunctionComponent<VertexProps> = Vertex;
     centroidRenderer(): React.FunctionComponent;
     centroidRenderer(_: React.FunctionComponent): this;
     centroidRenderer(_?: React.FunctionComponent): this | React.FunctionComponent {
@@ -718,7 +718,7 @@ export class Graph2 extends SVGZoomWidget {
         return this;
     }
 
-    private _vertexRenderer: React.FunctionComponent<Vertex> = Vertex;
+    private _vertexRenderer: React.FunctionComponent<VertexProps> = Vertex;
     vertexRenderer(): React.FunctionComponent;
     vertexRenderer(_: React.FunctionComponent): this;
     vertexRenderer(_?: React.FunctionComponent): this | React.FunctionComponent {
@@ -727,7 +727,7 @@ export class Graph2 extends SVGZoomWidget {
         return this;
     }
 
-    vertexMapper(props: IVertex, origRow: any): Vertex | IVertex3 {
+    vertexMapper(props: IVertex, origRow: any): VertexProps | Vertex3Props {
         return {
             ...props,
             categoryID: this.categoryID(props.categoryID),

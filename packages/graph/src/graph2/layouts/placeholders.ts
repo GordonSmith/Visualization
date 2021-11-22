@@ -1,12 +1,12 @@
 import { Selection } from "@hpcc-js/common";
-import { Edge, Subgraph, Vertex } from "@hpcc-js/react";
+import { Edge, Subgraph, VertexProps } from "@hpcc-js/react";
 
 export interface ISubgraph extends Subgraph {
     id: string;
     origData?: any;
 }
 
-export interface IVertex extends Vertex {
+export interface IVertex extends VertexProps {
     id: string;
     origData?: any;
     centroid?: boolean;

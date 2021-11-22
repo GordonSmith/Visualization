@@ -1,0 +1,48 @@
+{
+    "extends": "../../packages/tsconfig.settings.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./lib-es6",
+        "declarationDir": "./types",
+        "target": "ES2019",
+        "module": "ES6",
+        "noImplicitThis": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "jsx": "react"
+        // "outDir": "./src-es6",
+        // "target": "ES2019",
+        // "module": "ES6",
+        // "moduleResolution": "node",
+        // "sourceMap": true,
+        // "strict": true,
+        // "forceConsistentCasingInFileNames": true,
+        // "alwaysStrict": false,
+        // "noImplicitUseStrict": true,
+        // "noImplicitAny": false,
+        // "noEmitOnError": false,
+        // "noUnusedLocals": true,
+        // "strictNullChecks": false,
+        // "importHelpers": true,
+        // "skipLibCheck": true,
+        // "resolveJsonModule": true,
+        // "jsx": "react",
+        // "experimentalDecorators": true,
+        // "lib": [
+        //     "dom",
+        //     "es5",
+        //     "es2015.promise",
+        //     "es2015.iterable"
+        // ],
+        // "types": [],
+        // "paths": {
+        //     // "@hpcc-js/*": [
+        //     //     "./node_modules/@hpcc-js/*",
+        //     //     "../../packages/*"
+        //     // ]
+        // }
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}

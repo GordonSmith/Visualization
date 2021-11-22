@@ -1,0 +1,614 @@
+{
+    "inquiryDetail": {
+        "duns": "315369934",
+        "ownershipType": "BENF_OWRP",
+        "productID": "cmpbos",
+        "productVersion": "v1"
+    },
+    "organization": {
+        "address": {
+            "addressCountry": {
+                "isoAlpha2Code": "DE",
+                "name": "Germany"
+            },
+            "addressCounty": {
+                "name": "Bayern"
+            },
+            "addressLocality": {
+                "name": "M\u00fcnchen"
+            },
+            "addressRegion": null,
+            "postalCode": "80788",
+            "streetAddress": {
+                "line1": "Petuelring 130",
+                "line2": null,
+                "line3": null
+            }
+        },
+        "beneficialOwnership": {
+            "beneficialOwners": [
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "M\u00fcnchen"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "80788",
+                        "streetAddress": {
+                            "line1": "Petuelring 130",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": null,
+                    "beneficiaryType": {
+                        "description": "Business",
+                        "dnbCode": 118
+                    },
+                    "birthDate": null,
+                    "businessEntityType": {
+                        "description": "Public Limited Liability Company (DE)",
+                        "dnbCode": 7114
+                    },
+                    "controlOwnershipType": {
+                        "confidenceLevel": null,
+                        "description": "Publicly Traded Company",
+                        "dnbCode": 9057
+                    },
+                    "degreeOfSeparation": 0,
+                    "directOwnershipPercentage": null,
+                    "duns": "315369934",
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": false,
+                    "isFilteredOut": null,
+                    "isOutofBusiness": false,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 197241775,
+                    "name": "Bayerische Motoren Werke Aktiengesellschaft",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": null,
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": 53.63,
+                    "beneficiaryType": null,
+                    "birthDate": null,
+                    "businessEntityType": null,
+                    "controlOwnershipType": null,
+                    "degreeOfSeparation": 1,
+                    "directOwnershipPercentage": 53.63,
+                    "duns": null,
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": true,
+                    "isFilteredOut": false,
+                    "isOutofBusiness": null,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 670061343,
+                    "name": "Streubesitz",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "Bad Homburg"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "61352",
+                        "streetAddress": {
+                            "line1": "Seedammweg 55",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": null,
+                    "beneficiaryType": {
+                        "description": "Business",
+                        "dnbCode": 118
+                    },
+                    "birthDate": null,
+                    "businessEntityType": {
+                        "description": "European Company",
+                        "dnbCode": 13142
+                    },
+                    "controlOwnershipType": null,
+                    "degreeOfSeparation": 1,
+                    "directOwnershipPercentage": 9.02,
+                    "duns": "340907483",
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": 9.02,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": false,
+                    "isFilteredOut": true,
+                    "isOutofBusiness": false,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 196342144,
+                    "name": "AQTON SE",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "Bad Homburg"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "61352",
+                        "streetAddress": {
+                            "line1": "Seedammweg 55",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": null,
+                    "beneficiaryType": {
+                        "description": "Business",
+                        "dnbCode": 118
+                    },
+                    "birthDate": null,
+                    "businessEntityType": {
+                        "description": "Private Limited Liability Company (DE)",
+                        "dnbCode": 7113
+                    },
+                    "controlOwnershipType": {
+                        "confidenceLevel": null,
+                        "description": "Privately owned",
+                        "dnbCode": 9058
+                    },
+                    "degreeOfSeparation": 1,
+                    "directOwnershipPercentage": 20.74,
+                    "duns": "537754488",
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": false,
+                    "isFilteredOut": true,
+                    "isOutofBusiness": false,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 65750480,
+                    "name": "Susanne Klatten Beteiligungs GmbH",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "Bad Homburg"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "61352",
+                        "streetAddress": {
+                            "line1": "Seedammweg 55",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": null,
+                    "beneficiaryType": {
+                        "description": "Business",
+                        "dnbCode": 118
+                    },
+                    "birthDate": null,
+                    "businessEntityType": {
+                        "description": "Private Limited Liability Company and Limited Partnership (DE)",
+                        "dnbCode": 7118
+                    },
+                    "controlOwnershipType": {
+                        "confidenceLevel": null,
+                        "description": "Privately owned",
+                        "dnbCode": 9058
+                    },
+                    "degreeOfSeparation": 1,
+                    "directOwnershipPercentage": 16.61,
+                    "duns": "315761838",
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": false,
+                    "isFilteredOut": true,
+                    "isOutofBusiness": false,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 245769898,
+                    "name": "AQTON GmbH & Co.KG f\u00fcr Automobilwerte",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "Bad Homburg"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "61352",
+                        "streetAddress": {
+                            "line1": "Seedammweg 55",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [
+                        {
+                            "description": "Impacted Distribution",
+                            "dnbCode": 34784
+                        }
+                    ],
+                    "beneficialOwnershipPercentage": 25.63,
+                    "beneficiaryType": {
+                        "description": "Individual",
+                        "dnbCode": 119
+                    },
+                    "birthDate": "1966-05",
+                    "businessEntityType": null,
+                    "controlOwnershipType": null,
+                    "degreeOfSeparation": 2,
+                    "directOwnershipPercentage": null,
+                    "duns": null,
+                    "impliedBeneficialOwnershipPercentage": 25.63,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": 9.02,
+                    "indirectOwnershipPercentage": 9.02,
+                    "isBeneficiary": true,
+                    "isFilteredOut": false,
+                    "isOutofBusiness": null,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 566565587,
+                    "name": "Stefan Quandt",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "M\u00fcnchen"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "80538",
+                        "streetAddress": null
+                    },
+                    "appliedControlType": [],
+                    "beneficialOwnershipPercentage": 20.74,
+                    "beneficiaryType": {
+                        "description": "Individual",
+                        "dnbCode": 119
+                    },
+                    "birthDate": "1962-04",
+                    "businessEntityType": null,
+                    "controlOwnershipType": null,
+                    "degreeOfSeparation": 2,
+                    "directOwnershipPercentage": null,
+                    "duns": null,
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": 20.74,
+                    "isBeneficiary": true,
+                    "isFilteredOut": false,
+                    "isOutofBusiness": null,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 565640542,
+                    "name": "Susanne Klatten",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                },
+                {
+                    "address": {
+                        "addressCountry": {
+                            "isoAlpha2Code": "DE",
+                            "name": "Germany"
+                        },
+                        "addressLocality": {
+                            "name": "Bad Homburg"
+                        },
+                        "addressRegion": null,
+                        "postalCode": "61352",
+                        "streetAddress": {
+                            "line1": "Seedammweg 55",
+                            "line2": null,
+                            "line3": null
+                        }
+                    },
+                    "appliedControlType": [
+                        {
+                            "description": "Worst Case Distribution",
+                            "dnbCode": 34781
+                        }
+                    ],
+                    "beneficialOwnershipPercentage": null,
+                    "beneficiaryType": {
+                        "description": "Business",
+                        "dnbCode": 118
+                    },
+                    "birthDate": null,
+                    "businessEntityType": {
+                        "description": "Private Limited Liability Company (DE)",
+                        "dnbCode": 7113
+                    },
+                    "controlOwnershipType": {
+                        "confidenceLevel": null,
+                        "description": "Privately owned",
+                        "dnbCode": 9058
+                    },
+                    "degreeOfSeparation": 2,
+                    "directOwnershipPercentage": null,
+                    "duns": "340910244",
+                    "impliedBeneficialOwnershipPercentage": null,
+                    "impliedDirectOwnershipPercentage": null,
+                    "impliedIndirectOwnershipPercentage": null,
+                    "indirectOwnershipPercentage": null,
+                    "isBeneficiary": false,
+                    "isFilteredOut": true,
+                    "isOutofBusiness": false,
+                    "legalAuthority": null,
+                    "legalForm": null,
+                    "memberID": 199043930,
+                    "name": "AQTON Verwaltung GmbH",
+                    "nationality": null,
+                    "ownershipUnavailableReasons": [],
+                    "personId": null,
+                    "residenceCountryName": null
+                }
+            ],
+            "relationships": [
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": false,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 405733595,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 53.63,
+                    "sourceMemberID": 197241775,
+                    "targetMemberID": 670061343
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 372504576,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 9.02,
+                    "sourceMemberID": 197241775,
+                    "targetMemberID": 196342144
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 8955133,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 100.0,
+                    "sourceMemberID": 199043930,
+                    "targetMemberID": 196342144
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 364614326,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 100.0,
+                    "sourceMemberID": 245769898,
+                    "targetMemberID": 196342144
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 258272856,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 20.74,
+                    "sourceMemberID": 197241775,
+                    "targetMemberID": 65750480
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 154079270,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 16.61,
+                    "sourceMemberID": 197241775,
+                    "targetMemberID": 245769898
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": false,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 298711594,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 100.0,
+                    "sourceMemberID": 196342144,
+                    "targetMemberID": 566565587
+                },
+                {
+                    "impliedSharePercentage": null,
+                    "isFilteredOut": false,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 354559076,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": 100.0,
+                    "sourceMemberID": 65750480,
+                    "targetMemberID": 565640542
+                },
+                {
+                    "impliedSharePercentage": 0.0,
+                    "isFilteredOut": true,
+                    "natureOfControlStartDate": null,
+                    "natureOfControlType": [],
+                    "natureofControlClass": [],
+                    "relationshipID": 126559954,
+                    "relationshipType": {
+                        "description": "Owned Subject / Share Owner",
+                        "dnbCode": "137"
+                    },
+                    "sharePercentage": null,
+                    "sourceMemberID": 245769898,
+                    "targetMemberID": 199043930
+                }
+            ]
+        },
+        "beneficialOwnershipSummary": {
+            "beneficialOwnersCount": 7,
+            "corporateBeneficiariesCount": 0,
+            "countryUnknownPSCCount": null,
+            "countryWisePSCSummary": [],
+            "countryWiseSummary": [
+                {
+                    "beneficialOwnersCount": 6,
+                    "countryISOAlpha2Code": "DE"
+                }
+            ],
+            "governmentOrganizationsCount": 0,
+            "impliedPercentageBeneficialOwnersCount": 2,
+            "individualsCount": 2,
+            "maximumDegreeOfSeparation": 2,
+            "nationalityUnknownPSCCount": null,
+            "nationalityWisePSCSummary": [],
+            "organizationsCount": 4,
+            "privatelyHeldOrganizationsCount": 3,
+            "pscCount": 0,
+            "pscUniqueTypeCount": 0,
+            "publiclyTradingOrganizationsCount": 0,
+            "relationshipsCount": 9,
+            "stateOwnedOrganizationsCount": 0,
+            "totalAllocatedOwnershipPercentage": 100.0,
+            "totalImpliedOwnershipPercentage": 25.63,
+            "typeWisePSCSummary": [],
+            "unIdentifiedShareOwnersCount": 0,
+            "unclassifedOwnersCount": 1
+        },
+        "businessEntityType": {
+            "description": "Public Limited Liability Company (DE)",
+            "dnbCode": 7114
+        },
+        "controlOwnershipType": {
+            "confidenceLevel": null,
+            "description": "Publicly Traded Company",
+            "dnbCode": 9057
+        },
+        "corporateLinkage": {
+            "domesticUltimate": {
+                "duns": "315369934",
+                "primaryName": "Bayerische Motoren Werke Aktiengesellschaft"
+            },
+            "globalUltimate": {
+                "duns": "315369934",
+                "primaryName": "Bayerische Motoren Werke Aktiengesellschaft"
+            },
+            "parent": null
+        },
+        "duns": "315369934",
+        "dunsControlStatus": {
+            "isOutOfBusiness": false
+        },
+        "ownershipUnavailableReasons": [],
+        "primaryIndustryCode": null,
+        "primaryName": "Bayerische Motoren Werke Aktiengesellschaft",
+        "pscUnavailableReasons": []
+    },
+    "transactionDetail": {
+        "inLanguage": "en-US",
+        "productID": "cmpbos",
+        "productVersion": "v1",
+        "transactionID": "rrt-09ca07d4c5d500ae0-d-ea-31975-98411325-33",
+        "transactionTimestamp": "2021-09-28T20:38:03.172Z"
+    }
+}
