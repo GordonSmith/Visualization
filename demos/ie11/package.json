@@ -1,0 +1,50 @@
+{
+    "private": true,
+    "name": "demo-ie11",
+    "main": "dist/index.js",
+    "module": "dist/index.es6",
+    "browser": "dist/index.js",
+    "unpkg": "dist/index.min.js",
+    "jsdelivr": "dist/index.min.js",
+    "scripts": {
+        "clean": "rimraf lib* types dist *.tsbuildinfo",
+        "copy-resources": "copyfiles -f ../../packages/graph/dist/*.wasm ./dist",
+        "compile": "tsc --outDir ./lib",
+        "compile-watch": "npm run compile -- -w",
+        "bundle": "rollup -c",
+        "bundle-workers": "rollup -c ./workers/rollup.config.js",
+        "bundle-watch": "npm run bundle -- -w",
+        "rm-hpcc": "rimraf ./node_modules/@hpcc-js",
+        "build": "npm run copy-resources && npm run compile && npm run bundle",
+        "start": "ws"
+    },
+    "dependencies": {
+        "@hpcc-js/api": "^2.8.53",
+        "@hpcc-js/chart": "^2.69.0",
+        "@hpcc-js/common": "^2.17.0",
+        "@hpcc-js/codemirror": "^2.51.0",
+        "@hpcc-js/dgrid": "^2.5.1",
+        "@hpcc-js/dgrid-shim": "^2.10.2",
+        "@hpcc-js/graph": "^2.9.10",
+        "@hpcc-js/html": "^2.33.0",
+        "@hpcc-js/layout": "^2.13.0",
+        "@hpcc-js/phosphor": "^2.12.4",
+        "@hpcc-js/react": "^2.41.0",
+        "@hpcc-js/util": "^2.7.2",
+        "d3-fetch": "^1",
+        "tslib": "2.3.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-alias": "3.1.8",
+        "@rollup/plugin-commonjs": "21.0.1",
+        "@rollup/plugin-json": "4.1.0",
+        "@rollup/plugin-node-resolve": "13.0.6",
+        "@rollup/plugin-replace": "3.0.0",
+        "copyfiles": "^2.4.1",
+        "local-web-server": "5.1.1",
+        "rimraf": "2.6.3",
+        "rollup": "2.60.2",
+        "rollup-plugin-sourcemaps": "0.6.3",
+        "typescript": "4.3.4"
+    }
+}
