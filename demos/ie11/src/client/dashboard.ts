@@ -1,7 +1,7 @@
 import { DockPanel } from "@hpcc-js/phosphor";
+import { JSONEditor } from "@hpcc-js/codemirror";
 import { MainGraph, MainSankey } from "./graph";
 import { Company, Person, CompanyTable, PersonTable } from "./table";
-import { DataEditor } from "./editor";
 import { fetchCompanies, fetchGraph, fetchPeople, rawData, RawDataT } from "../server";
 
 //  Dock Panel ---
@@ -9,6 +9,9 @@ export class Dashboard extends DockPanel {
 
     // protected _data = new DataWrangler();
     protected _mainGraph = new MainGraph()
+        .on("vertex_click", (row, col, sel) => {
+            this.graphSelection(this._mainGraph.selection());
+        })
         .on("vertex_dblclick", (row, col, sel) => {
             this.fetchGraph(row.id);
         })
@@ -28,7 +31,12 @@ export class Dashboard extends DockPanel {
         .on("click", () => this.tableSelection(this._personTable.selection()))
         ;
 
-    protected _dataEditor = new DataEditor().json(rawData());
+    protected _dataEditor = new JSONEditor().json(rawData());
+
+    protected _propsEditor = new JSONEditor()
+        .readOnly(true)
+        .json({})
+        ;
 
     constructor(target: string) {
         super();
@@ -40,6 +48,7 @@ export class Dashboard extends DockPanel {
             .addWidget(this._mainSankey, "Sankey", "tab-after", this._mainGraph)
             .addWidget(this._personTable, "People", "tab-after", this._companyTable)
             .addWidget(this._dataEditor, "Data (paste here!!!)", "tab-after", this._personTable)
+            .addWidget(this._propsEditor, "Selected Details", "split-right", this._personTable)
             .render()
             ;
 
@@ -93,6 +102,14 @@ export class Dashboard extends DockPanel {
         });
     }
 
+    //  Selection  ---
+    graphSelection(selection: any) {
+        this._propsEditor
+            .json(selection.map(row => row.origData?.payload?.payload))
+            .lazyRender()
+            ;
+    }
+
     tableSelection(selection: any) {
         if (selection.length) {
             this._mainGraph
@@ -100,5 +117,9 @@ export class Dashboard extends DockPanel {
                 .centerOnItem(selection[0].__lparam.id)
                 ;
         }
+        this._propsEditor
+            .json(selection.map(row => row.__lparam))
+            .lazyRender()
+            ;
     }
 }

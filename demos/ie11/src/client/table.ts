@@ -29,3 +29,4 @@ export class PersonTable extends Table {
         return this;
     }
 }
+

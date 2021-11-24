@@ -11,7 +11,7 @@ const pkg = require("./package.json");
 const isHpcc = (id) => id.indexOf("@hpcc-js") === 0;
 const isShim = (id) => isHpcc(id) && id.indexOf("-shim") > 0;
 function external(id) {
-    return (isHpcc(id) && !isShim(id)) || id.indexOf(".xxxjson") > 0;
+    return (isHpcc(id) && !isShim(id)) || id.indexOf(".json") > 0;
 }
 
 function globals(id) {
@@ -22,7 +22,7 @@ function globals(id) {
 }
 const browserTpl = (input, umdOutput, esOutput) => ({
     input: input,
-    external,
+    // external,
     output: [{
         file: umdOutput,
         format: "umd",
