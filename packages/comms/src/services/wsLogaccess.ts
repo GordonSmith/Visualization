@@ -1,5 +1,5 @@
 import { scopedLogger } from "@hpcc-js/util";
-import { LogaccessServiceBase, WsLogaccess } from "./wsdl/ws_logaccess/v1.02/ws_logaccess";
+import { LogaccessServiceBase, WsLogaccess } from "./wsdl/ws_logaccess/v1.03/ws_logaccess";
 
 const logger = scopedLogger("@hpcc-js/comms/services/wsLogaccess.ts");
 
@@ -10,14 +10,54 @@ export {
 export enum KnownColumns {
     audience = "hpcc.log.audience",
     class = "hpcc.log.class",
+    containerName = "kubernetes.container.name",
     jobId = "hpcc.log.jobid",
     message = "hpcc.log.message",
     procId = "hpcc.log.procid",
     sequence = "hpcc.log.sequence",
     threadId = "hpcc.log.threadid",
     timestamp = "hpcc.log.timestamp",
-    containerName = "kubernetes.container.name"
 }
+
+const enum LogType {
+    Disaster = "DIS",
+    Error = "ERR",
+    Warning = "WRN",
+    Information = "INF",
+    Progress = "PRO",
+    Metric = "MET"
+}
+
+const enum TargetAudience {
+    Operator = "OPR",
+    User = "USR",
+    Programmer = "PRO",
+    Audit = "ADT"
+}
+
+const AzureLogAnalyticsCurl = {
+    audience: "hpcc_log_audience",      // #Target Audience
+    class: "hpcc_log_class",            // #Log Entry type
+    component: "hpcc_log_component",    // #not currently populated: KubePodInventory | extend hpcc_log_component = (parse_json(PodLabel)[0])["app.kubernetes.io/component"]
+    host: "Computer",
+    instance: "ContainerID",
+    message: "hpcc_log_message",        // #The log message
+    timestamp: "hpcc_log_timestamp",    // #Date/Time object derived from log entry text (can lose precision)
+    workunit: "hpcc_log_jobid",         // #the work-unit field, not all components report it, can be 'UNK'
+};
+
+const elasticstack = {
+    audience: "hpcc.log.audience",              // # Field containing audience information
+    class: "hpcc.log.class",                    // # Field containing log class information
+    components: "kubernetes.container.name",    // # Field containing container information
+    host: "kubernetes.node.hostname",           // # Field containing source host information
+    instance: "kubernetes.pod.name",            // # Field containing source instance information
+    searchColumn: "message",                    // #The 'message' field is to be targeted for wilcard text searches
+    storeName: "filebeat-*",                    // #Logs are expected to be housed in ES indexes prefixed 'filebeat-'
+    timeStampColumn: "@timestamp",              // #The '@timestamp' field contains time log entry timestamp
+    type: "global",                             // #These settings apply to all log mappings
+    workunits: "hpcc.log.jobid",                // # Field containing WU information
+};
 
 const RKnownColumns: { [key: string]: string } = {};
 for (const key in KnownColumns) {

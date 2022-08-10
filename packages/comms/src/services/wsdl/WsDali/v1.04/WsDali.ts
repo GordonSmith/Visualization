@@ -3,7 +3,7 @@ import { Service } from "../../../../espConnection";
 
 export namespace WsDali {
 
-    type unsignedInt = number;
+    export type unsignedInt = number;
 
     export interface AddRequest {
         Path?: string;
