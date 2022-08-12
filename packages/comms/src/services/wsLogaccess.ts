@@ -7,65 +7,6 @@ export {
     WsLogaccess
 };
 
-export enum KnownColumns {
-    audience = "hpcc.log.audience",
-    class = "hpcc.log.class",
-    containerName = "kubernetes.container.name",
-    jobId = "hpcc.log.jobid",
-    message = "hpcc.log.message",
-    procId = "hpcc.log.procid",
-    sequence = "hpcc.log.sequence",
-    threadId = "hpcc.log.threadid",
-    timestamp = "hpcc.log.timestamp",
-}
-
-const enum LogType {
-    Disaster = "DIS",
-    Error = "ERR",
-    Warning = "WRN",
-    Information = "INF",
-    Progress = "PRO",
-    Metric = "MET"
-}
-
-const enum TargetAudience {
-    Operator = "OPR",
-    User = "USR",
-    Programmer = "PRO",
-    Audit = "ADT"
-}
-
-const AzureLogAnalyticsCurl = {
-    audience: "hpcc_log_audience",      // #Target Audience
-    class: "hpcc_log_class",            // #Log Entry type
-    component: "hpcc_log_component",    // #not currently populated: KubePodInventory | extend hpcc_log_component = (parse_json(PodLabel)[0])["app.kubernetes.io/component"]
-    host: "Computer",
-    instance: "ContainerID",
-    message: "hpcc_log_message",        // #The log message
-    timestamp: "hpcc_log_timestamp",    // #Date/Time object derived from log entry text (can lose precision)
-    workunit: "hpcc_log_jobid",         // #the work-unit field, not all components report it, can be 'UNK'
-};
-
-const elasticstack = {
-    audience: "hpcc.log.audience",              // # Field containing audience information
-    class: "hpcc.log.class",                    // # Field containing log class information
-    components: "kubernetes.container.name",    // # Field containing container information
-    host: "kubernetes.node.hostname",           // # Field containing source host information
-    instance: "kubernetes.pod.name",            // # Field containing source instance information
-    searchColumn: "message",                    // #The 'message' field is to be targeted for wilcard text searches
-    storeName: "filebeat-*",                    // #Logs are expected to be housed in ES indexes prefixed 'filebeat-'
-    timeStampColumn: "@timestamp",              // #The '@timestamp' field contains time log entry timestamp
-    type: "global",                             // #These settings apply to all log mappings
-    workunits: "hpcc.log.jobid",                // # Field containing WU information
-};
-
-const RKnownColumns: { [key: string]: string } = {};
-for (const key in KnownColumns) {
-    if (KnownColumns.hasOwnProperty(key)) {
-        RKnownColumns[KnownColumns[key]] = key;
-    }
-}
-
 export interface GetLogsExRequest {
     audience?: string;
     class?: string;
@@ -82,6 +23,35 @@ export interface GetLogsExRequest {
     LogLineLimit: number
 }
 
+export const enum LogType {
+    Disaster = "DIS",
+    Error = "ERR",
+    Warning = "WRN",
+    Information = "INF",
+    Progress = "PRO",
+    Metric = "MET"
+}
+
+export const enum TargetAudience {
+    Operator = "OPR",
+    User = "USR",
+    Programmer = "PRO",
+    Audit = "ADT"
+}
+
+// const elasticstack = {
+//     audience: "hpcc.log.audience",              // # Field containing audience information
+//     class: "hpcc.log.class",                    // # Field containing log class information
+//     components: "kubernetes.container.name",    // # Field containing container information
+//     host: "kubernetes.node.hostname",           // # Field containing source host information
+//     instance: "kubernetes.pod.name",            // # Field containing source instance information
+//     searchColumn: "message",                    // #The 'message' field is to be targeted for wilcard text searches
+//     storeName: "filebeat-*",                    // #Logs are expected to be housed in ES indexes prefixed 'filebeat-'
+//     timeStampColumn: "@timestamp",              // #The '@timestamp' field contains time log entry timestamp
+//     type: "global",                             // #These settings apply to all log mappings
+//     workunits: "hpcc.log.jobid",                // # Field containing WU information
+// };
+
 export interface LogLine {
     audience?: string;
     class?: string;
@@ -94,10 +64,57 @@ export interface LogLine {
     containerName?: string;
 }
 
-const defaultToLogLine = (line?: any): LogLine => {
+enum ElasticKnownColumns {
+    audience = "hpcc.log.audience",
+    class = "hpcc.log.class",
+    containerName = "kubernetes.container.name",
+    jobId = "hpcc.log.jobid",
+    message = "hpcc.log.message",
+    procId = "hpcc.log.procid",
+    sequence = "hpcc.log.sequence",
+    threadId = "hpcc.log.threadid",
+    timestamp = "hpcc.log.timestamp",
+}
+
+const RElasticKnownColumns: { [key: string]: string } = {};
+for (const key in ElasticKnownColumns) {
+    if (ElasticKnownColumns.hasOwnProperty(key)) {
+        RElasticKnownColumns[ElasticKnownColumns[key]] = key;
+    }
+}
+
+const elasticToLogLine = (line?: any): LogLine => {
     const retVal: LogLine = {};
-    for (const key in RKnownColumns) {
-        retVal[RKnownColumns[key]] = line?.fields[0][key];
+    for (const key in RElasticKnownColumns) {
+        retVal[RElasticKnownColumns[key]] = line?.fields[0][key];
+    }
+    return retVal;
+};
+
+enum AzureKnownColumns {
+    audience = "hpcc_log_audience",      // #Target Audience
+    class = "hpcc_log_class",            // #Log Entry type
+    containerID = "ContainerID",
+    containerName = "ContainerID",
+    jobId = "hpcc_log_jobid",
+    message = "hpcc_log_message",        // #The log message
+    procId = "",
+    sequence = "hpcc_log_sequence",
+    threadId = "hpcc_log_threadid",
+    timestamp = "hpcc_log_timestamp"
+}
+
+const RAzureKnownColumns: { [key: string]: string } = {};
+for (const key in AzureKnownColumns) {
+    if (AzureKnownColumns.hasOwnProperty(key)) {
+        RAzureKnownColumns[AzureKnownColumns[key]] = key;
+    }
+}
+
+const azureToLogLine = (line?: any): LogLine => {
+    const retVal: LogLine = {};
+    for (const key in RAzureKnownColumns) {
+        retVal[RAzureKnownColumns[key]] = line?.fields[0][key] ?? "";
     }
     return retVal;
 };
@@ -109,8 +126,13 @@ export interface GetLogsExResponse {
 
 export class LogaccessService extends LogaccessServiceBase {
 
-    GetLogAccessInfo(request: WsLogaccess.GetLogAccessInfoRequest): Promise<WsLogaccess.GetLogAccessInfoResponse> {
-        return super.GetLogAccessInfo(request);
+    protected _logAccessInfo: Promise<WsLogaccess.GetLogAccessInfoResponse>;
+
+    GetLogAccessInfo(request: WsLogaccess.GetLogAccessInfoRequest = {}): Promise<WsLogaccess.GetLogAccessInfoResponse> {
+        if (!this._logAccessInfo) {
+            this._logAccessInfo = super.GetLogAccessInfo(request);
+        }
+        return this._logAccessInfo;
     }
 
     GetLogs(request: WsLogaccess.GetLogsRequest): Promise<WsLogaccess.GetLogsResponse> {
@@ -139,10 +161,10 @@ export class LogaccessService extends LogaccessServiceBase {
 
         const filters: WsLogaccess.leftFilter[] = [];
         for (const key in request) {
-            if (key in KnownColumns) {
+            if (key in ElasticKnownColumns) {
                 filters.push({
                     LogCategory: WsLogaccess.LogAccessType.ByFieldName,
-                    SearchField: KnownColumns[key],
+                    SearchField: ElasticKnownColumns[key],
                     SearchByValue: request[key]
                 });
             }
@@ -171,12 +193,24 @@ export class LogaccessService extends LogaccessServiceBase {
             getLogsRequest.Range.EndDate = request.EndDate.toISOString();
         }
 
-        return this.GetLogs(getLogsRequest).then(response => {
+        return Promise.all([this.GetLogAccessInfo(), this.GetLogs(getLogsRequest)]).then(([info, response]) => {
             try {
                 const logLines = JSON.parse(response.LogLines);
+                let lines = [];
+                switch (info.RemoteLogManagerType) {
+                    case "azureloganalyticscurl":
+                        lines = logLines.lines?.map(azureToLogLine) ?? [];
+                        break;
+                    case "elasticstack":
+                        lines = logLines.lines?.map(elasticToLogLine) ?? [];
+                        break;
+                    default:
+                        logger.warning(`Unknown RemoteLogManagerType: ${info.RemoteLogManagerType}`);
+                        lines = [];
+                }
                 return {
-                    lines: logLines.lines?.map(defaultToLogLine) ?? [],
-                    total: response.TotalLogLinesAvailable ?? 10000
+                    lines: lines,
+                    total: response.TotalLogLinesAvailable || 10000
                 };
             } catch (e) {
                 logger.error(e);
