@@ -4,15 +4,19 @@
         "rootDir": "./src",
         "outDir": "./lib-umd",
         "declarationDir": "./types",
-        "module": "Node16",
-        "target": "ES2021",
+        "target": "ES2018",
         "noImplicitThis": true,
         "lib": [
-            "ES2021"
+            "dom",
+            "ES2018"
         ]
     },
     "include": [
         "./src/**/*"
     ],
-    "references": []
+    "references": [
+        {
+            "path": "../common"
+        }
+    ]
 }

@@ -18,6 +18,12 @@ export default [{
     input: "lib-es6/index",
     output: [{
         file: pkg.main,
+        format: "umd",
+        sourcemap: true,
+        name: pkg.name,
+        globals
+    }, {
+        file: pkg.module,
         format: "es",
         sourcemap: true,
         globals
