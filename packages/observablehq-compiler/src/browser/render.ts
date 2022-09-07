@@ -1,9 +1,9 @@
+import type { ohq } from "@hpcc-js/observable-shim";
 import { Notebook } from "../notebook";
 import { createHookedObserverFactory, HookedObserver, nullObserver } from "../observer";
-import { omd2ojs } from "../util";
-import { observablehq } from "../types";
+import { ojs2ohqnb, omd2ojs } from "../util";
 
-export function renderOJS(ojs: string, element: HTMLElement, ext?: { callback?: observablehq.Inspector, folder?: string }) {
+export function renderOJS(ojs: string, element: HTMLElement, ext?: { callback?: ohq.Inspector, folder?: string }) {
     const notebook = new Notebook()
         .observerFactory(name => {
             const div = document.createElement("div");
@@ -12,25 +12,26 @@ export function renderOJS(ojs: string, element: HTMLElement, ext?: { callback?: 
         })
         ;
     if (ext?.folder) {
-        notebook.folder(ext.folder);
+        notebook.baseUrl(ext.folder);
     }
-    notebook.parseOJS(ojs);
+    notebook.ohqNotebook(ojs2ohqnb(ojs));
+    notebook.interpret();
     return notebook;
 }
 
-export function renderOMD(omd: string, element: HTMLElement, ext?: { callback?: observablehq.Inspector, folder?: string }) {
+export function renderOMD(omd: string, element: HTMLElement, ext?: { callback?: ohq.Inspector, folder?: string }) {
     const ojsArr = omd2ojs(omd);
     return renderOJS(ojsArr.map(row => row.ojs).join("\n"), element, ext);
 }
 
-export function renderOJSNB(ojsnb: string, element: HTMLElement, ext?: { callback?: observablehq.Inspector, folder?: string }) {
-    const parsed: observablehq.Notebook = JSON.parse(ojsnb);
+export function renderOJSNB(ojsnb: string, element: HTMLElement, ext?: { callback?: ohq.Inspector, folder?: string }) {
+    const parsed: ohq.Notebook = JSON.parse(ojsnb);
     const notebook = new Notebook()
-        .notebook(parsed)
+        .ohqNotebook(parsed)
         .observerFactory(createHookedObserverFactory(element, ext?.callback))
         ;
     if (ext?.folder) {
-        notebook.folder(ext.folder);
+        notebook.baseUrl(ext.folder);
     }
     notebook.interpret();
     return notebook;

@@ -1,5 +1,5 @@
+import type { ohq } from "@hpcc-js/observable-shim";
 import { Inspector } from "@hpcc-js/observable-shim";
-import type { observablehq, observablehq as ohq } from "./types";
 
 export { Inspector as Observer };
 
@@ -42,7 +42,7 @@ export class HookedObserver extends NullObserver {
     }
 }
 
-export function createHookedObserverFactory(element: HTMLElement, callback: observablehq.Inspector = nullObserver) {
+export function createHookedObserverFactory(element: HTMLElement, callback: ohq.Inspector = nullObserver) {
     return (name: string) => {
         const div = document.createElement("div");
         element.appendChild(div);

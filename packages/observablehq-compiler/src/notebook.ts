@@ -1,30 +1,32 @@
-import { Runtime, Library, FileAttachments, parseModule } from "@hpcc-js/observable-shim";
+import type { ohq } from "@hpcc-js/observable-shim";
+import { Runtime, Library, FileAttachments } from "@hpcc-js/observable-shim";
 import { endsWith, join } from "@hpcc-js/util";
-import { Cell } from "./cell";
+import { Node } from "./node";
+import { NotebookData } from "./notebookData";
 import { nullObserverFactory } from "./observer";
-import { observablehq as ohq } from "./types";
-import { ojsnb2ojs, omd2ojs } from "./util";
+import { ojs2ohqnb, omd2ohqnb } from "./util";
 import { Writer } from "./writer";
 
-function createEmptyNotebook(): ohq.Notebook {
-    return {
-        files: [],
-        nodes: []
-    } as ohq.Notebook;
+async function fetchUrl(url) {
+    return fetch(url).then(r => r.text());
 }
 
 export class Notebook {
 
     protected _runtime: ohq.Runtime;
     protected _main: ohq.Module;
-    protected _cells: Set<Cell> = new Set<Cell>();
+    protected _cells: Map<ohq.Node, Node> = new Map<ohq.Node, Node>();
 
-    protected _notebook: ohq.Notebook = createEmptyNotebook();
-    notebook(): ohq.Notebook;
-    notebook(_: ohq.Notebook): this;
-    notebook(_?: ohq.Notebook): ohq.Notebook | this {
-        if (arguments.length === 0) return this._notebook;
-        this._notebook = _;
+    protected _notebookdata = new NotebookData();
+    ohqNotebook(): ohq.Notebook;
+    ohqNotebook(_: ohq.Notebook): this;
+    ohqNotebook(_?: ohq.Notebook): ohq.Notebook | this {
+        if (arguments.length === 0) return this._notebookdata.serialize();
+        this._notebookdata.deserialize(_);
+        this.disposeCells();
+        this._notebookdata.nodes().forEach((cell, idx) => {
+            this.attachCell(cell, this._observerFactory);
+        });
         return this;
     }
 
@@ -37,29 +39,28 @@ export class Notebook {
         return this;
     }
 
-    protected _folder: string = ".";
-    folder(): string;
-    folder(_: string): this;
-    folder(_?: string): string | this {
-        if (arguments.length === 0) return this._folder;
-        this._folder = _;
+    protected _baseUrl: string = ".";
+    baseUrl(): string;
+    baseUrl(_: string): this;
+    baseUrl(_?: string): string | this {
+        if (arguments.length === 0) return this._baseUrl;
+        this._baseUrl = _;
         return this;
     }
 
     constructor(plugins: object = {}, runtime?: ohq.Runtime) {
-        const files = {};
-        this._notebook?.files?.forEach(f => files[f.name] = f.url);
 
         const library = new Library();
+        const context = this;
         library.FileAttachment = function () {
             return FileAttachments(name => {
-                return files[name] ?? name;
+                return context._notebookdata.fileUrl(name) ?? name;
             });
         };
 
         const domDownload = library.DOM.download;
         library.DOM.download = function (blob, file) {
-            return domDownload(blob, files[file]);
+            return domDownload(blob, context._notebookdata.fileUrl(file) ?? file);
         };
 
         this._runtime = runtime ?? new Runtime({ ...library, ...plugins });
@@ -67,50 +68,55 @@ export class Notebook {
     }
 
     dispose() {
+        this.disposeCells();
         this._runtime.dispose();
-        this._cells.clear();
-    }
-
-    protected async fetchUrl(url) {
-        return fetch(url).then(r => r.text());
     }
 
     async importFile(partial: string) {
-        const path = join(this.folder(), partial);
-        let ojs = await this.fetchUrl(path);
-        if (endsWith(partial, ".omd")) {
-            ojs = omd2ojs(ojs).map(row => row.ojs).join("\n");
-        } else if (endsWith(partial, ".ojsnb")) {
-            ojs = ojsnb2ojs(ojs).map(row => row.ojs).join("\n");
+        const path = join(this.baseUrl(), partial);
+        const content = await fetchUrl(path);
+        let ohqnb: ohq.Notebook;
+        if (endsWith(partial, ".ojsnb")) {
+            ohqnb = JSON.parse(content);
+        } else if (endsWith(partial, ".ojs")) {
+            ohqnb = ojs2ohqnb(content);
+        } else if (endsWith(partial, ".omd")) {
+            ohqnb = omd2ohqnb(content);
         }
 
         const notebook = new Notebook(undefined, this._runtime);
-        notebook.folder(this.folder());
-        await notebook.parseOJS(ojs);
+        notebook.baseUrl(this.baseUrl());
+        notebook.ohqNotebook(ohqnb);
+
+        await notebook.interpret();
         return notebook._main;
     }
 
-    async parseOJS(ojs: string) {
-        const parsed = parseModule(ojs);
-        parsed.cells.forEach((cell, idx) => {
-            this.createCell(this._observerFactory).text(ojs.substring(cell.start, cell.end), "ojs");
-        });
-        await this.interpret();
-    }
-
-    createCell(observer?: ohq.InspectorFactory): Cell {
-        const newCell = new Cell(this, observer);
-        this._cells.add(newCell);
+    private attachCell(node: ohq.Node, observer?: ohq.InspectorFactory): Node {
+        const newCell = new Node(this, node, observer);
+        this._cells.set(node, newCell);
         return newCell;
     }
 
-    disposeCell(cell: Cell) {
+    createCell(observer?: ohq.InspectorFactory): Node {
+        const node = this._notebookdata.appendNode();
+        const newCell = new Node(this, node, observer);
+        this._cells.set(node, newCell);
+        return newCell;
+    }
+
+    destroyCell(cell: Node) {
         cell.reset();
-        this._cells.delete(cell);
+        this._cells.delete(cell._node);
+        this._notebookdata.removeNode(cell._node);
+    }
+
+    private disposeCells() {
+        [...this._cells.values()].forEach(cell => this.destroyCell(cell));
     }
 
     async interpret() {
-        this._cells.forEach(async cell => await cell.evaluate());
+        this._cells.forEach(async cell => await cell.interpret());
     }
 
     compile(writer: Writer) {

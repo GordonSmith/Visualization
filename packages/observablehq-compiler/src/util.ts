@@ -1,4 +1,4 @@
-import { observablehq } from "./types";
+import { ohq, parseModule } from "@hpcc-js/observable-shim";
 
 const FuncTypes = {
     functionType: Object.getPrototypeOf(function () { }).constructor,
@@ -95,6 +95,24 @@ export function omd2ojs(_: string): ParsedOJS[] {
 }
 
 export function ojsnb2ojs(_: string): ParsedOJS[] {
-    const parsed: observablehq.Notebook = JSON.parse(_);
+    const parsed: ohq.Notebook = JSON.parse(_);
     return parsed.nodes.map(node => createParsedOJS(node.value, 0, node.mode === "md"));
+}
+
+export function ojs2ohqnb(ojs: string): ohq.Notebook {
+    const parsed = parseModule(ojs);
+    return {
+        files: [],
+        nodes: parsed.cells.map((cell, idx) => {
+            return {
+                id: idx,
+                mode: "js",
+                value: ojs.substring(cell.start, cell.end)
+            };
+        })
+    } as ohq.Notebook;
+}
+
+export function omd2ohqnb(omd: string): ohq.Notebook {
+    return ojs2ohqnb(omd2ojs(omd).map(item => item.ojs).join("\n"));
 }

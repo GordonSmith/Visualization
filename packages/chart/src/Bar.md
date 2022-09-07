@@ -15,14 +15,77 @@ Bar and [Column](./Column) are effectively the same class, but have one differen
 
       new Bar()
           .target("placeholder")
-          .columns(["Category", "Value"])
+          .columns(['Guideline', 'Error Occurrences', 'Warning Occurrences']) 
           .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .yAxisDomainLow(0)
+              [
+                  "perceivable 1.1.1",
+                  1,
+                  76
+              ],
+              [
+                  "perceivable 1.3.1b",
+                  206,
+                  6334
+              ],
+              [
+                  "perceivable 1.3.1a",
+                  0,
+                  41
+              ],
+              [
+                  "perceivable 1.4.10",
+                  0,
+                  36
+              ],
+              [
+                  "operable 2.1.1",
+                  0,
+                  2819
+              ],
+              [
+                  "operable 2.4.1",
+                  31,
+                  0
+              ],
+              [
+                  "operable 2.4.2",
+                  5,
+                  0
+              ],
+              [
+                  "operable 2.5.3",
+                  0,
+                  916
+              ],
+              [
+                  "understandable 3.1.1",
+                  5,
+                  0
+              ],
+              [
+                  "understandable 3.2.2",
+                  43,
+                  0
+              ],
+              [
+                  "robust 4.1.1",
+                  166,
+                  0
+              ],
+              [
+                  "robust 4.1.2",
+                  579,
+                  3104
+              ]
+            ])
+          .orientation('vertical')
+          .showValue(true)
+          .valueCentered(true)
+          .yAxisStacked(true)
+          .yAxisType('pow')
+          .yAxisTypePowExponent(0.5)
+          .xAxisType('ordinal')
+          .xAxisTitle('')
           .render()
           ;
     </script>

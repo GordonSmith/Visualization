@@ -39,7 +39,7 @@
         "@hpcc-js/bundle": "^2.11.2",
         "@observablehq/inspector": "3.2.4",
         "@observablehq/parser": "6.0.0",
-        "@observablehq/runtime": "4.23.0",
+        "@observablehq/runtime": "4.24.0",
         "rimraf": "2.7.1"
     },
     "repository": {

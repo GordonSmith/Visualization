@@ -4,13 +4,16 @@ import defaultGlobals from "../../../node_modules/@observablehq/parser/src/globa
 import findReferences from "../../../node_modules/@observablehq/parser/src/references.js";
 import findFeatures from "../../../node_modules/@observablehq/parser/src/features.js";
 
+//  compare to ../../../node_modules/@observablehq/parser/src/parse.js
 function parseReferences(cell, input, globals = defaultGlobals) {
     if (!cell.body) {
         cell.references = [];
     } else if (cell.body.type === "ImportDeclaration") {
+        //  This is correct  ---
         cell.references = cell.body.specifiers
             ? cell.body.specifiers.map(i => i.imported)
             : [];
+        //  This is correct  ---
     } else {
         try {
             cell.references = findReferences(cell, globals);

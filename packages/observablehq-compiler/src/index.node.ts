@@ -1,6 +1,7 @@
-export * from "./cell";
-export * from "./notebook";
+export { ohq } from "@hpcc-js/observable-shim";
+
+export * from "./notebookData";
+export * from "./node";
 export * from "./parser";
 export * from "./observer";
-export * from "./types";
 export * from "./writer";

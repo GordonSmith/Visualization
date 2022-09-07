@@ -10,6 +10,16 @@
         "interpreter",
         "renderer"
     ],
+    "exports": {
+        ".": {
+            "types": "./types/index.d.ts",
+            "node": {
+                "import": "./dist/index.node.es6.js",
+                "require": "./dist/index.node.js"
+            },
+            "default": "./dist/index.es6.js"
+        }
+    },
     "main": "dist/index.node.js",
     "module": "dist/index.es6",
     "module-node": "dist/index.node.es6",

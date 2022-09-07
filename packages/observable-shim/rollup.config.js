@@ -6,7 +6,9 @@ import { globals } from "@hpcc-js/bundle";
 import pkg from "./package.json";
 
 const plugins = [
-    nodeResolve(),
+    nodeResolve({
+        preferBuiltins: true,
+    }),
     sourcemaps(),
     postcss({
         extensions: [".css"],

@@ -1,4 +1,4 @@
-export namespace observablehq {
+export namespace ohq {
 
     //  ObservableHQ Notebook Format  ---
     export interface Owner {
@@ -101,11 +101,11 @@ export namespace observablehq {
 
     export interface Node {
         id: number;
+        mode: string;
         value: string;
         pinned?: boolean;
-        mode: string;
         data?: any;
-        name: string;
+        name?: string;
     }
 
     export interface Notebook {

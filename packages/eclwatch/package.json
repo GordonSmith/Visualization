@@ -40,7 +40,7 @@
     "dependencies": {
         "@hpcc-js/codemirror": "^2.60.1",
         "@hpcc-js/common": "^2.71.1",
-        "@hpcc-js/comms": "^2.79.1",
+        "@hpcc-js/comms": "^2.79.2",
         "@hpcc-js/dgrid": "^2.32.1",
         "@hpcc-js/graph": "^2.83.0",
         "@hpcc-js/layout": "^2.49.1",

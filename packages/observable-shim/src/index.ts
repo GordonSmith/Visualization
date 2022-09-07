@@ -6,4 +6,5 @@ export { ancestor } from "acorn-walk";
 
 import "@observablehq/inspector/dist/inspector.css";
 
-export * from "./parse.js";
+export * from "./parse";
+export * from "./types";

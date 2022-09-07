@@ -1,19 +1,22 @@
-import { observablehq as ohq } from "./types";
+import type { ohq } from "@hpcc-js/observable-shim";
 import { Notebook } from "./notebook";
 import { parseCell } from "./parser";
-import { encodeBacktick, obfuscatedImport } from "./util";
+import { obfuscatedImport } from "./util";
 import { Writer } from "./writer";
 import { nullObserverFactory } from "./observer";
 
-export class Cell {
+export type Mode = "md" | "js";
+
+export class Node {
 
     protected _notebook: Notebook;
-    protected _id: string | number;
+    readonly _node: ohq.Node;
     protected _observer: ohq.InspectorFactory;
     protected _variables = new Set<ohq.Variable>();
 
-    constructor(notebook: Notebook, observer: ohq.InspectorFactory = nullObserverFactory) {
+    constructor(notebook: Notebook, node: ohq.Node, observer: ohq.InspectorFactory = nullObserverFactory) {
         this._notebook = notebook;
+        this._node = node;
         this._observer = observer;
     }
 
@@ -23,30 +26,34 @@ export class Cell {
     }
 
     dispose() {
-        this._notebook.disposeCell(this);
+        this._notebook.destroyCell(this);
     }
 
     protected async importNotebook(partial) {
         const impMod = await obfuscatedImport(`https://api.observablehq.com/${partial[0] === "@" ? partial : `d/${partial}`}.js?v=3`);
-        return impMod.define;
+        return this._notebook.createModule(impMod.default);
     }
 
-    protected _cellSource: string = "";
-    text(): string;
-    text(cellSource: string, languageId?: string): this;
-    text(cellSource?: string, languageId: string = "ojs"): string | this {
-        if (arguments.length === 0) return this._cellSource;
-        if (languageId === "markdown") {
-            languageId = "md";
-        }
-        this._cellSource = languageId === "ojs" ? cellSource! : `${languageId}\`${encodeBacktick(cellSource!)}\``;
+    mode(): Mode;
+    mode(_: Mode): this;
+    mode(_?: Mode): Mode | this {
+        if (arguments.length === 0) return this._node.mode as Mode;
+        this._node.mode = _;
         return this;
     }
 
-    async evaluate() {
+    value(): string;
+    value(_: string): this;
+    value(_?: string): string | this {
+        if (arguments.length === 0) return this._node.value;
+        this._node.value = _;
+        return this;
+    }
+
+    async interpret() {
         this.reset();
 
-        const parsed = parseCell(this._cellSource);
+        const parsed = parseCell(this.value());
         switch (parsed.type) {
             case "import":
                 let mod = [".", "/"].indexOf(parsed.src[0]) === 0 ?
@@ -66,7 +73,7 @@ export class Cell {
                 });
                 this._variables.add(this._notebook.createVariable(this._observer(), undefined, ["md"], md => {
                     return md`\`\`\`JavaScript
-${this._cellSource}
+${this.value()}
 \`\`\``;
                 }));
                 break;
@@ -86,7 +93,7 @@ ${this._cellSource}
     }
 
     compile(writer: Writer) {
-        const parsed = parseCell(this._cellSource);
+        const parsed = parseCell(this.value());
         let id;
         switch (parsed.type) {
             case "import":
