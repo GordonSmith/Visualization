@@ -1,4 +1,5 @@
-import { parseCell as ohqParseCell, ancestor, walk } from "@hpcc-js/observable-shim";
+import type { acorn } from "@hpcc-js/observable-shim/dist/parser";
+import { parseCell as ohqParseCell, ancestor, walk } from "@hpcc-js/observable-shim/dist/parser";
 import { createFunction, Refs } from "./util";
 
 function calcRefs(cellAst, cellStr): Refs {
@@ -31,7 +32,7 @@ function calcRefs(cellAst, cellStr): Refs {
         ThisExpression(node, ancestors: acorn.Node[]) {
             const value = cellStr.substring(node.start, node.end);
             if (value === "this" && !ancestors.find(n => n.type === "FunctionExpression")) {
-                pushPatch(node, "(this === window ? undefined : this.valueOf())");
+                pushPatch(node, "(this === globalThis ? undefined : this?.valueOf())");
             }
         }
     }, walk);

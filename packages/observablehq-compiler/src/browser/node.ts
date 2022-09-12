@@ -1,8 +1,8 @@
-import type { ohq } from "@hpcc-js/observable-shim";
+import type { ohq } from "@hpcc-js/observable-shim/dist/parser";
 import { Notebook } from "./notebook";
-import { parseCell } from "./parser";
-import { obfuscatedImport } from "./util";
-import { Writer } from "./writer";
+import { parseCell } from "../node/parser";
+import { obfuscatedImport } from "../node/util";
+import { Writer } from "../node/writer";
 import { nullObserverFactory } from "./observer";
 
 export type Mode = "md" | "js";
@@ -50,8 +50,15 @@ export class Node {
         return this;
     }
 
+    variables() {
+        return [...this._variables.values()].map(v => v._name).filter(name => !!name);
+    }
+
     async interpret() {
-        this.reset();
+        try {
+            this.reset();
+        } catch (e) {
+        }
 
         const parsed = parseCell(this.value());
         switch (parsed.type) {

@@ -1,4 +1,4 @@
-import { ohq, parseModule } from "@hpcc-js/observable-shim";
+import { ohq, parseModule } from "@hpcc-js/observable-shim/dist/parser";
 
 const FuncTypes = {
     functionType: Object.getPrototypeOf(function () { }).constructor,
@@ -115,4 +115,18 @@ export function ojs2ohqnb(ojs: string): ohq.Notebook {
 
 export function omd2ohqnb(omd: string): ohq.Notebook {
     return ojs2ohqnb(omd2ojs(omd).map(item => item.ojs).join("\n"));
+}
+
+export async function fetchNotebook(url: string) {
+    const isShared = url.indexOf("https://observablehq.com/d") === 0;
+    return await fetch(url.replace(`https://observablehq.com/${isShared ? "d/" : ""}`, "https://api.observablehq.com/document/"), {
+        headers: {
+            origin: "https://observablehq.com",
+            referer: url
+        }
+    }).then(r => r.json());
+}
+
+export async function fetchUrl(url) {
+    return fetch(url).then(r => r.text());
 }

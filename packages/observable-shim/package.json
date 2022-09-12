@@ -3,15 +3,23 @@
     "version": "2.2.0",
     "description": "hpcc-js - Observable Shim",
     "exports": {
-        ".": {
-            "types": "./types/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
+        "./dist/runtime": {
+            "types": "./types/runtime.d.ts",
+            "import": "./dist/runtime.js"
+        },
+        "./dist/parser": {
+            "types": "./types/parser.d.ts",
+            "import": "./dist/parser.js"
+        },
+        "./dist/stdlib": {
+            "types": "./types/stdlib.d.ts",
+            "import": "./dist/stdlib.js"
+        },
+        "./dist/inspector": {
+            "types": "./types/inspector.d.ts",
+            "import": "./dist/inspector.js"
         }
     },
-    "main": "dist/index.cjs",
-    "module": "dist/index.js",
-    "types": "types/index.d.ts",
     "typesVersions": {
         "<3.8": {
             "*": [
@@ -39,8 +47,7 @@
         "@hpcc-js/bundle": "^2.11.2",
         "@observablehq/inspector": "3.2.4",
         "@observablehq/parser": "6.0.0",
-        "@observablehq/runtime": "4.24.0",
-        "rimraf": "2.7.1"
+        "@observablehq/runtime": "4.24.0"
     },
     "repository": {
         "type": "git",

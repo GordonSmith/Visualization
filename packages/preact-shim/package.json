@@ -41,8 +41,7 @@
         "preact": "10.10.6"
     },
     "devDependencies": {
-        "@hpcc-js/bundle": "^2.11.2",
-        "rimraf": "2.7.1"
+        "@hpcc-js/bundle": "^2.11.2"
     },
     "repository": {
         "type": "git",

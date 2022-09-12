@@ -1,4 +1,4 @@
-import type { ohq } from "@hpcc-js/observable-shim";
+import type { ohq } from "@hpcc-js/observable-shim/dist/parser";
 
 export class NotebookData {
 

@@ -5,21 +5,34 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "test-node",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "test-node"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "name": "index.html (file)",
-            "type": "pwa-msedge",
+            "type": "msedge",
             "request": "launch",
             "url": "${workspaceFolder}/index.html",
             "webRoot": "${workspaceFolder}"
         },
         {
             "name": "index.html (http)",
-            "type": "pwa-msedge",
+            "type": "msedge",
             "request": "launch",
             "url": "http://localhost:8080/index.html",
             "webRoot": "${workspaceFolder}"
         },
         {
-            "type": "pwa-msedge",
+            "type": "msedge",
             "request": "launch",
             "name": "Docs",
             "url": "${workspaceFolder}/../../website/index.html?debug=1#packages/react/docs/index.md",

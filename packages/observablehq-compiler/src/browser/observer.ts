@@ -1,5 +1,5 @@
-import type { ohq } from "@hpcc-js/observable-shim";
-import { Inspector } from "@hpcc-js/observable-shim";
+import type { ohq } from "@hpcc-js/observable-shim/dist/parser";
+import { Inspector } from "@hpcc-js/observable-shim/dist/inspector";
 
 export { Inspector as Observer };
 

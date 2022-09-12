@@ -1,7 +1,7 @@
-import type { ohq } from "@hpcc-js/observable-shim";
-import { Notebook } from "../notebook";
-import { createHookedObserverFactory, HookedObserver, nullObserver } from "../observer";
-import { ojs2ohqnb, omd2ojs } from "../util";
+import type { ohq } from "@hpcc-js/observable-shim/dist/parser";
+import { Notebook } from "../browser/notebook";
+import { createHookedObserverFactory, HookedObserver, nullObserver } from "../browser/observer";
+import { ojs2ohqnb, omd2ojs } from "../node/util";
 
 export function renderOJS(ojs: string, element: HTMLElement, ext?: { callback?: ohq.Inspector, folder?: string }) {
     const notebook = new Notebook()

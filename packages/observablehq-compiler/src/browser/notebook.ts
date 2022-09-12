@@ -1,21 +1,18 @@
-import type { ohq } from "@hpcc-js/observable-shim";
-import { Runtime, Library, FileAttachments } from "@hpcc-js/observable-shim";
+import type { ohq } from "@hpcc-js/observable-shim/dist/parser";
+import { Runtime } from "@hpcc-js/observable-shim/dist/runtime";
+import { Library, FileAttachments } from "@hpcc-js/observable-shim/dist/stdlib";
 import { endsWith, join } from "@hpcc-js/util";
 import { Node } from "./node";
-import { NotebookData } from "./notebookData";
+import { NotebookData } from "../node/notebookData";
 import { nullObserverFactory } from "./observer";
-import { ojs2ohqnb, omd2ohqnb } from "./util";
-import { Writer } from "./writer";
-
-async function fetchUrl(url) {
-    return fetch(url).then(r => r.text());
-}
+import { fetchUrl, ojs2ohqnb, omd2ohqnb } from "../node/util";
+import { Writer } from "../node/writer";
 
 export class Notebook {
 
     protected _runtime: ohq.Runtime;
     protected _main: ohq.Module;
-    protected _cells: Map<ohq.Node, Node> = new Map<ohq.Node, Node>();
+    protected _nodes: Map<ohq.Node, Node> = new Map<ohq.Node, Node>();
 
     protected _notebookdata = new NotebookData();
     ohqNotebook(): ohq.Notebook;
@@ -94,33 +91,40 @@ export class Notebook {
 
     private attachCell(node: ohq.Node, observer?: ohq.InspectorFactory): Node {
         const newCell = new Node(this, node, observer);
-        this._cells.set(node, newCell);
+        this._nodes.set(node, newCell);
         return newCell;
     }
 
     createCell(observer?: ohq.InspectorFactory): Node {
         const node = this._notebookdata.appendNode();
         const newCell = new Node(this, node, observer);
-        this._cells.set(node, newCell);
+        this._nodes.set(node, newCell);
         return newCell;
     }
 
     destroyCell(cell: Node) {
         cell.reset();
-        this._cells.delete(cell._node);
+        this._nodes.delete(cell._node);
         this._notebookdata.removeNode(cell._node);
     }
 
     private disposeCells() {
-        [...this._cells.values()].forEach(cell => this.destroyCell(cell));
+        [...this._nodes.values()].forEach(cell => this.destroyCell(cell));
     }
 
     async interpret() {
-        this._cells.forEach(async cell => await cell.interpret());
+        const retVal = {};
+        await Promise.all([...this._nodes.values()].map(cell => cell.interpret()));
+        for (const cell of this._nodes.values()) {
+            for (const name of cell.variables()) {
+                retVal[name] = async () => await this._main.value(name);
+            }
+        }
+        return retVal;
     }
 
     compile(writer: Writer) {
-        this._cells.forEach(cell => {
+        this._nodes.forEach(cell => {
             try {
                 cell.compile(writer);
             } catch (e: any) {

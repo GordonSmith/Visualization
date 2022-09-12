@@ -4,7 +4,7 @@
         "rootDir": "./src",
         "outDir": "./lib-umd",
         "declarationDir": "./types",
-        "module": "Node16",
+        "module": "ES6",
         "target": "ES2021",
         "noImplicitThis": true,
         "lib": [

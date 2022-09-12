@@ -9,14 +9,12 @@
         "lib": [
             "dom",
             "ES2018"
+        ],
+        "types": [
+            "mocha"
         ]
     },
     "include": [
         "./src/**/*"
-    ],
-    "references": [
-        {
-            "path": "../common"
-        }
     ]
 }
