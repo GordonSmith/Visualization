@@ -65,7 +65,7 @@ A column chart supports n-number of numeric values per data row. A series is cre
     <script type="module">
       import { Column } from "@hpcc-js/chart";
 
-      new Column()
+      var column = new Column()
           .target("placeholder")
           .columns(["Category", "Value 1", "Value 2", "Value 3"])
           .data([
