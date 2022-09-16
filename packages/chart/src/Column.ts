@@ -148,16 +148,19 @@ export class Column extends XYAxis {
             .merge(dataRow)
             .each(function (dataRow, dataRowIdx) {
                 const dataRowG = d3Select(this);
+                const rects = {};
 
-                const dataCellG = dataRowG.selectAll(".dataCell").data(dataRow.filter(function (_d, i) { return i < context.layerColumns(host).length; }).map(function (d, i) {
-                    return {
+                const visibleCells = dataRow
+                    .filter((_d, i) => i < context.layerColumns(host).length)
+                    .map((d, i) => ({
                         column: context.layerColumns(host)[i],
                         row: dataRow,
                         origRow: hostData[dataRowIdx],
                         value: d,
                         idx: i
-                    };
-                }).filter(function (d) { return d.value !== null && d.idx > 0; }), (d: any) => d.column);
+                    })).filter(d => d.value !== null && d.idx > 0);
+
+                const dataCellG = dataRowG.selectAll(".dataCell").data(visibleCells, (d: any) => d.column);
 
                 const dataCellGEnter = dataCellG
                     .enter().append("g")
@@ -195,65 +198,95 @@ export class Column extends XYAxis {
                     .style("opacity", 1)
                     ;
                 const domainLength = host.yAxisStacked() ? dataLen : columnScale.bandwidth();
-                dataCellGEnter.merge(dataCellG as any).each(function (this: SVGElement, d: any) {
-                    const dataCellG2 = d3Select(this);
-                    const domainPos = host.dataPos(dataRow[0]) + (host.yAxisStacked() ? 0 : columnScale(d.column)) + offset;
-                    const upperValue = d.value instanceof Array ? d.value[1] : d.value;
-                    let valueText = d.origRow[d.idx];
-                    if (context.showValue()) {
-                        const dm = context.dataMeta();
-                        switch (context.showValueAsPercent()) {
-                            case "series":
-                                const seriesSum = typeof dm.sum !== "undefined" ? dm.sum : seriesSums[d.idx];
-                                valueText = d3Format(context.showValueAsPercentFormat())(valueText / seriesSum);
-                                break;
-                            case "domain":
-                                const domainSum = typeof dm.sum !== "undefined" ? dm.sum : domainSums[d.idx];
-                                valueText = d3Format(context.showValueAsPercentFormat())(valueText / domainSum);
-                                break;
-                            case null:
-                            default:
-                                valueText = d3Format(context.showValueFormat())(valueText);
-                                break;
+                dataCellGEnter.merge(dataCellG as any)
+                    .each(function (this: SVGElement, d: any) {
+                        const dataCellG2 = d3Select(this);
+                        const domainPos = host.dataPos(dataRow[0]) + (host.yAxisStacked() ? 0 : columnScale(d.column)) + offset;
+                        const upperValue = d.value instanceof Array ? d.value[1] : d.value;
+                        let valueText = d.origRow[d.idx];
+                        if (context.showValue()) {
+                            const dm = context.dataMeta();
+                            switch (context.showValueAsPercent()) {
+                                case "series":
+                                    const seriesSum = typeof dm.sum !== "undefined" ? dm.sum : seriesSums[d.idx];
+                                    valueText = d3Format(context.showValueAsPercentFormat())(valueText / seriesSum);
+                                    break;
+                                case "domain":
+                                    const domainSum = typeof dm.sum !== "undefined" ? dm.sum : domainSums[d.idx];
+                                    valueText = d3Format(context.showValueAsPercentFormat())(valueText / domainSum);
+                                    break;
+                                case null:
+                                default:
+                                    valueText = d3Format(context.showValueFormat())(valueText);
+                                    break;
+                            }
                         }
-                    }
-                    const upperValuePos = host.valuePos(upperValue);
-                    const lowerValuePos = host.valuePos(d.value instanceof Array ? d.value[0] : 0);
-                    const valuePos = Math.min(lowerValuePos, upperValuePos);
-                    const valueLength = Math.abs(upperValuePos - lowerValuePos);
+                        const upperValuePos = host.valuePos(upperValue);
+                        const lowerValuePos = host.valuePos(d.value instanceof Array ? d.value[0] : 0);
+                        const valuePos = Math.min(lowerValuePos, upperValuePos);
+                        const valueLength = Math.abs(upperValuePos - lowerValuePos);
 
-                    const _rects = dataCellG2.select("rect").transition().duration(duration)
-                        .style("fill", (d: any) => context.fillColor(d.row, d.column, d.value, d.origRow))
-                        ;
+                        const _rects = dataCellG2.select("rect").transition().duration(duration)
+                            .style("fill", (d: any) => context.fillColor(d.row, d.column, d.value, d.origRow))
+                            ;
 
-                    if (context.isHorizontal) {
+                        const rect = context.calcRect(domainPos, domainLength, valuePos, valueLength);
+                        rects[d.column] = rect;
                         _rects
-                            .attr("x", domainPos)
-                            .attr("y", valuePos)
-                            .attr("width", domainLength)
-                            .attr("height", valueLength)
+                            .attr("x", rect.x)
+                            .attr("y", rect.y)
+                            .attr("width", rect.width)
+                            .attr("height", rect.height)
                             ;
-                    } else {
-                        _rects
-                            .attr("y", domainPos)
-                            .attr("x", valuePos)
-                            .attr("height", domainLength)
-                            .attr("width", valueLength)
-                            ;
-                    }
-                    context.updateText(dataCellG2, d, valueText, upperValue, domainPos, domainLength, valuePos, valueLength, columnLength, axisSize, duration);
-                });
+                        // context.updateTextOld(dataCellG2, d, valueText, upperValue, domainPos, domainLength, valuePos, valueLength, columnLength, axisSize, duration);
+                    });
                 dataCellG.exit().transition().duration(duration)
                     .style("opacity", 0)
                     .remove()
                     ;
+                context.updateText(host, dataRowG, visibleCells, rects);
             });
         dataRow.exit().transition().duration(duration)
             .remove()
             ;
     }
 
-    updateText(element, d, valueText, upperValue, domainPos, domainLength, valuePos, valueLength, columnLength, axisSize, duration) {
+    calcRect(domainPos, domainLength, valuePos, valueLength) {
+        if (this.isHorizontal) {
+            return { x: domainPos, y: valuePos, width: domainLength, height: valueLength };
+        } else {
+            return { x: valuePos, y: domainPos, width: valueLength, height: domainLength };
+        }
+    }
+
+    updateText(host: XYAxis, dataRowG, visibleCells, rects) {
+        const columnLength = this.columns().length;
+        const texts = dataRowG.selectAll(".cellText")
+            .data(visibleCells)
+            ;
+        const textsEnter = texts
+            .enter().append("text")
+            .attr("class", ".cellText")
+            ;
+        texts.merge(textsEnter)
+            .text(d => {
+                if (this.showInnerText()) {
+                    const innerText = this.innerText(d.origRow, d.origRow[columnLength], d.idx);
+                    if (innerText) {
+                        const clippedValueLength = this.isHorizontal ? rects[d.column].height : rects[d.column].width;
+                        const valueText = d.origRow[d.idx];
+                        const innerTextObj = this.calcInnerText(clippedValueLength, innerText, valueText);
+                        d.innerTextObj = innerTextObj;
+
+                        return innerTextObj.text;
+                    }
+                    return "";
+                }
+            })
+            ;
+    }
+
+    updateTextOld(element, d, valueText, upperValue, domainPos, domainLength, valuePos, valueLength, columnLength, axisSize, duration) {
         const innerTextHeight = this.innerTextFontSize();
         const innerTextPadding = this.innerTextPadding_exists() ? this.innerTextPadding() : innerTextHeight / 2.5;
 
@@ -511,6 +544,7 @@ export class Column extends XYAxis {
         }
 
         return {
+            origInnerText,
             text: innerText,
             isTruncated: origInnerText !== innerText,
             padding,

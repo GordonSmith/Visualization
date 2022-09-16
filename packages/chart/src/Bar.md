@@ -147,7 +147,13 @@ A bar chart supports n-number of numeric values per data row. A series is create
             .yAxisStacked(!bar.yAxisStacked())
             .lazyRender()
           ;
-      }, 5000);
+      }, 3000);
+      setInterval(()=> {
+          bar
+            .orientation(bar.orientation() !== "vertical" ? "vertical" : "horizontal")
+            .lazyRender()
+          ;
+      }, 6000);
     </script>
   </hpcc-vitepress>
 </ClientOnly>
