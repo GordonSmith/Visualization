@@ -25,6 +25,20 @@
             "webRoot": "${workspaceFolder}"
         },
         {
+            "name": "test-cli-download-recursive",
+            "program": "${workspaceFolder}/bin/ojscc.mjs",
+            "request": "launch",
+            "args": [
+                "download",
+                "-r",
+                "https://observablehq.com/@observablehq/import",
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "name": "test-cli-download",
             "program": "${workspaceFolder}/bin/ojscc.mjs",
             "request": "launch",

@@ -1,5 +1,6 @@
 import { external, globals } from "@hpcc-js/bundle";
 import alias from "@rollup/plugin-alias";
+import replace from "@rollup/plugin-replace";
 import commonjs from "@rollup/plugin-commonjs";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import nodeResolve from "@rollup/plugin-node-resolve";
@@ -59,5 +60,26 @@ export default [{
     }],
     plugins: [
         ...plugins,
+    ]
+}, {
+    input: "lib-es6/__bin__/index",
+    external: id => {
+        return id.indexOf("lib-es6") < 0;
+    },
+    output: [{
+        file: "bin/ojscc.mjs",
+        format: "es",
+        sourcemap: true,
+        name: pkg.name
+    }],
+    plugins: [
+        replace({
+            include: ["lib-es6/__bin__/*.js"],
+            delimiters: ["", ""],
+            values: {
+                "../index": "../dist/index.js"
+            }
+        }),
+        sourcemaps(),
     ]
 }];

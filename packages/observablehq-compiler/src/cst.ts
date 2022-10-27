@@ -153,7 +153,7 @@ function parseVariableExpression(cellStr: string, cellAst, refs: Refs, bodyStr?:
     };
 }
 
-export function parseCell(cellStr: string, baseUrl: string): ParsedImportCell | ParsedViewCell | ParsedMutableCell | ParsedVariableCell {
+export function parseCell(cellStr: string, baseUrl: string = "."): ParsedImportCell | ParsedViewCell | ParsedMutableCell | ParsedVariableCell {
     const cellAst = ohqParseCell(cellStr);
     let bodyStr = cellAst.body && cellStr.substring(cellAst.body.start, cellAst.body.end);
     switch ((cellAst.body)?.type) {

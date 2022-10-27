@@ -173,10 +173,3 @@ export function fetchEx(url: string, proxyPrefix = "https://observable-cors.glit
             });
         });
 }
-
-export function download(impUrl: string): Promise<ohq.Notebook> {
-    const isShared = impUrl.indexOf("https://observablehq.com/d") === 0;
-    return fetchEx(impUrl.replace(`https://observablehq.com/${isShared ? "d/" : ""}`, "https://api.observablehq.com/document/"))
-        .then(r => r.json())
-        ;
-}
