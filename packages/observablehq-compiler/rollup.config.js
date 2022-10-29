@@ -64,7 +64,11 @@ export default [{
 }, {
     input: "lib-es6/__bin__/index",
     external: id => {
-        return id.indexOf("lib-es6") < 0;
+        if (id.indexOf("./") !== 0 && id.indexOf("__bin__") < 0) {
+            console.log(id);
+            return true;
+        }
+        return false;
     },
     output: [{
         file: "bin/ojscc.mjs",

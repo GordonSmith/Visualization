@@ -61,8 +61,9 @@ async function importCompiledNotebook(partial: string) {
 }
 
 // Recursive notebook parsing and compiling
-async function importNotebook(partial: string) {
-    const url = `https://api.observablehq.com/document/${partial}`;
+async function importNotebook(partialUrl: string, { baseUrl, importMode }: CompileOptions) {
+    debugger;
+    const url = `https://api.observablehq.com/document/${partialUrl}`;
     const notebook = fetchEx(url)
         .then(r => {
             return r.json();
@@ -78,11 +79,11 @@ async function importNotebook(partial: string) {
     return retVal;
 }
 
-async function createModule(node: ohq.Node, parsed: ParsedImportCell, text: string, { baseUrl, importMode }: CompileOptions) {
+async function createModule(node: ohq.Node, parsed: ParsedImportCell, { baseUrl, importMode }: CompileOptions) {
     const otherModule = isRelativePath(parsed.src) ?
         await importFile(parsed.src, baseUrl) :
         importMode === "recursive" ?
-            await importNotebook(parsed.src) :
+            await importNotebook(parsed.src, { baseUrl, importMode }) :
             await importCompiledNotebook(parsed.src);
 
     const importVariables: ImportVariableFunc[] = [];
@@ -201,7 +202,7 @@ async function createCell(node: ohq.Node, options: CompileOptions) {
             const parsed = parseCell(cell.text, options.baseUrl);
             switch (parsed.type) {
                 case "import":
-                    modules.push(await createModule(node, parsed, cell.text, options));
+                    modules.push(await createModule(node, parsed, options));
                     break;
                 case "viewof":
                     variables.push(createVariable(node, true, parsed.variable.id, parsed.variable.inputs, parsed.variable.func));

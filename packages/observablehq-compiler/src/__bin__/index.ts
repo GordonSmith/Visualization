@@ -1,22 +1,14 @@
 import fetch, { Headers, Request, Response } from "node-fetch";
 import { promises as fs } from "fs";
 import yargsMode from "yargs";
-import { compile, download, downloadRecursive } from "../index";
+import { compile, download } from "../index";
+import { doDownload, doDownloadRecursive, install } from "./download";
 
 if (!globalThis.fetch) {
     (globalThis as any).fetch = fetch;
     (globalThis as any).Headers = Headers;
     (globalThis as any).Request = Request;
     (globalThis as any).Response = Response;
-}
-
-async function doDownload(url, filePath, recursive) {
-    const nb = recursive ? await downloadRecursive(url) : await download(url);
-    if (filePath) {
-        fs.writeFile(filePath, JSON.stringify(nb, undefined, 4));
-    } else {
-        console.info(nb);
-    }
 }
 
 async function doCompile(url, filePath) {
@@ -34,6 +26,16 @@ const yargs = yargsMode(process.argv.slice(2));
 yargs
     .scriptName("ojscc")
     .wrap(Math.min(90, yargs.terminalWidth()))
+    .command("install", "Install ObservableHQ Notebook and Dependencies",
+        function (yargs) {
+            return yargs
+                .usage("ojscc install @user/notebook")
+                .demandCommand(1, "Notebook ID required")
+                ;
+        }, function (argv) {
+            install(argv._[1]);
+        }
+    )
     .command("download", "Download ObservableHQ Notebook",
         function (yargs) {
             return yargs
@@ -50,7 +52,7 @@ yargs
                 })
                 ;
         }, function (argv) {
-            doDownload(argv._[1], argv.o, argv.r);
+            argv.r ? doDownloadRecursive(argv._[1], argv.o) : doDownload(argv._[1], argv.o);
         }
     )
     .command("compile", "Compile ObservableHQ Notebook",

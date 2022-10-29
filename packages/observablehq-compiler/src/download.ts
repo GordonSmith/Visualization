@@ -8,9 +8,13 @@ function downloadNotebook(partialUrl: string): Promise<ohq.Notebook> {
         ;
 }
 
-function full2partial(fullUrl: string) {
-    const isShared = fullUrl.indexOf("https://observablehq.com/d") === 0;
-    return fullUrl.replace(`https://observablehq.com/${isShared ? "d/" : ""}`, "");
+function notebookId(fullOrPartialUrl: string) {
+    const isFullUrl = fullOrPartialUrl.indexOf("https://observablehq.com") === 0;
+    if (isFullUrl) {
+        const isShared = fullOrPartialUrl.indexOf("https://observablehq.com/d") === 0;
+        return fullOrPartialUrl.replace(`https://observablehq.com/${isShared ? "d/" : ""}`, "");
+    }
+    return fullOrPartialUrl;
 }
 
 type PartialUrl = string;
@@ -39,13 +43,22 @@ async function gatherNotebooks(partialUrl: PartialUrl, notebooks: Notebooks): Pr
     return Promise.all(promises).then(_ => { });
 }
 
-export function download(fullUrl: string): Promise<ohq.Notebook> {
-    return downloadNotebook(full2partial(fullUrl));
+export function download(fullOrPartialUrl: string): Promise<ohq.Notebook> {
+    const partialUrl = notebookId(fullOrPartialUrl);
+    return downloadNotebook(partialUrl);
 }
 
-export async function downloadRecursive(fullUrl: string): Promise<Notebooks> {
-    const partialUrl = full2partial(fullUrl);
-    const retVal: Notebooks = {};
-    await gatherNotebooks(partialUrl, retVal);
-    return retVal;
+export async function fetchRecursive(fullOrPartialUrl: string): Promise<Notebooks> {
+    const partialUrl = notebookId(fullOrPartialUrl);
+    const dependencies: Notebooks = {};
+    await gatherNotebooks(partialUrl, dependencies);
+    return dependencies;
+}
+
+export async function downloadRecursive(fullOrPartialUrl: string): Promise<{ notebook: ohq.Notebook, dependencies: Notebooks }> {
+    const partialUrl = notebookId(fullOrPartialUrl);
+    const dependencies = await fetchRecursive(partialUrl);
+    const notebook = dependencies[partialUrl];
+    delete dependencies[partialUrl];
+    return { notebook, dependencies };
 }

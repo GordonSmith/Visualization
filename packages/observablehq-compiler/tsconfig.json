@@ -6,6 +6,7 @@
         "declarationDir": "./types",
         "target": "ES2018",
         "noImplicitThis": true,
+        "esModuleInterop": true,
         "lib": [
             "dom",
             "ES2018"

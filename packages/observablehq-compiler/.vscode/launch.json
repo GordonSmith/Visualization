@@ -25,13 +25,28 @@
             "webRoot": "${workspaceFolder}"
         },
         {
+            "name": "test-cli-install",
+            "program": "${workspaceFolder}/bin/ojscc.mjs",
+            "request": "launch",
+            "args": [
+                "install",
+                "@observablehq/import",
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "name": "test-cli-download-recursive",
             "program": "${workspaceFolder}/bin/ojscc.mjs",
             "request": "launch",
             "args": [
                 "download",
                 "-r",
-                "https://observablehq.com/@observablehq/import",
+                "-o",
+                "tmp.ojsnb",
+                "https://observablehq.com/@observablehq/introduction-to-data",
             ],
             "skipFiles": [
                 "<node_internals>/**"

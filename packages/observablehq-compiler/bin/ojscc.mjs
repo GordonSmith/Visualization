@@ -1,22 +1,48 @@
 import fetch, { Headers, Request, Response } from 'node-fetch';
 import { promises } from 'fs';
 import yargsMode from 'yargs';
-import { downloadRecursive, download, compile } from '../dist/index.js';
+import { download, downloadRecursive, compile } from '../dist/index.js';
+import fs from 'fs/promises';
+import path from 'path';
+
+async function writeNotbook(filePath, notebook) {
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    fs.writeFile(filePath, JSON.stringify(notebook, undefined, 4));
+}
+async function doDownload(url, filePath) {
+    const nb = await download(url);
+    if (filePath) {
+        writeNotbook(filePath, nb);
+    }
+    else {
+        console.info(nb);
+    }
+}
+async function doDownloadRecursive(url, filePath) {
+    const all = await downloadRecursive(url);
+    if (filePath) {
+        writeNotbook(filePath, all.notebook);
+        const depsFolder = path.join(path.dirname(filePath), path.basename(filePath, path.extname(filePath)));
+        for (const key in all.dependencies) {
+            writeNotbook(path.join(depsFolder, key) + ".ojsnb", all.dependencies[key]);
+        }
+    }
+    else {
+        console.info(all);
+    }
+}
+async function install(url) {
+    const all = await downloadRecursive(url);
+    for (const key in all) {
+        writeNotbook(path.join(process.cwd(), "ojs_modules", key) + ".ojsnb", all[key]);
+    }
+}
 
 if (!globalThis.fetch) {
     globalThis.fetch = fetch;
     globalThis.Headers = Headers;
     globalThis.Request = Request;
     globalThis.Response = Response;
-}
-async function doDownload(url, filePath, recursive) {
-    const nb = recursive ? await downloadRecursive(url) : await download(url);
-    if (filePath) {
-        promises.writeFile(filePath, JSON.stringify(nb, undefined, 4));
-    }
-    else {
-        console.info(nb);
-    }
 }
 async function doCompile(url, filePath) {
     const nb = await download(url);
@@ -33,6 +59,13 @@ const yargs = yargsMode(process.argv.slice(2));
 yargs
     .scriptName("ojscc")
     .wrap(Math.min(90, yargs.terminalWidth()))
+    .command("install", "Install ObservableHQ Notebook and Dependencies", function (yargs) {
+    return yargs
+        .usage("ojscc install @user/notebook")
+        .demandCommand(1, "Notebook ID required");
+}, function (argv) {
+    install(argv._[1]);
+})
     .command("download", "Download ObservableHQ Notebook", function (yargs) {
     return yargs
         .usage("ojscc download [-o myfile.ojsnb] [-r] https://observablehq.com/@user/notebook")
@@ -47,7 +80,7 @@ yargs
         describe: "Download all dependencies"
     });
 }, function (argv) {
-    doDownload(argv._[1], argv.o, argv.r);
+    argv.r ? doDownloadRecursive(argv._[1], argv.o) : doDownload(argv._[1], argv.o);
 })
     .command("compile", "Compile ObservableHQ Notebook", function (yargs) {
     return yargs
