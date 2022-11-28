@@ -21,7 +21,7 @@ interface ImportDefine {
     write: (w: Writer) => void;
 }
 
-async function importFile(relativePath: string, baseUrl: string) {
+async function importFile(node: ohq.Node, relativePath: string, baseUrl: string) {
     const path = fixRelativeUrl(relativePath, baseUrl);
     const content = await fetchEx(path).then(r => r.text());
     let notebook: ohq.Notebook;
@@ -35,13 +35,13 @@ async function importFile(relativePath: string, baseUrl: string) {
     const retVal: ImportDefine = compile(notebook, { baseUrl }) as any;
     retVal.delete = () => { };
     retVal.write = (w: Writer) => {
-        w.import(path);
+        w.import(path, node);
     };
     return retVal;
 }
 
 // Import precompiled notebook from observable  ---
-async function importCompiledNotebook(partial: string) {
+async function importCompiledNotebook(node: ohq.Node, partial: string) {
     const url = `https://api.observablehq.com/${partial[0] === "@" ? partial : `d/${partial}`}.js?v=3`;
     let impMod = {
         default: function (runtime: ohq.Runtime, inspector?: InspectorFactoryEx): ohq.Module {
@@ -55,13 +55,13 @@ async function importCompiledNotebook(partial: string) {
     const retVal: ImportDefine = impMod.default;
     retVal.delete = () => { };
     retVal.write = (w: Writer) => {
-        w.import(url);
+        w.import(url, node);
     };
     return retVal;
 }
 
 // Recursive notebook parsing and compiling
-async function importNotebook(partial: string) {
+async function importNotebook(node: ohq.Node, partial: string) {
     const url = `https://api.observablehq.com/document/${partial}`;
     const notebook = fetchEx(url)
         .then(r => {
@@ -73,17 +73,17 @@ async function importNotebook(partial: string) {
     const retVal: ImportDefine = compile(await notebook) as any;
     retVal.delete = () => { };
     retVal.write = (w: Writer) => {
-        w.import(url);
+        w.import(url, node);
     };
     return retVal;
 }
 
 async function createModule(node: ohq.Node, parsed: ParsedImportCell, text: string, { baseUrl, importMode }: CompileOptions) {
     const otherModule = isRelativePath(parsed.src) ?
-        await importFile(parsed.src, baseUrl) :
+        await importFile(node, parsed.src, baseUrl) :
         importMode === "recursive" ?
-            await importNotebook(parsed.src) :
-            await importCompiledNotebook(parsed.src);
+            await importNotebook(node, parsed.src) :
+            await importCompiledNotebook(node, parsed.src);
 
     const importVariables: ImportVariableFunc[] = [];
     const variables: VariableFunc[] = [];
@@ -166,7 +166,7 @@ ${node.value}
         if (inline) {
             w.define({ id: name, inputs, func: definition }, inspect, true);
         } else {
-            const id = w.function({ id: name, func: definition });
+            const id = w.function({ id: name, func: definition }, node);
             w.define({ id: name, inputs, func: definition }, inspect, false, id);
         }
     };
@@ -252,7 +252,8 @@ export interface CompileOptions {
     baseUrl?: string;
     importMode?: "recursive" | "precompiled";
 }
-export function notebook(_files: ohq.File[] = [], _cells: CellFunc[] = [], { baseUrl = ".", importMode = "precompiled" }: CompileOptions = {}) {
+export function notebook(nb: ohq.Notebook, _cells: CellFunc[] = [], { baseUrl = ".", importMode = "precompiled" }: CompileOptions = {}) {
+    const _files = nb.files ?? [];
     const files: FileFunc[] = _files.map(f => createFile(f, { baseUrl, importMode }));
     const fileAttachments = new Map<string, any>(files);
     const cells = new Map<string | number, CellFunc>(_cells.map(c => [c.id, c]));
@@ -296,9 +297,13 @@ export function notebook(_files: ohq.File[] = [], _cells: CellFunc[] = [], { bas
         w.files(_files);
         cells.forEach(cell => cell.write(w));
     };
-    retVal.toString = (w = new Writer()) => {
+    retVal.toString = (w = new Writer(nb, "tmp.ojsnb", "tmp.js")) => {
         retVal.write(w);
         return w.toString().trim();
+    };
+    retVal.toMap = (w = new Writer(nb, "tmp.ojsnb", "tmp.js")) => {
+        retVal.write(w);
+        return w.toMap();
     };
     return retVal;
 }
@@ -306,6 +311,6 @@ export function notebook(_files: ohq.File[] = [], _cells: CellFunc[] = [], { bas
 export async function compile(notebookOrOjs: ohq.Notebook | string, { baseUrl = ".", importMode = "precompiled" }: CompileOptions = {}) {
     const ojsNotebook = typeof notebookOrOjs === "string" ? ojs2notebook(notebookOrOjs) : notebookOrOjs;
     const _cells: CellFunc[] = await Promise.all(ojsNotebook.nodes.map(n => createCell(n, { baseUrl, importMode })));
-    return notebook(ojsNotebook.files, _cells, { baseUrl, importMode });
+    return notebook(ojsNotebook, _cells, { baseUrl, importMode });
 }
 export type compileFunc = Awaited<ReturnType<typeof compile>>;

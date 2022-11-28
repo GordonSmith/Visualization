@@ -105,7 +105,7 @@ describe("ojs", function () {
   });
 
   it("compiler", async function () {
-    const writer = new Writer();
+    const writer = new Writer(imports as any);
     const define = await compile(imports as any);
     define.write(writer);
     console.info(writer.toString());

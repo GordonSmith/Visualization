@@ -6,11 +6,18 @@
   <title>@hpcc-js/observable-md</title>
 </head>
 
-<body onresize="doResize()">
+<body>
   <div id="placeholder">
   </div>
   <script type="module">
-    import { } from "./dist/index.esm.js";
+    import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime/dist/runtime.js";
+    import notebook from "./tmp.js";
+    new Runtime().module(notebook, Inspector.into(document.body));
+
+    // import { download, compile } from "./dist/index.esm.js";
+    // const rawNotebook = await download("./tmp.ojsnb");
+    // const notebook = await compile(rawNotebook);
+    // new Runtime().module(notebook, Inspector.into(document.body));
   </script>
 </body>
 

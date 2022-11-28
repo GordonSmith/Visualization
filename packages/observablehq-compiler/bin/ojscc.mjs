@@ -28,6 +28,8 @@ async function doCompile(url, filePath) {
     const js = define.toString();
     if (filePath) {
         fs.writeFile(filePath, js);
+        const map = define.toMap();
+        fs.writeFile(filePath + ".map", map);
     } else {
         console.info(js);
     }
