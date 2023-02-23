@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "wsdl",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "wsdl-logaccess"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "name": "index.html",
             "type": "msedge",
             "request": "launch",
