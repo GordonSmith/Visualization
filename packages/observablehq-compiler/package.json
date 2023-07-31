@@ -49,7 +49,7 @@
         "stamp": "node ../../node_modules/@hpcc-js/bundle/src/stamp.js",
         "lint": "eslint ./src",
         "docs": "typedoc --options tdoptions.json .",
-        "dev-start": "ws",
+        "serve": "npx -y http-serve ../../",
         "test-cli": "node ./bin/ojscc.mjs --version",
         "test-node": "mocha ./dist-test/index.mjs --reporter spec",
         "test": "run-s test-cli test-node",

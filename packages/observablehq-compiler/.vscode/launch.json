@@ -25,6 +25,13 @@
             "webRoot": "${workspaceFolder}"
         },
         {
+            "name": "test.html (http)",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:8080/packages/observablehq-compiler/test.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "test-cli-download",
             "program": "${workspaceFolder}/bin/ojscc.mjs",
             "request": "launch",

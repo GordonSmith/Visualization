@@ -51,8 +51,8 @@ export default [{
     input: "lib-es6/__tests__/index",
     external: external,
     output: [{
-        file: "dist-test/index.mjs",
-        format: "es",
+        file: "dist-test/index.js",
+        format: "umd",
         sourcemap: true,
         globals: globals,
         name: pkg.name
