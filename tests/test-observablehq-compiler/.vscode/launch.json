@@ -5,35 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Mocha Tests",
-            "type": "node",
+            "name": "Launch Edge",
             "request": "launch",
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "../../node_modules/.bin/mocha",
-            "windows": {
-                "runtimeExecutable": "../../node_modules/.bin/mocha.cmd"
-            },
-            "linux": {
-                "runtimeExecutable": "../../node_modules/.bin/mocha"
-            },
-            "runtimeArgs": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
-                "--exit",
-                "${workspaceRoot}/lib-umd/index.node.spec.js"
-            ],
-            "internalConsoleOptions": "openOnSessionStart",
-            "outFiles": [
-                "${workspaceRoot}/build/**/*"
-            ]
-        },
-        {
-            "name": "Chrome Debug",
-            "type": "chrome",
-            "request": "launch",
+            "type": "msedge",
             "url": "file:///${workspaceRoot}/test.html",
             "trace": true,
             "webRoot": "${workspaceRoot}/",
@@ -43,9 +17,9 @@
             }
         },
         {
-            "name": "Chrome Debug WS",
-            "type": "chrome",
+            "name": "Launch Edge WS",
             "request": "launch",
+            "type": "msedge",
             "url": "http://localhost:8080/tests/test-util/test.html",
             "trace": true,
             "webRoot": "${workspaceRoot}/",

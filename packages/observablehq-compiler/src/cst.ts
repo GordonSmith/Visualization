@@ -1,6 +1,4 @@
-import { parseCell as ohqParseCell } from "@hpcc-js/observable-shim";
-import { acorn, walk } from "@observablehq/parser";
-import { ancestor } from "acorn-walk";
+import { acorn, walk, ancestor, parseCell as ohqParseCell } from "@hpcc-js/observable-shim";
 
 import { fixRelativeUrl, createFunction, Refs } from "./util";
 

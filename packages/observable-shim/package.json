@@ -2,6 +2,7 @@
     "name": "@hpcc-js/observable-shim",
     "version": "2.5.3",
     "description": "hpcc-js - Observable Shim",
+    "type": "module",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
     "types": "types/index.d.ts",
@@ -19,6 +20,7 @@
     ],
     "scripts": {
         "clean": "rimraf lib* types dist *.tsbuildinfo",
+        "gen-libs": "observable build --debug",
         "compile-es6": "tsc --module es2020 --outDir ./lib-es6",
         "compile-es6-watch": "npm run compile-es6 -- -w",
         "bundle": "rollup -c",
@@ -30,7 +32,8 @@
     },
     "devDependencies": {
         "@hpcc-js/bundle": "^2.11.5",
-        "@observablehq/parser": "6.1.0"
+        "@observablehq/parser": "6.1.0",
+        "@observablehq/framework": "1.0.0"
     },
     "repository": {
         "type": "git",
