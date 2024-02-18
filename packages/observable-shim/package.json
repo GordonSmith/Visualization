@@ -25,7 +25,7 @@
         "compile-es6-watch": "npm run compile-es6 -- -w",
         "bundle": "rollup -c",
         "bundle-watch": "npm run bundle -- -w",
-        "build": "npm run compile-es6 && npm run bundle",
+        "build": "npm run gen-libs && npm run compile-es6 && npm run bundle",
         "watch": "npm-run-all compile-es6 -p compile-es6-watch bundle-watch",
         "lint": "eslint ./src",
         "update": "npx --yes npm-check-updates -u -t minor"

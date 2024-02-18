@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Edge",
+            "request": "launch",
+            "type": "msedge",
+            "url": "index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "vscode-edge-devtools.debug",
+            "request": "launch",
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "url": "index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "test-node",
             "request": "launch",
             "runtimeArgs": [
@@ -28,8 +42,12 @@
             "name": "index.html (file)",
             "type": "msedge",
             "request": "launch",
-            "url": "${workspaceFolder}/index.html",
-            "webRoot": "${workspaceFolder}"
+            "url": "file://wsl.localhost/Ubuntu-22.04/home/gordon/Visualization/packages/observablehq-compiler/index.html",
+            "webRoot": "${workspaceFolder}",
+            "runtimeArgs": [
+                "--allow-file-access-from-files",
+                "--disable-web-security"
+            ]
         },
         {
             "name": "test-cli-download",

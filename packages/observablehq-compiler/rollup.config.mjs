@@ -5,9 +5,9 @@ import sourcemaps from "rollup-plugin-sourcemaps";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
 import json from "@rollup/plugin-json";
+import pkg from "./package.json" assert { type: 'json' };;
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkg = require("./package.json");
 
 const plugins = [
     json(),
@@ -29,16 +29,10 @@ const plugins = [
 
 export default [{
     input: "lib-es6/index",
-    external: external,
+    external: (id, _parentId, _isResolved) => id.indexOf("http") === 0 || external(id),
     output: [{
-        file: pkg.main,
-        format: "umd",
-        sourcemap: true,
-        globals: globals,
-        name: pkg.name,
-        plugins: []
-    }, {
-        file: pkg.module,
+        dir: "dist",
+        entryFileNames: "[name].esm.js",
         format: "es",
         sourcemap: true,
         globals: globals
@@ -49,9 +43,9 @@ export default [{
     plugins
 }, {
     input: "lib-es6/__tests__/index",
-    external: external,
+    external: (id, parentId, isResolved) => id.indexOf("http") === 0 || external(id),
     output: [{
-        file: "dist-test/index.mjs",
+        dir: "dist-test",
         format: "es",
         sourcemap: true,
         globals: globals,

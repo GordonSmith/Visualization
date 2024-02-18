@@ -4,8 +4,6 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
 import { globals } from "@hpcc-js/bundle";
 
-import pkg from "./package.json";
-
 const plugins = [
     alias({
         entries: [
@@ -24,14 +22,9 @@ const plugins = [
 
 export default [{
     input: "lib-es6/index",
+    external: (id, parentId, isResolved) => id.indexOf("http") === 0,
     output: [{
-        file: pkg.main,
-        format: "umd",
-        sourcemap: true,
-        name: pkg.name,
-        globals
-    }, {
-        file: pkg.module,
+        dir: "dist",
         format: "es",
         sourcemap: true,
         globals
@@ -42,5 +35,5 @@ export default [{
             return false;
         }
     },
-    plugins: plugins
+    plugins
 }];

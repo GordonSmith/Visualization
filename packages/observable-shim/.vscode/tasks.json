@@ -2,11 +2,29 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "gen libs",
+            "type": "npm",
+            "script": "gen-libs",
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-es6",
+            "type": "npm",
+            "script": "compile-es6",
+            "dependsOn": [
+                "gen libs"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "es6 watch",
             "type": "npm",
             "script": "compile-es6-watch",
             "problemMatcher": [
                 "$tsc-watch"
+            ],
+            "dependsOn": [
+                "compile-es6"
             ],
             "presentation": {
                 "group": "group-build"
@@ -17,6 +35,9 @@
             "type": "npm",
             "script": "bundle-watch",
             "problemMatcher": [],
+            "dependsOn": [
+                "compile-es6"
+            ],
             "presentation": {
                 "group": "group-build"
             }

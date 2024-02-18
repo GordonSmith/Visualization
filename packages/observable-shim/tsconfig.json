@@ -7,6 +7,7 @@
         "module": "ES6",
         "target": "ES2021",
         "noImplicitThis": true,
+        "allowJs": false,
         "lib": [
             "ES2021",
             "DOM"
