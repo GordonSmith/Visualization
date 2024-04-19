@@ -30,7 +30,7 @@
         "d3-fetch": "1.1.2",
         "d3-selection": "1.4.0",
         "es6-promise": "4.2.8",
-        "tslib": "1.10.0"
+        "tslib": "1.14.1"
     },
     "devDependencies": {
         "local-web-server": "3.0.7",
