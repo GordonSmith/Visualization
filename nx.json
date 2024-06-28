@@ -1,0 +1,268 @@
+{
+  "targetDefaults": {
+    "clean": {
+      "dependsOn": []
+    },
+    "compile-es6": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": [
+        "{projectRoot}/lib-es6"
+      ]
+    },
+    "compile-es6-watch": {
+      "dependsOn": []
+    },
+    "bundle": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "bundle-watch": {
+      "dependsOn": []
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": [
+        "compile-es6"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "lint": {
+      "dependsOn": []
+    },
+    "update": {
+      "dependsOn": []
+    },
+    "compile-umd": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": [
+        "{projectRoot}/lib-umd"
+      ]
+    },
+    "compile-umd-watch": {
+      "dependsOn": []
+    },
+    "compile-all": {
+      "cache": true,
+      "dependsOn": []
+    },
+    "compile-all-watch": {
+      "dependsOn": []
+    },
+    "bundle-rollup": {
+      "dependsOn": []
+    },
+    "bundle-webpack": {
+      "dependsOn": []
+    },
+    "start-dev": {
+      "dependsOn": []
+    },
+    "gen-filejson": {
+      "dependsOn": []
+    },
+    "test": {
+      "dependsOn": []
+    },
+    "minimize": {
+      "dependsOn": []
+    },
+    "watch": {
+      "dependsOn": []
+    },
+    "build-docs": {
+      "dependsOn": []
+    },
+    "eject": {
+      "dependsOn": []
+    },
+    "start": {
+      "dependsOn": []
+    },
+    "gen-legacy-types": {
+      "dependsOn": []
+    },
+    "stamp": {
+      "dependsOn": []
+    },
+    "docs": {
+      "dependsOn": []
+    },
+    "copy-resources": {
+      "dependsOn": []
+    },
+    "compile-util": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": []
+    },
+    "compile-util-watch": {
+      "dependsOn": []
+    },
+    "minimize-browser": {
+      "dependsOn": []
+    },
+    "minimize-node": {
+      "dependsOn": []
+    },
+    "lint-fix": {
+      "dependsOn": []
+    },
+    "wsdl-access": {
+      "dependsOn": []
+    },
+    "wsdl-account": {
+      "dependsOn": []
+    },
+    "wsdl-cloud": {
+      "dependsOn": []
+    },
+    "wsdl-codesign": {
+      "dependsOn": []
+    },
+    "wsdl-dali": {
+      "dependsOn": []
+    },
+    "wsdl-dfu": {
+      "dependsOn": []
+    },
+    "wsdl-dfuxref": {
+      "dependsOn": []
+    },
+    "wsdl-elk": {
+      "dependsOn": []
+    },
+    "wsdl-esdlconfig": {
+      "dependsOn": []
+    },
+    "wsdl-fileio": {
+      "dependsOn": []
+    },
+    "wsdl-filespray": {
+      "dependsOn": []
+    },
+    "wsdl-logaccess": {
+      "dependsOn": []
+    },
+    "wsdl-machine": {
+      "dependsOn": []
+    },
+    "wsdl-packageprocess": {
+      "dependsOn": []
+    },
+    "wsdl-smc": {
+      "dependsOn": []
+    },
+    "wsdl-resources": {
+      "dependsOn": []
+    },
+    "wsdl-store": {
+      "dependsOn": []
+    },
+    "wsdl-topology": {
+      "dependsOn": []
+    },
+    "wsdl-workunits": {
+      "dependsOn": []
+    },
+    "wsdl-all": {
+      "dependsOn": []
+    },
+    "wsdl": {
+      "dependsOn": []
+    },
+    "preinstall": {
+      "dependsOn": []
+    },
+    "generate-v1": {
+      "dependsOn": []
+    },
+    "generate-v2": {
+      "dependsOn": []
+    },
+    "generate": {
+      "dependsOn": []
+    },
+    "compile-amd": {
+      "dependsOn": []
+    },
+    "compile-cjs": {
+      "dependsOn": []
+    },
+    "compile-cjs-watch": {
+      "dependsOn": []
+    },
+    "serve-vite": {
+      "dependsOn": []
+    },
+    "compile-workers": {
+      "dependsOn": []
+    },
+    "bundle-workers": {
+      "dependsOn": []
+    },
+    "minimize-workers-forceDirected": {
+      "dependsOn": []
+    },
+    "minimize-workers-dagre": {
+      "dependsOn": []
+    },
+    "minimize-workers-graphviz": {
+      "dependsOn": []
+    },
+    "minimize-workers": {
+      "dependsOn": []
+    },
+    "wrap-workers-forceDirected": {
+      "dependsOn": []
+    },
+    "wrap-workers-dagre": {
+      "dependsOn": []
+    },
+    "wrap-workers-graphviz": {
+      "dependsOn": []
+    },
+    "wrap-workers": {
+      "dependsOn": []
+    },
+    "build-workers": {
+      "dependsOn": []
+    },
+    "build-package": {
+      "dependsOn": []
+    },
+    "ddd": {
+      "dependsOn": []
+    },
+    "minimize-index": {
+      "dependsOn": []
+    },
+    "minimize-index-es6": {
+      "dependsOn": []
+    },
+    "dev-start": {
+      "dependsOn": []
+    },
+    "test-cli": {
+      "dependsOn": []
+    },
+    "test-node": {
+      "dependsOn": []
+    },
+    "test:node": {
+      "dependsOn": []
+    },
+    "test:chrome": {
+      "dependsOn": []
+    },
+    "test-skip": {
+      "dependsOn": []
+    }
+  }
+}
