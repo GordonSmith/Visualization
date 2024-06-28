@@ -155,7 +155,7 @@
     "style-loader": "3.3.4",
     "terser": "5.30.0",
     "terser-webpack-plugin": "5.3.10",
-    "typescript": "5.4.3",
+    "typescript": "5.5.2",
     "url-loader": "4.1.1",
     "vitepress": "0.22.4",
     "webpack": "5.91.0",
