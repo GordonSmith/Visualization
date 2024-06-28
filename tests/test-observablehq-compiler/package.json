@@ -2,8 +2,8 @@
     "private": true,
     "name": "@hpcc-js/test-observablehq-compiler",
     "dependencies": {
-        "@hpcc-js/common": "^2.71.15",
-        "@hpcc-js/observablehq-compiler": "^1.2.11",
+        "@hpcc-js/common": "^2.71.17",
+        "@hpcc-js/observablehq-compiler": "^1.2.12",
         "@observablehq/runtime": "5.9.8"
     },
     "devDependencies": {

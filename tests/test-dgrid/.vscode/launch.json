@@ -31,8 +31,8 @@
             ]
         },
         {
-            "name": "Chrome Debug",
-            "type": "chrome",
+            "name": "Browser Debug",
+            "type": "msedge",
             "request": "launch",
             "url": "file:///${workspaceRoot}/test.html",
             "trace": true,
@@ -43,8 +43,8 @@
             }
         },
         {
-            "name": "Chrome Debug WS",
-            "type": "chrome",
+            "name": "Browser Debug WS",
+            "type": "msedge",
             "request": "launch",
             "url": "http://localhost:8080/tests/test-util/test.html",
             "trace": true,
