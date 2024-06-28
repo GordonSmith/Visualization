@@ -2,10 +2,10 @@
     "private": true,
     "name": "@hpcc-js/test-map",
     "dependencies": {
-        "@hpcc-js/common": "^2.71.15",
-        "@hpcc-js/map": "^2.77.18",
-        "@hpcc-js/util": "^2.50.6",
-        "@hpcc-js/map-deck": "^2.7.16",
+        "@hpcc-js/common": "^2.71.17",
+        "@hpcc-js/map": "^2.77.21",
+        "@hpcc-js/util": "^2.51.0",
+        "@hpcc-js/map-deck": "^2.7.19",
         "es6-promise": "4.2.8",
         "simulate-event": "1.4.0"
     },
