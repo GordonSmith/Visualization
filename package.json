@@ -59,7 +59,7 @@
     "stamp": "lerna run stamp",
     "stamp-main": "node ./utils/bundle/src/stamp-main.js",
     "compile-es6": "lerna run --ignore \"@hpcc-js/test-*\" compile-es6",
-    "compile-es6-watch": "lerna run --nosort --stream --ignore \"@hpcc-js/test-*\" compile-es6-watch",
+    "compile-es6-watch": "lerna run --no-sort --stream --ignore \"@hpcc-js/test-*\" compile-es6-watch",
     "compile-umd": "lerna run --ignore \"@hpcc-js/test-*\" compile-umd",
     "api-extractor": "api-extractor run --local --verbose",
     "api-extractor-watch": "nodemon --watch types \"run-s api-extractor\"",
