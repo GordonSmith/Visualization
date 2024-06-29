@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable */
 //@ts-nocheck
 
 // This implementation of LRUMap is a copy of https://github.com/rsms/js-lru/ ,
