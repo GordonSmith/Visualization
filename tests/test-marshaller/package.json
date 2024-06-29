@@ -9,7 +9,7 @@
         "simulate-event": "1.4.0"
     },
     "devDependencies": {
-        "@types/mocha": "5.2.7",
+        "@types/mocha": "10.0.7",
         "file-loader": "5.1.0"
     },
     "scripts": {

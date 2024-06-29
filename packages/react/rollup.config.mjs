@@ -5,7 +5,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from "rollup-plugin-postcss";
 
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 export default {
     input: "lib-es6/index",
@@ -15,15 +15,13 @@ export default {
         format: "umd",
         sourcemap: true,
         globals: globals,
-        name: pkg.name,
-        strict: false
+        name: pkg.name
     }, {
         file: pkg.module + ".js",
         format: "es",
         sourcemap: true,
         globals: globals,
-        name: pkg.name,
-        strict: false
+        name: pkg.name
     }],
     plugins: [
         alias({
@@ -48,9 +46,7 @@ export default {
         nodeResolve({
             preferBuiltins: true
         }),
-        commonjs({
-            namedExports: {}
-        }),
+        commonjs({}),
         sourcemaps(),
         postcss({
             extensions: [".css"],

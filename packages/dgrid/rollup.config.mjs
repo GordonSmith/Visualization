@@ -5,7 +5,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from "rollup-plugin-postcss";
 
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 export default {
     input: "lib-es6/index",
@@ -15,13 +15,15 @@ export default {
         format: "umd",
         sourcemap: true,
         globals: globals,
-        name: pkg.name
+        name: pkg.name,
+        strict: false
     }, {
         file: pkg.module + ".js",
         format: "es",
         sourcemap: true,
         globals: globals,
-        name: pkg.name
+        name: pkg.name,
+        strict: false
     }],
     plugins: [
         alias({
@@ -46,7 +48,11 @@ export default {
         nodeResolve({
             preferBuiltins: true
         }),
-        commonjs({}),
+        commonjs({
+            namedExports: {
+                "../dgrid-shim/dist/index.js": ["Deferred", "domConstruct", "QueryResults", "Memory", "PagingGrid", "Grid"]
+            }
+        }),
         sourcemaps(),
         postcss({
             extensions: [".css"],

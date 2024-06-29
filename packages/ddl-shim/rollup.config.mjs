@@ -8,7 +8,7 @@ import shebang from "rollup-plugin-add-shebang";
 import sourcemaps from "rollup-plugin-sourcemaps";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 export default [{
     input: "lib-es6/cli",

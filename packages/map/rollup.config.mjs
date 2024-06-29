@@ -5,7 +5,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from "rollup-plugin-postcss";
 
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 export default {
     input: "lib-es6/index",
@@ -48,6 +48,10 @@ export default {
         }),
         commonjs({
             namedExports: {
+                "@hpcc-js/leaflet-shim": ["BeautifyIcon", "Control", "CRS", "Circle", "DivIcon", "D3SvgOverlay", "Draw", "FeatureGroup", "GeoJSON", "GoogleMutant", "HeatLayer",
+                    "Icon", "LatLng", "LatLngBounds", "Map", "Marker", "MarkerClusterGroup",
+                    "Point", "point", "Polygon", "Polyline", "Rectangle", "TileLayer", "Transformation", "Util"
+                ]
             }
         }),
         sourcemaps(),

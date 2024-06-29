@@ -4,14 +4,14 @@ import commonjs from "@rollup/plugin-commonjs";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
+import json from "@rollup/plugin-json";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 const plugins = [
+    json(),
     alias({
         entries: [
-            { find: "@hpcc-js/common", replacement: "@hpcc-js/common/lib-es6/index.js" }
         ]
     }),
     nodeResolve({
@@ -21,6 +21,7 @@ const plugins = [
     sourcemaps(),
     postcss({
         extensions: [".css"],
+        extract: true,
         minimize: true
     })
 ];
@@ -29,48 +30,33 @@ export default [{
     input: "lib-es6/index",
     external: external,
     output: [{
-        file: pkg.browser,
-        format: "umd",
-        sourcemap: true,
-        globals: globals,
-        name: pkg.name
-    }, {
-        file: pkg.module + ".js",
-        format: "es",
-        sourcemap: true,
-        globals: globals
-    }],
-    plugins: plugins
-}, {
-    input: "lib-es6/index.node",
-    external: external,
-    output: [{
         file: pkg.main,
-        format: "cjs",
-        sourcemap: true,
-        globals: globals,
-        name: pkg.name
-    }, {
-        file: pkg.main.split(".node.").join(".node.es6"),
-        format: "es",
-        sourcemap: true,
-        globals: globals
-    }],
-    plugins: plugins
-}, {
-    input: "lib-es6/index",
-    output: [{
-        file: "dist/index.full.js",
         format: "umd",
         sourcemap: true,
         globals: globals,
-        name: pkg.name
+        name: pkg.name,
+        plugins: []
+    }, {
+        file: pkg.module,
+        format: "es",
+        sourcemap: true,
+        globals: globals
     }],
     treeshake: {
-        moduleSideEffects: (id, external) => {
-            if (id.indexOf(".css") >= 0) return true;
-            return false;
-        }
+        moduleSideEffects: []
     },
-    plugins: plugins
+    plugins
+}, {
+    input: "lib-es6/__tests__/index",
+    external: external,
+    output: [{
+        file: "dist-test/index.mjs",
+        format: "es",
+        sourcemap: true,
+        globals: globals,
+        name: pkg.name
+    }],
+    plugins: [
+        ...plugins,
+    ]
 }];

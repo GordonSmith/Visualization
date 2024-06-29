@@ -7,7 +7,7 @@
         "es6-promise": "4.2.8"
     },
     "devDependencies": {
-        "@types/mocha": "5.2.7",
+        "@types/mocha": "10.0.7",
         "file-loader": "5.1.0"
     },
     "scripts": {
@@ -21,7 +21,7 @@
         "watch": "npm-run-all compile-es6 -p compile-es6-watch bundle-watch",
         "build": "npm run compile-es6 && npm run compile-umd && npm run bundle",
         "test": "npm run test:node",
-        "test:node": "mocha lib-umd/index.node.spec.js --exit --reporter spec",
+        "test:node": "mocha dist/bundle.test.js --reporter spec",
         "test:chrome": "mocha-headless-chrome -f ./test.html",
         "update": "npx --yes npm-check-updates -u -t minor"
     }

@@ -5,7 +5,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import postcss from "rollup-plugin-postcss";
 
-const pkg = require("./package.json");
+import pkg from "./package.json" with { type: "json" };
 
 export default {
     input: "lib-es6/index",
