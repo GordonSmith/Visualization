@@ -44,7 +44,6 @@
         "d3-geo": "^1",
         "d3-selection": "^1",
         "leaflet-draw": "1.0.4",
-        "leaflet.gridlayer.googlemutant": "https://github.com/GordonSmith/Leaflet.GridLayer.GoogleMutant#master",
         "leaflet.heat": "0.2.0",
         "leaflet.markercluster": "1.5.3",
         "simpleheat": "0.4.0",
