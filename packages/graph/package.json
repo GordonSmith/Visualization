@@ -21,7 +21,7 @@
         "src/*"
     ],
     "scripts": {
-        "clean": "rimraf lib* types dist *.tsbuildinfo  workers/lib-* workers/dist workers/types workers/*.tsbuildinfo",
+        "clean": "rimraf --glob lib* types dist *.tsbuildinfo  workers/lib-* workers/dist workers/types workers/*.tsbuildinfo",
         "compile-es6": "tsc --module es6 --outDir ./lib-es6",
         "compile-es6-watch": "npm run compile-es6 -- -w",
         "compile-umd": "tsc --module umd --outDir ./lib-umd",
