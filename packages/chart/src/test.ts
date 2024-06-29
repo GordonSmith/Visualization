@@ -1,7 +1,6 @@
 import { Column } from "./Column";
 import { Line } from "./Line"; Line;
 import { Pie } from "./Pie";
-import { Table } from "@hpcc-js/dgrid2";
 
 export { Test3 as Test };
 
@@ -38,19 +37,6 @@ export class Test3 extends Column {
             .xAxisHidden(false)
             .xAxisFocus(false)
             .xAxisGuideLines(false)
-            .render()
-            ;
-    }
-}
-
-export class Test2 extends Table {
-
-    constructor() {
-        super();
-        this
-            .target("placeholder")
-            .columns(db.columns)
-            .data(db.data)
             .render()
             ;
     }
