@@ -8,22 +8,22 @@ SummaryC is commonly used to emphasize significant data points within a dashboar
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { SummaryC } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { SummaryC } from "@hpcc-js/chart";
 
-      new SummaryC()
-          .target("placeholder")
-          .columns(["Summary", "Score"])
-          .data([
-              ["Cars", 128]
-          ])
-          .labelColumn("Summary")
-          .valueColumn("Score")
-          .render()
-          ;
-    </script>
+    new SummaryC()
+        .target("placeholder")
+        .columns(["Summary", "Score"])
+        .data([
+            ["Cars", 128]
+        ])
+        .labelColumn("Summary")
+        .valueColumn("Score")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -33,24 +33,24 @@ _fontSizeRatio_ can be used to set the font size ration between the value size a
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { SummaryC } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { SummaryC } from "@hpcc-js/chart";
 
-      new SummaryC()
-          .target("placeholder")
-          .columns(["Summary", "Score"])
-          .data([
-              ["Cars", 128]
-          ])
-          .labelColumn("Summary")
-          .valueColumn("Score")
-          .icon("")
-          .fontSizeRatio(0.38)
-          .render()
-          ;
-    </script>
+    new SummaryC()
+        .target("placeholder")
+        .columns(["Summary", "Score"])
+        .data([
+            ["Cars", 128]
+        ])
+        .labelColumn("Summary")
+        .valueColumn("Score")
+        .icon("")
+        .fontSizeRatio(0.38)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -66,27 +66,27 @@ _iconBaseline_ controls the vertical placement of the icon.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { SummaryC } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { SummaryC } from "@hpcc-js/chart";
 
-      new SummaryC()
-          .target("placeholder")
-          .columns(["Summary", "Score"])
-          .data([
-              ["Users", 256]
-          ])
-          .labelColumn("Summary")
-          .valueColumn("Score")
-          .icon("fa-users")
-          .colorFill("#eeeeee")
-          .colorStroke("#30336b")
-          .iconSizeRatio(0.5)
-          .iconBaseline("middle")
-          .render()
-          ;
-    </script>
+    new SummaryC()
+        .target("placeholder")
+        .columns(["Summary", "Score"])
+        .data([
+            ["Users", 256]
+        ])
+        .labelColumn("Summary")
+        .valueColumn("Score")
+        .icon("fa-users")
+        .colorFill("#eeeeee")
+        .colorStroke("#30336b")
+        .iconSizeRatio(0.5)
+        .iconBaseline("middle")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -94,25 +94,25 @@ _playInterval_ can be used to cycle through multiple data rows. In the below exa
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { SummaryC } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { SummaryC } from "@hpcc-js/chart";
 
-      new SummaryC()
-          .target("placeholder")
-          .columns(["Summary", "Score", "Icon"])
-          .data([
-              ["Cars", 128, "fa-automobile"],
-              ["Trucks", 64, "fa-truck"]
-          ])
-          .labelColumn("Summary")
-          .valueColumn("Score")
-          .iconColumn("Icon")
-          .playInterval(2000)
-          .render()
-          ;
-    </script>
+    new SummaryC()
+        .target("placeholder")
+        .columns(["Summary", "Score", "Icon"])
+        .data([
+            ["Cars", 128, "fa-automobile"],
+            ["Trucks", 64, "fa-truck"]
+        ])
+        .labelColumn("Summary")
+        .valueColumn("Score")
+        .iconColumn("Icon")
+        .playInterval(2000)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -120,29 +120,29 @@ _iconColumn_, _colorFillColumn_ and _colorStrokeColumn_ can be set to designate 
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { SummaryC } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { SummaryC } from "@hpcc-js/chart";
 
-      new SummaryC()
-          .target("placeholder")
-          .columns(["Summary", "Score", "Icon", "Background", "TextColor"])
-          .data([
-              ["Cold days", 56, "fa-thermometer-0", "#95a5a6", "#34495e"],
-              ["Cool days", 120, "fa-thermometer-1", "white", "#2980b9"],
-              ["Warm days", 130, "fa-thermometer-2", "#f1c40f", "#d35400"],
-              ["Hot days", 59, "fa-thermometer-3", "#c0392b", "#ecf0f1"]
-          ])
-          .labelColumn("Summary")
-          .valueColumn("Score")
-          .iconColumn("Icon")
-          .colorFillColumn("Background")
-          .colorStrokeColumn("TextColor")
-          .playInterval(2000)
-          .render()
-          ;
-    </script>
+    new SummaryC()
+        .target("placeholder")
+        .columns(["Summary", "Score", "Icon", "Background", "TextColor"])
+        .data([
+            ["Cold days", 56, "fa-thermometer-0", "#95a5a6", "#34495e"],
+            ["Cool days", 120, "fa-thermometer-1", "white", "#2980b9"],
+            ["Warm days", 130, "fa-thermometer-2", "#f1c40f", "#d35400"],
+            ["Hot days", 59, "fa-thermometer-3", "#c0392b", "#ecf0f1"]
+        ])
+        .labelColumn("Summary")
+        .valueColumn("Score")
+        .iconColumn("Icon")
+        .colorFillColumn("Background")
+        .colorStrokeColumn("TextColor")
+        .playInterval(2000)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

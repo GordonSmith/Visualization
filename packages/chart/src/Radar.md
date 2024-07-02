@@ -9,23 +9,23 @@ Radar displays continuous data across n-number of categories (rows) and n-number
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Radar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Radar } from "@hpcc-js/chart";
 
-      new Radar()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .render()
-          ;
-    </script>
+    new Radar()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -35,35 +35,35 @@ _pointShape_ and _pointSize_ can be used to control the shape and size of the da
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Radar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Radar } from "@hpcc-js/chart";
 
-      new Radar()
-          .target("placeholder")
-          .columns(["Hour", "Value"])
-          .data([
-              ["Dec", 134],
-              ["Jan", 95],
-              ["Feb", 80],
-              ["Mar", 65],
-              ["Apr", 59],
-              ["May", 51],
-              ["Jun", 58],
-              ["Jul", 72],
-              ["Aug", 79],
-              ["Sep", 104],
-              ["Oct", 134],
-              ["Nov", 124]
-          ])
-          .fontFamily("Verdana")
-          .fontSize(14)
-          .pointShape("circle")
-          .pointSize(3)
-          .render()
-          ;
-    </script>
+    new Radar()
+        .target("placeholder")
+        .columns(["Hour", "Value"])
+        .data([
+            ["Dec", 134],
+            ["Jan", 95],
+            ["Feb", 80],
+            ["Mar", 65],
+            ["Apr", 59],
+            ["May", 51],
+            ["Jun", 58],
+            ["Jul", 72],
+            ["Aug", 79],
+            ["Sep", 104],
+            ["Oct", 134],
+            ["Nov", 124]
+        ])
+        .fontFamily("Verdana")
+        .fontSize(14)
+        .pointShape("circle")
+        .pointSize(3)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -75,25 +75,25 @@ _labelPaddingRatio_ shrinks the chart's visible area between its column labels.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Radar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Radar } from "@hpcc-js/chart";
 
-      new Radar()
-          .target("placeholder")
-          .columns(["Category", "Value 1", "Value 2"])
-          .data([
-              ["A", 34, 190],
-              ["B", 55, 150],
-              ["C", 89, 35],
-              ["D", 144, 36]
-          ])
-          .valueGuideRatios([0.5, 1.0])
-          .labelPaddingRatio(0.8)
-          .render()
-          ;
-    </script>
+    new Radar()
+        .target("placeholder")
+        .columns(["Category", "Value 1", "Value 2"])
+        .data([
+            ["A", 34, 190],
+            ["B", 55, 150],
+            ["C", 89, 35],
+            ["D", 144, 36]
+        ])
+        .valueGuideRatios([0.5, 1.0])
+        .labelPaddingRatio(0.8)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

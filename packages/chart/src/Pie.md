@@ -8,23 +8,23 @@ A circular statistical graphic, which is divided into slices to illustrate numer
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Pie } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Pie } from "@hpcc-js/chart";
 
-      new Pie()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .render()
-          ;
-    </script>
+    new Pie()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -32,24 +32,24 @@ In the below example the 'showSeriesValue' is used to display the value next to 
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Pie } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Pie } from "@hpcc-js/chart";
 
-      new Pie()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .showSeriesValue(true)
-          .render()
-          ;
-    </script>
+    new Pie()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .showSeriesValue(true)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -58,25 +58,25 @@ In the below example the 'innerRadius' is used to transform the pie chart into a
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Pie } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Pie } from "@hpcc-js/chart";
 
-      new Pie()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .innerRadius(62)
-          .showSeriesPercentage(true)
-          .render()
-          ;
-    </script>
+    new Pie()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .innerRadius(62)
+        .showSeriesPercentage(true)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

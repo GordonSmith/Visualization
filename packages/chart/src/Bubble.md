@@ -9,23 +9,23 @@ A bubble chart represents a categorical data by displaying circles sized relativ
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Bubble } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Bubble } from "@hpcc-js/chart";
 
-      new Bubble()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .render()
-          ;
-    </script>
+    new Bubble()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -37,25 +37,25 @@ _selectionGlowColor_ can be used to change the glow color when a bubble is selec
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Bubble } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Bubble } from "@hpcc-js/chart";
 
-      new Bubble()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 1440]
-          ])
-          .paletteID("FlatUI_British")
-          .selectionGlowColor("#00FF00")
-          .render()
-          ;
-    </script>
+    new Bubble()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 1440]
+        ])
+        .paletteID("FlatUI_British")
+        .selectionGlowColor("#00FF00")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

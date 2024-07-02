@@ -1,6 +1,6 @@
 import { ApiClass, ApiItem, ApiModel, ApiProperty } from "@microsoft/api-extractor-model";
 import path from "path";
-import { IndentedWriter, writeApiItem } from "./mdWriter";
+import { IndentedWriter, writeApiItem } from "./mdWriter.mjs";
 
 function getGuideSidebar() {
     return [
@@ -140,7 +140,7 @@ function getVisualizationsSidebar() {
     ];
 }
 
-module.exports = {
+export default {
     lang: "en-US",
     title: "@hpcc-js/Visualization",
     description: "HPCC Systems JavaScript Library",

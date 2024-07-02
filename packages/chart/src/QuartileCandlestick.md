@@ -9,18 +9,18 @@ QuartileCandlestick displays a five number summary of a range of numeric values.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { QuartileCandlestick } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { QuartileCandlestick } from "@hpcc-js/chart";
 
-      new QuartileCandlestick()
-          .target("placeholder")
-          .columns(["Min","25%","50%","75%","Max"])
-          .data([100,250,350,400,500])
-          .render()
-          ;
-    </script>
+    new QuartileCandlestick()
+        .target("placeholder")
+        .columns(["Min","25%","50%","75%","Max"])
+        .data([100,250,350,400,500])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -38,25 +38,25 @@ _upperTextRotation_ and _lowerTextRotation_ sets the degrees of rotation for the
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { QuartileCandlestick } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { QuartileCandlestick } from "@hpcc-js/chart";
 
-      new QuartileCandlestick()
-          .target("placeholder")
-          .columns(["Min","25%","50%","75%","Max"])
-          .data([100,200,300,400,500])
-          .orientation("vertical")
-          .lineWidth(2)
-          .candleWidth(80)
-          .edgePadding(20)
-          .roundedCorners(0)
-          .upperTextRotation(-90)
-          .lowerTextRotation(-90)
-          .render()
-          ;
-    </script>
+    new QuartileCandlestick()
+        .target("placeholder")
+        .columns(["Min","25%","50%","75%","Max"])
+        .data([100,200,300,400,500])
+        .orientation("vertical")
+        .lineWidth(2)
+        .candleWidth(80)
+        .edgePadding(20)
+        .roundedCorners(0)
+        .upperTextRotation(-90)
+        .lowerTextRotation(-90)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -68,28 +68,28 @@ _innerRectColor_ sets the fill color of the inner rectangles between the first a
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { QuartileCandlestick } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { QuartileCandlestick } from "@hpcc-js/chart";
 
-      new QuartileCandlestick()
-          .target("placeholder")
-          .columns(["Min","25%","50%","75%","Max"])
-          .data([100,250,350,400,500])
-          .orientation("vertical")
-          .lineColor("#999")
-          .textColor("#555")
-          .innerRectColor("#000")
-          .lineWidth(2)
-          .candleWidth(80)
-          .edgePadding(20)
-          .roundedCorners(0)
-          .upperTextRotation(-90)
-          .lowerTextRotation(-90)
-          .render()
-          ;
-    </script>
+    new QuartileCandlestick()
+        .target("placeholder")
+        .columns(["Min","25%","50%","75%","Max"])
+        .data([100,250,350,400,500])
+        .orientation("vertical")
+        .lineColor("#999")
+        .textColor("#555")
+        .innerRectColor("#000")
+        .lineWidth(2)
+        .candleWidth(80)
+        .edgePadding(20)
+        .roundedCorners(0)
+        .upperTextRotation(-90)
+        .lowerTextRotation(-90)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -97,28 +97,28 @@ _showLabels_ and _showValues_ are true by default but can be used to hide the la
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { QuartileCandlestick } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { QuartileCandlestick } from "@hpcc-js/chart";
 
-      new QuartileCandlestick()
-          .target("placeholder")
-          .columns(["Min","25%","50%","75%","Max"])
-          .data([1,497,498,499,500])
-          .showLabels(false)
-          .showValues(false)
-          .lineColor("#999")
-          .innerRectColor("#000")
-          .lineWidth(2)
-          .candleWidth(80)
-          .edgePadding(20)
-          .roundedCorners(0)
-          .upperTextRotation(-90)
-          .lowerTextRotation(-90)
-          .render()
-          ;
-    </script>
+    new QuartileCandlestick()
+        .target("placeholder")
+        .columns(["Min","25%","50%","75%","Max"])
+        .data([1,497,498,499,500])
+        .showLabels(false)
+        .showValues(false)
+        .lineColor("#999")
+        .innerRectColor("#000")
+        .lineWidth(2)
+        .candleWidth(80)
+        .edgePadding(20)
+        .roundedCorners(0)
+        .upperTextRotation(-90)
+        .lowerTextRotation(-90)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

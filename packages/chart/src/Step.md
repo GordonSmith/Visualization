@@ -8,23 +8,23 @@ Step, [Area](./Area.md), [Line](./Line.md) and [Scatter](./Scatter.md) serve a s
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Step } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Step } from "@hpcc-js/chart";
 
-      new Step()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 34],
-              ["B", 55],
-              ["C", 89],
-              ["D", 144]
-          ])
-          .render()
-          ;
-    </script>
+    new Step()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 34],
+            ["B", 55],
+            ["C", 89],
+            ["D", 144]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -32,23 +32,23 @@ Step supports n-number of numeric values per data row. A series is created for e
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Step } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Step } from "@hpcc-js/chart";
 
-      new Step()
-          .target("placeholder")
-          .columns(["Category", "Value 1", "Value 2", "Value 3"])
-          .data([
-              ["A", 34, 90, 82],
-              ["B", 55, 50, 65],
-              ["C", 89, 75, 43],
-              ["D", 144, 66, 56]
-          ])
-          .render()
-          ;
-    </script>
+    new Step()
+        .target("placeholder")
+        .columns(["Category", "Value 1", "Value 2", "Value 3"])
+        .data([
+            ["A", 34, 90, 82],
+            ["B", 55, 50, 65],
+            ["C", 89, 75, 43],
+            ["D", 144, 66, 56]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -62,27 +62,27 @@ _yAxisDomainPadding_ can be used to reserve a percentage of the top and bottom e
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Step } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Step } from "@hpcc-js/chart";
 
-      new Step()
-          .target("placeholder")
-          .columns(["Category", "Value", "Value 2"])
-          .data([
-              ["A", 34, 350],
-              ["B", 55, 380],
-              ["C", 89, 390],
-              ["D", 98, 410]
-          ])
-          .pointShape("circle")
-          .pointSize(2)
-          .showValue(true)
-          .yAxisDomainPadding(10)
-          .render()
-          ;
-    </script>
+    new Step()
+        .target("placeholder")
+        .columns(["Category", "Value", "Value 2"])
+        .data([
+            ["A", 34, 350],
+            ["B", 55, 380],
+            ["C", 89, 390],
+            ["D", 98, 410]
+        ])
+        .pointShape("circle")
+        .pointSize(2)
+        .showValue(true)
+        .yAxisDomainPadding(10)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -96,31 +96,31 @@ _xAxisDomainPadding_ can be used to reserve a percentage of the left and right e
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Step } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Step } from "@hpcc-js/chart";
 
-      new Step()
-          .target("placeholder")
-          .columns(["Value 1", "Value 2"])
-          .data([
-              [144, 90],
-              [89, 50],
-              [55, 75],
-              [34, 66]
-          ])
-          .paletteID("FlatUI_German")
-          .xAxisType("linear")
-          .pointShape("rectangle")
-          .pointSize(20)
-          .pointDarken(false)
-          .showValue(true)
-          .valueBaseline("central")
-          .xAxisDomainPadding(5)
-          .render()
-          ;
-    </script>
+    new Step()
+        .target("placeholder")
+        .columns(["Value 1", "Value 2"])
+        .data([
+            [144, 90],
+            [89, 50],
+            [55, 75],
+            [34, 66]
+        ])
+        .paletteID("FlatUI_German")
+        .xAxisType("linear")
+        .pointShape("rectangle")
+        .pointSize(20)
+        .pointDarken(false)
+        .showValue(true)
+        .valueBaseline("central")
+        .xAxisDomainPadding(5)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -128,30 +128,30 @@ For documentation on axis-specific properties, like those used in the below exam
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Step } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Step } from "@hpcc-js/chart";
 
-      new Step()
-          .target("placeholder")
-          .columns(["Value 1", "Value 2"])
-          .data([
-              [144, 90],
-              [89, 50],
-              [55, 75],
-              [34, 66]
-          ])
-          .xAxisType("linear")
-          .xAxisTitle("X-Axis Title")
-          .yAxisTitle("Y-Axis Title")
-          .xAxisTickCount(30)
-          .xAxisOverlapMode("rotate")
-          .xAxisLabelRotation(90)
-          .pointShape("circle")
-          .render()
-          ;
-    </script>
+    new Step()
+        .target("placeholder")
+        .columns(["Value 1", "Value 2"])
+        .data([
+            [144, 90],
+            [89, 50],
+            [55, 75],
+            [34, 66]
+        ])
+        .xAxisType("linear")
+        .xAxisTitle("X-Axis Title")
+        .yAxisTitle("Y-Axis Title")
+        .xAxisTickCount(30)
+        .xAxisOverlapMode("rotate")
+        .xAxisLabelRotation(90)
+        .pointShape("circle")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

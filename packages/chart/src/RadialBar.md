@@ -8,23 +8,23 @@ RadialBar displays one category and one numeric value per data row.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { RadialBar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { RadialBar } from "@hpcc-js/chart";
 
-      new RadialBar()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["A", 144],
-              ["B", 89],
-              ["C", 55],
-              ["D", 34]
-          ])
-          .render()
-          ;
-    </script>
+    new RadialBar()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["A", 144],
+            ["B", 89],
+            ["C", 55],
+            ["D", 34]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -34,25 +34,25 @@ _tickCount_ sets the target number of ticks to display along the circular axis. 
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { RadialBar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { RadialBar } from "@hpcc-js/chart";
 
-      new RadialBar()
-          .target("placeholder")
-          .columns(["Category", "Value 1"])
-          .data([
-              ["A", 144],
-              ["B", 89],
-              ["C", 55],
-              ["D", 34]
-          ])
-          .valueMaxAngle(90)
-          .tickCount(10)
-          .render()
-          ;
-    </script>
+    new RadialBar()
+        .target("placeholder")
+        .columns(["Category", "Value 1"])
+        .data([
+            ["A", 144],
+            ["B", 89],
+            ["C", 55],
+            ["D", 34]
+        ])
+        .valueMaxAngle(90)
+        .tickCount(10)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -62,25 +62,25 @@ _valueDomainHigh_ sets the maximum domain axis value.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { RadialBar } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { RadialBar } from "@hpcc-js/chart";
 
-      new RadialBar()
-          .target("placeholder")
-          .columns(["Category", "Value 1"])
-          .data([
-              ["A", 144],
-              ["B", 89],
-              ["C", 55],
-              ["D", 34]
-          ])
-          .domainPadding(0.62)
-          .valueDomainHigh(200)
-          .render()
-          ;
-    </script>
+    new RadialBar()
+        .target("placeholder")
+        .columns(["Category", "Value 1"])
+        .data([
+            ["A", 144],
+            ["B", 89],
+            ["C", 55],
+            ["D", 34]
+        ])
+        .domainPadding(0.62)
+        .valueDomainHigh(200)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

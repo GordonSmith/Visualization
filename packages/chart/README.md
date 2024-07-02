@@ -63,31 +63,31 @@ This package is part of the mono repository "@hpcc-js" (aka Visualization Framew
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="width:100%;height:400px">
-    </div>
-    <script type="module">
-        import { Contour } from "@hpcc-js/chart";
+  <div id="placeholder" style="width:100%;height:400px">
+  </div>
+  <script type="module">
+      import { Contour } from "@hpcc-js/chart";
 
-        new Contour()
-            .target("placeholder")
-            .columns(["A", "B"])
-            .data([
-                [10, 10],
-                [20, 20],
-                [20, 30],
-                [30, 20],
-                [40, 30],
-                [30, 40],
-                [10, 20],
-                [20, 10]
-            ])
-            .contourBandwidth(80)
-            .contourStrokeWidth(0)
-            .yAxisType("linear")
-            .xAxisType("ordinal")
-            .xAxisTitle("A")
-            .render()
-            ;
-    </script>
+      new Contour()
+          .target("placeholder")
+          .columns(["A", "B"])
+          .data([
+              [10, 10],
+              [20, 20],
+              [20, 30],
+              [30, 20],
+              [40, 30],
+              [30, 40],
+              [10, 20],
+              [20, 10]
+          ])
+          .contourBandwidth(80)
+          .contourStrokeWidth(0)
+          .yAxisType("linear")
+          .xAxisType("ordinal")
+          .xAxisTitle("A")
+          .render()
+          ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>

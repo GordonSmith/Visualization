@@ -4,31 +4,31 @@
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="width:100%;height:600px">
-    </div>
-    <script type="module">
-        import { Observable } from "@hpcc-js/observable-md";
-        
-        const observable = new Observable()
-            .target("placeholder")
-            .showValues(true)
-            .mode("omd")
-            .text(`
-            # Hello World
+  <div id="placeholder" style="width:100%;height:600px">
+  </div>
+  <script type="module">
+      import { Observable } from "@hpcc-js/observable-md";
+      
+      const observable = new Observable()
+          .target("placeholder")
+          .showValues(true)
+          .mode("omd")
+          .text(`
+          # Hello World
 
-            \`\`\`
-            hw = 'Hello' + ' World';            
-            tick = {                           
-              let i = 0;                       
-              while (true) {                   
-                yield ++i;                     
-              }                                
-            }
-            \`\`\`
-            `)                                  
-            .render()
-            ;
-    </script>
+          \`\`\`
+          hw = 'Hello' + ' World';            
+          tick = {                           
+            let i = 0;                       
+            while (true) {                   
+              yield ++i;                     
+            }                                
+          }
+          \`\`\`
+          `)                                  
+          .render()
+          ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

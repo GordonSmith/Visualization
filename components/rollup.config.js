@@ -28,8 +28,6 @@ const parserOptions = {
     sourceType: "module",
 };
 
-console.log(Object.keys(terser));
-
 const plugins = [
     alias({
         entries: [

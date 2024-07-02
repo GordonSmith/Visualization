@@ -10,16 +10,16 @@ The x and y axis extend a core 'Axis' widget and share all of the same propertie
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { XYAxis } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { XYAxis } from "@hpcc-js/chart";
 
-      new XYAxis()
-          .target("placeholder")
-          .render()
-          ;
-    </script>
+    new XYAxis()
+        .target("placeholder")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -32,17 +32,17 @@ _xAxisType_ is likely the most significant property as it determines the expecte
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { XYAxis } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { XYAxis } from "@hpcc-js/chart";
 
-      new XYAxis()
-          .target("placeholder")
-          .xAxisType("linear")
-          .render()
-          ;
-    </script>
+    new XYAxis()
+        .target("placeholder")
+        .xAxisType("linear")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -53,26 +53,26 @@ The following two properties only apply to an axis while its type is 'ordinal':
 NOTE: Column is used below as the two padding properties require data in order to observe their effect.
 
 <ClientOnly>
-  <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { Column } from "@hpcc-js/chart";
+<hpcc-vitepress style="width:100%;height:600px">
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { Column } from "@hpcc-js/chart";
 
-      new Column()
-          .target("placeholder")
-          .columns(["Category", "Value 1", "Value 2", "Value 3"])
-          .xAxisOrdinalPaddingInner(0.9)
-          .xAxisOrdinalPaddingOuter(1)
-          .data([
-              ["A", 34, 90, 82],
-              ["B", 55, 50, 65],
-              ["C", 89, 75, 43],
-              ["D", 144, 66, 56]
-          ])
-          .render()
-          ;
-    </script>
+    new Column()
+        .target("placeholder")
+        .columns(["Category", "Value 1", "Value 2", "Value 3"])
+        .xAxisOrdinalPaddingInner(0.9)
+        .xAxisOrdinalPaddingOuter(1)
+        .data([
+            ["A", 34, 90, 82],
+            ["B", 55, 50, 65],
+            ["C", 89, 75, 43],
+            ["D", 144, 66, 56]
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -90,26 +90,26 @@ _xAxisLabelRotation_ sets the degree angle of rotation for labels while overlap 
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { XYAxis } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { XYAxis } from "@hpcc-js/chart";
 
-      new XYAxis()
-          .target("placeholder")
-          .yAxisType("log")
-          .xAxisType("pow")
-          .xAxisGuideLines(true)
-          .xAxisDomainLow(-1000000)
-          .xAxisDomainHigh(1000000)
-          .xAxisTickCount(7)
-          .xAxisTickFormat(",.2r")
-          .xAxisOverlapMode("rotate")
-          .xAxisLabelRotation(90)
-          .xAxisTitle("AXIS TITLE GOES HERE")
-          .render()
-          ;
-    </script>
+    new XYAxis()
+        .target("placeholder")
+        .yAxisType("log")
+        .xAxisType("pow")
+        .xAxisGuideLines(true)
+        .xAxisDomainLow(-1000000)
+        .xAxisDomainHigh(1000000)
+        .xAxisTickCount(7)
+        .xAxisTickFormat(",.2r")
+        .xAxisOverlapMode("rotate")
+        .xAxisLabelRotation(90)
+        .xAxisTitle("AXIS TITLE GOES HERE")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -123,21 +123,21 @@ While working with time data the following properties should be used:
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { XYAxis } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { XYAxis } from "@hpcc-js/chart";
 
-      new XYAxis()
-          .target("placeholder")
-          .xAxisType("time")
-          .xAxisTypeTimePattern("%m/%d/%Y")
-          .xAxisDomainLow("06/31/1980")
-          .xAxisDomainHigh("06/31/2019")
-          .xAxisTickFormat("%Y")
-          .render()
-          ;
-    </script>
+    new XYAxis()
+        .target("placeholder")
+        .xAxisType("time")
+        .xAxisTypeTimePattern("%m/%d/%Y")
+        .xAxisDomainLow("06/31/1980")
+        .xAxisDomainHigh("06/31/2019")
+        .xAxisTickFormat("%Y")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

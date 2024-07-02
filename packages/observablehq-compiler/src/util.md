@@ -13,16 +13,16 @@ Downloads a notebook directly from [Observable HQ](https://observablehq.com/) as
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
-    </hpcc-codemirror>
-    <script type="module">
-      import "@hpcc-js/wc-editor";
-      import { download } from "@hpcc-js/observablehq-compiler";
+  <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
+  </hpcc-codemirror>
+  <script type="module">
+    import "@hpcc-js/wc-editor";
+    import { download } from "@hpcc-js/observablehq-compiler";
 
-      const notebook = await download("https://observablehq.com/@observablehq/plot");
-      const placeholder = document.getElementById("placeholder");
-      placeholder.text = JSON.stringify(notebook, undefined, 4);
-    </script>
+    const notebook = await download("https://observablehq.com/@observablehq/plot");
+    const placeholder = document.getElementById("placeholder");
+    placeholder.text = JSON.stringify(notebook, undefined, 4);
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -37,37 +37,37 @@ Transforms Observable JavaScript to a JSON notebook.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
-    </hpcc-codemirror>
-    <script type="module">
-      import "@hpcc-js/wc-editor";
-      import { ojs2notebook } from "@hpcc-js/observablehq-compiler";
+  <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
+  </hpcc-codemirror>
+  <script type="module">
+    import "@hpcc-js/wc-editor";
+    import { ojs2notebook } from "@hpcc-js/observablehq-compiler";
 
-      const notebook = ojs2notebook(`
-        md\`# Simple Notebook\`
-        a = 1
-        b = 2
-        c = a + b
-        d = {
-          yield 1;
-          yield 2;
-          yield 3;
-        }
+    const notebook = ojs2notebook(`
+      md\`# Simple Notebook\`
+      a = 1
+      b = 2
+      c = a + b
+      d = {
+        yield 1;
+        yield 2;
+        yield 3;
+      }
 
-        viewof e = {
-          let output = {};
-          let listeners = [];
-          output.value = 10;
-          output.addEventListener = (listener) => listeners.push(listener);;
-          output.removeEventListener = (listener) => {
-            listeners = listeners.filter(l => l !== listener);
-          };
-          return output;
-        }
-      `);
-      const placeholder = document.getElementById("placeholder");
-      placeholder.text = JSON.stringify(notebook, undefined, 4);
-    </script>
+      viewof e = {
+        let output = {};
+        let listeners = [];
+        output.value = 10;
+        output.addEventListener = (listener) => listeners.push(listener);;
+        output.removeEventListener = (listener) => {
+          listeners = listeners.filter(l => l !== listener);
+        };
+        return output;
+      }
+    `);
+    const placeholder = document.getElementById("placeholder");
+    placeholder.text = JSON.stringify(notebook, undefined, 4);
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -80,34 +80,34 @@ Transforms Observable Markdown to a JSON notebook.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
-    </hpcc-codemirror>
-    <script type="module">
-      import "@hpcc-js/wc-editor";
-      import { omd2notebook } from "@hpcc-js/observablehq-compiler";
+  <hpcc-codemirror id="placeholder" mode="json" theme="dark" style="width:100%;height:100%">
+  </hpcc-codemirror>
+  <script type="module">
+    import "@hpcc-js/wc-editor";
+    import { omd2notebook } from "@hpcc-js/observablehq-compiler";
 
-      const notebook = omd2notebook(`\
-        # Simple Notebook
+    const notebook = omd2notebook(`\
+      # Simple Notebook
 
-        * Set A
-        \`\`\`
-        a = 1
-        \`\`\`
+      * Set A
+      \`\`\`
+      a = 1
+      \`\`\`
 
-        * Set B
-        \`\`\`
-        b = 2
-        \`\`\`
+      * Set B
+      \`\`\`
+      b = 2
+      \`\`\`
 
-        * Calculate c
+      * Calculate c
 
-        \`\`\`
-        c = a + b
-        \`\`\`
-      `);
-      const placeholder = document.getElementById("placeholder");
-      placeholder.text = JSON.stringify(notebook, undefined, 4);
-    </script>
+      \`\`\`
+      c = a + b
+      \`\`\`
+    `);
+    const placeholder = document.getElementById("placeholder");
+    placeholder.text = JSON.stringify(notebook, undefined, 4);
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

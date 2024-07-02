@@ -8,29 +8,29 @@ A word cloud chart displays words with prominence relative to the word’s given
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { WordCloud } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { WordCloud } from "@hpcc-js/chart";
 
-      new WordCloud()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["Apples", 34],
-              ["Bananas", 55],
-              ["Carrots", 89],
-              ["Danishes", 144],
-              ["Eggs", 60],
-              ["Figs", 72],
-              ["Ginger", 92],
-              ["Hazelnut", 102],
-              ["Incaberries", 52],
-              ["Jambalaya", 42],
-          ])
-          .render()
-          ;
-    </script>
+    new WordCloud()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["Apples", 34],
+            ["Bananas", 55],
+            ["Carrots", 89],
+            ["Danishes", 144],
+            ["Eggs", 60],
+            ["Figs", 72],
+            ["Ginger", 92],
+            ["Hazelnut", 102],
+            ["Incaberries", 52],
+            ["Jambalaya", 42],
+        ])
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -38,32 +38,32 @@ Use _fontFamily_ to set the font family. _fontSizeFrom_ and _fontSizeTo_ can be 
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { WordCloud } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { WordCloud } from "@hpcc-js/chart";
 
-      new WordCloud()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["Apples", 34],
-              ["Bananas", 55],
-              ["Carrots", 89],
-              ["Danishes", 144],
-              ["Eggs", 60],
-              ["Figs", 72],
-              ["Ginger", 92],
-              ["Hazelnut", 102],
-              ["Incaberries", 52],
-              ["Jambalaya", 42],
-          ])
-          .fontFamily("Chilanka")
-          .fontSizeFrom(12)
-          .fontSizeTo(24)
-          .render()
-          ;
-    </script>
+    new WordCloud()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["Apples", 34],
+            ["Bananas", 55],
+            ["Carrots", 89],
+            ["Danishes", 144],
+            ["Eggs", 60],
+            ["Figs", 72],
+            ["Ginger", 92],
+            ["Hazelnut", 102],
+            ["Incaberries", 52],
+            ["Jambalaya", 42],
+        ])
+        .fontFamily("Chilanka")
+        .fontSizeFrom(12)
+        .fontSizeTo(24)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -71,32 +71,32 @@ The rotation of the words are not bound to their weight. Use _angleFrom_ and _an
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { WordCloud } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { WordCloud } from "@hpcc-js/chart";
 
-      new WordCloud()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["Apples", 34],
-              ["Bananas", 55],
-              ["Carrots", 89],
-              ["Danishes", 144],
-              ["Eggs", 60],
-              ["Figs", 72],
-              ["Ginger", 92],
-              ["Hazelnut", 102],
-              ["Incaberries", 52],
-              ["Jambalaya", 42],
-          ])
-          .angleFrom(90)
-          .angleTo(0)
-          .angleCount(2)
-          .render()
-          ;
-    </script>
+    new WordCloud()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["Apples", 34],
+            ["Bananas", 55],
+            ["Carrots", 89],
+            ["Danishes", 144],
+            ["Eggs", 60],
+            ["Figs", 72],
+            ["Ginger", 92],
+            ["Hazelnut", 102],
+            ["Incaberries", 52],
+            ["Jambalaya", 42],
+        ])
+        .angleFrom(90)
+        .angleTo(0)
+        .angleCount(2)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -104,35 +104,35 @@ Below is an example with a single angle of 45 degrees and font sizes ranging fro
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { WordCloud } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { WordCloud } from "@hpcc-js/chart";
 
-      new WordCloud()
-          .target("placeholder")
-          .columns(["Category", "Value"])
-          .data([
-              ["Apples", 34],
-              ["Bananas", 55],
-              ["Carrots", 89],
-              ["Danishes", 144],
-              ["Eggs", 60],
-              ["Figs", 72],
-              ["Ginger", 92],
-              ["Hazelnut", 102],
-              ["Incaberries", 52],
-              ["Jambalaya", 42],
-          ])
-          .fontFamily("Chilanka")
-          .angleFrom(45)
-          .angleTo(45)
-          .angleCount(1)
-          .fontSizeFrom(18)
-          .fontSizeTo(28)
-          .render()
-          ;
-    </script>
+    new WordCloud()
+        .target("placeholder")
+        .columns(["Category", "Value"])
+        .data([
+            ["Apples", 34],
+            ["Bananas", 55],
+            ["Carrots", 89],
+            ["Danishes", 144],
+            ["Eggs", 60],
+            ["Figs", 72],
+            ["Ginger", 92],
+            ["Hazelnut", 102],
+            ["Incaberries", 52],
+            ["Jambalaya", 42],
+        ])
+        .fontFamily("Chilanka")
+        .angleFrom(45)
+        .angleTo(45)
+        .angleCount(1)
+        .fontSizeFrom(18)
+        .fontSizeTo(28)
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

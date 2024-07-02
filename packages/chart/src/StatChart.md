@@ -24,19 +24,19 @@ The _7th_ data point sets the _standardDeviation_.
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { StatChart } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { StatChart } from "@hpcc-js/chart";
 
-      new StatChart()
-          .data([
-              [34,55,89,144,233,90,20]
-          ])
-          .target("placeholder")
-          .render()
-          ;
-    </script>
+    new StatChart()
+        .data([
+            [34,55,89,144,233,90,20]
+        ])
+        .target("placeholder")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -44,21 +44,21 @@ Alternatively, the _mean_ and _standardDeviation_ can be set via chained methods
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { StatChart } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { StatChart } from "@hpcc-js/chart";
 
-      new StatChart()
-          .data([
-              [34,55,89,144,233]
-          ])
-          .mean(90)
-          .standardDeviation(20)
-          .target("placeholder")
-          .render()
-          ;
-    </script>
+    new StatChart()
+        .data([
+            [34,55,89,144,233]
+        ])
+        .mean(90)
+        .standardDeviation(20)
+        .target("placeholder")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -68,23 +68,23 @@ _domainPadding_ controls the left and right padding of the interpolated _Scatter
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { StatChart } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { StatChart } from "@hpcc-js/chart";
 
-      new StatChart()
-          .data([
-              [34,55,89,144,233]
-          ])
-          .mean(90)
-          .standardDeviation(20)
-          .candleHeight(50)
-          .domainPadding(100)
-          .target("placeholder")
-          .render()
-          ;
-    </script>
+    new StatChart()
+        .data([
+            [34,55,89,144,233]
+        ])
+        .mean(90)
+        .standardDeviation(20)
+        .candleHeight(50)
+        .domainPadding(100)
+        .target("placeholder")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 
@@ -92,20 +92,20 @@ _tickFormat_ can be used to specify a d3 string formatting rule to be applied to
 
 <ClientOnly>
   <hpcc-vitepress style="width:100%;height:600px">
-    <div id="placeholder" style="height:400px">
-    </div>
-    <script type="module">
-      import { StatChart } from "@hpcc-js/chart";
+  <div id="placeholder" style="height:400px">
+  </div>
+  <script type="module">
+    import { StatChart } from "@hpcc-js/chart";
 
-      new StatChart()
-          .target("placeholder")
-          .quartiles([34,55,89,144,233])
-          .mean(120)
-          .standardDeviation(130)
-          .tickFormat(".2s")
-          .render()
-          ;
-    </script>
+    new StatChart()
+        .target("placeholder")
+        .quartiles([34,55,89,144,233])
+        .mean(120)
+        .standardDeviation(130)
+        .tickFormat(".2s")
+        .render()
+        ;
+  </script>
   </hpcc-vitepress>
 </ClientOnly>
 

@@ -4,24 +4,24 @@
 
 <ClientOnly>
   <hpcc-vitepress preview_border="0px" preview_height_ratio=0.6 style="width:100%;height:800px">
-    <hpcc-observable style="width:100%;height:100%">
-      md`# Covid cases in the world for select countries`
+  <hpcc-observable style="width:100%;height:100%">
+      # Covid cases in the world for select countries
 
       import { bubblemap } from "@gordonsmith/bubble-map-design-board"
 
       bubblemap
 
-      md`# Confirmed Cases v Deaths (${my_country}) - ${lastDate.toLocaleDateString("en-US", {dateStyle: "medium"})}`
+      # Confirmed Cases v Deaths (${my_country}) - ${lastDate.toLocaleDateString("en-US", {dateStyle: "medium"})}
 
       chart;
 
       //  Dependencies
       my_country = "Germany";
       import { chart, lastDate } with { my_country as overrideLocation } from "@gordonsmith/irish-confirmed-cases-v-deaths";
-    </hpcc-observable>
+  </hpcc-observable>
 
     <script type="module">
-      import "@hpcc-js/wc-observable";
+        import "@hpcc-js/wc-observable";
     </script>
   </hpcc-vitepress>
 </ClientOnly>
@@ -42,7 +42,7 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
 
 <ClientOnly>
   <hpcc-vitepress preview_border="0px" preview_height_ratio=0.75 style="width:100%;height:800px">
-    <hpcc-observable mode="markdown" style="width:100%;height:100%">
+  <hpcc-observable mode="markdown" style="width:100%;height:100%">
       # Liquid Fun
 
       ```
@@ -51,10 +51,10 @@ See [Getting Started](../../../README) for details on how to include @hpcc-js/we
       //  Dependencies
       import { canvas } from "@mbostock/liquidfun";
       ```
-    </hpcc-observable>
+  </hpcc-observable>
 
     <script type="module">
-      import "@hpcc-js/wc-observable";
+        import "@hpcc-js/wc-observable";
     </script>
   </hpcc-vitepress>
 </ClientOnly>
