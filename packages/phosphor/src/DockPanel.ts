@@ -152,17 +152,22 @@ export class DockPanel extends HTMLWidget implements IMessageHandler, IMessageHo
     _prevActive: Widget;
     processMessage(msg: Message): void {
         switch (msg.type) {
-            case Msg.WAActivateRequest.type:
+            case Msg.WAActivateRequest.type: {
                 const wa = (msg as Msg.WAActivateRequest).wa;
                 const widget = wa.widget;
                 if (this._prevActive !== widget) {
                     this._prevActive = widget;
                     this.childActivation(widget, wa);
                 }
-                break;
+            } break;
             case Msg.WALayoutChanged.type:
                 this._lazyLayoutChanged();
                 break;
+            case Msg.WAVisibleChanged.type: {
+                const wa = (msg as Msg.WAVisibleChanged).wa;
+                const widget = wa.widget;
+                this.childVisibility(widget, wa.isVisible, wa);
+            } break;
         }
     }
 
@@ -172,6 +177,9 @@ export class DockPanel extends HTMLWidget implements IMessageHandler, IMessageHo
 
     //  Events  ---
     childActivation(w: Widget, wa: WidgetAdapter) {
+    }
+
+    childVisibility(w: Widget, visible: boolean, wa: WidgetAdapter) {
     }
 
     layoutChanged() {

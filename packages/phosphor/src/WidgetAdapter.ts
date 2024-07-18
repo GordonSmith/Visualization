@@ -8,7 +8,7 @@ import "../src/WidgetAdapter.css";
 export namespace Msg {
 
     export class WAConflatableMessage extends ConflatableMessage {
-        private _wa: WidgetAdapter;
+        protected _wa: WidgetAdapter;
 
         constructor(wa: WidgetAdapter, msg: string) {
             super(msg);
@@ -40,6 +40,23 @@ export namespace Msg {
 
         constructor(wa: WidgetAdapter) {
             super(wa, WALayoutChanged.type);
+        }
+    }
+    export class WAVisibleChanged extends WAConflatableMessage {
+
+        static type = "wa-visible-changed";
+        visible: boolean;
+
+        constructor(wa: WidgetAdapter, visible: boolean) {
+            super(wa, WAVisibleChanged.type);
+            this.visible = visible;
+        }
+
+        conflate(other: WAVisibleChanged): boolean {
+            if (this._wa === other.wa && this.visible === other.visible) {
+                return super.conflate(other);
+            }
+            return false;
         }
     }
 }
@@ -129,6 +146,20 @@ export class WidgetAdapter extends PWidget {
         }
     }
 
+    protected onBeforeHide(msg: Message) {
+        super.onBeforeHide(msg);
+        if (this._owner) {
+            MessageLoop.postMessage(this._owner, new Msg.WAVisibleChanged(this, false));
+        }
+    }
+
+    protected onAfterShow(msg: Message) {
+        super.onAfterShow(msg);
+        if (this._owner) {
+            MessageLoop.postMessage(this._owner, new Msg.WAVisibleChanged(this, true));
+        }
+    }
+
     protected onResize(msg: PWidget.ResizeMessage): void {
         super.onResize(msg);
         if (this.node && this.node.offsetParent !== null && msg.width >= 0 && msg.height >= 0) {
@@ -184,7 +215,7 @@ export class WidgetAdapterArray extends Array<WidgetAdapter> {
         const intervalHandle = setInterval(() => {
             if (complete()) {
                 clearInterval(intervalHandle);
-                callback(w);
+                callback.apply(w, w);
             }
         }, 20);
 

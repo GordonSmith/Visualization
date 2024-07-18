@@ -21,6 +21,10 @@ const bubble = new Bubble()
     .columns(columns)
     .data(data)
     ;
+const bubble2 = new Bubble()
+    .columns(columns)
+    .data(data)
+    ;
 
 export class Test2 extends DockPanel {
 
@@ -33,6 +37,7 @@ export class Test2 extends DockPanel {
             .addWidget(area, "<drag me>")
             .addWidget(bubble, "<drag me>", "split-right", area)
             .addWidget(line, "<drag me>", "split-bottom", area)
+            .addWidget(bubble2, "<drag me>", "tab-after", bubble)
             ;
         return this;
     }
