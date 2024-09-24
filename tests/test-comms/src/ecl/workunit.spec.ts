@@ -146,7 +146,7 @@ allPeople;
     });
 
     if (!isCI) {
-        describe.skip("WUDetails", function () {
+        describe("WUDetails", function () {
             const wu = Workunit.attach({ baseUrl: ESP_URL }, WUID);
             it("WU Exists", function () {
                 return wu.refresh().then(() => {

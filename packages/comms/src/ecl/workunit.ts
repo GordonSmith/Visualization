@@ -196,10 +196,7 @@ export interface ITimeElapsed {
 }
 
 export interface FetchDetailsNormalizedOptions {
-    stdDevThresholds?: {
-        metric: string;
-        maxRawValue: number;
-    }[]
+    stdDevThresholds?: { [metric: string]: number };
 }
 
 export type WorkunitEvents = "completed" | StateEvents;
@@ -670,8 +667,8 @@ export class Workunit extends StateObject<UWorkunitState, IWorkunitState> implem
         return this.WUDetails(request).then(response => response.Scopes.Scope);
     }
 
-    normalizeDetails(meta: WsWorkunits.WUDetailsMetaResponse, scopes: WsWorkunits.Scope[], options: FetchDetailsNormalizedOptions = { stdDevThresholds: [] }): { meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] } {
-        const stdDevThresholds = options?.stdDevThresholds ?? [];
+    normalizeDetails(meta: WsWorkunits.WUDetailsMetaResponse, scopes: WsWorkunits.Scope[], options: FetchDetailsNormalizedOptions = { stdDevThresholds: {} }): { meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] } {
+        const stdDevThresholds = options?.stdDevThresholds ?? {};
         const columns: { [id: string]: any } = {
             id: {
                 Measure: "label"
@@ -772,8 +769,10 @@ export class Workunit extends StateObject<UWorkunitState, IWorkunitState> implem
                     if (row) {
                         normalizedScope.__groupedProps[row.Key] = row;
                         if (!isNaN(row.StdDevs) && normalizedScope.__StdDevs < row.StdDevs) {
-                            normalizedScope.__StdDevs = row.StdDevs;
-                            normalizedScope.__StdDevsSource = row.Key;
+                            if (stdDevThresholds[row.Key] === undefined || stdDevThresholds[row.Key] <= normalizedScope[key].RawValue) {
+                                normalizedScope.__StdDevs = row.StdDevs;
+                                normalizedScope.__StdDevsSource = row.Key;
+                            }
                         }
                     }
                 }
@@ -787,7 +786,7 @@ export class Workunit extends StateObject<UWorkunitState, IWorkunitState> implem
         };
     }
 
-    fetchDetailsNormalized(request: RecursivePartial<WsWorkunits.WUDetails> = {}, options: FetchDetailsNormalizedOptions = { stdDevThresholds: [] }): Promise<{ meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] }> {
+    fetchDetailsNormalized(request: RecursivePartial<WsWorkunits.WUDetails> = {}, options: FetchDetailsNormalizedOptions = { stdDevThresholds: {} }): Promise<{ meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] }> {
         return Promise.all([this.fetchDetailsMeta(), this.fetchDetailsRaw(request)]).then(promises => {
             return this.normalizeDetails(promises[0], promises[1], options);
         });
