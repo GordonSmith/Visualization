@@ -195,6 +195,13 @@ export interface ITimeElapsed {
     finish: string;
 }
 
+export interface FetchDetailsNormalizedOptions {
+    stdDevThresholds?: {
+        metric: string;
+        maxRawValue: number;
+    }[]
+}
+
 export type WorkunitEvents = "completed" | StateEvents;
 export type UWorkunitState = WsWorkunits.ECLWorkunit & WsWorkunits.Workunit & WsSMC.ActiveWorkunit & IWorkunit & IDebugWorkunit;
 export type IWorkunitState = WsWorkunits.ECLWorkunit | WsWorkunits.Workunit | WsSMC.ActiveWorkunit | IWorkunit | IDebugWorkunit;
@@ -663,7 +670,8 @@ export class Workunit extends StateObject<UWorkunitState, IWorkunitState> implem
         return this.WUDetails(request).then(response => response.Scopes.Scope);
     }
 
-    normalizeDetails(meta: WsWorkunits.WUDetailsMetaResponse, scopes: WsWorkunits.Scope[]): { meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] } {
+    normalizeDetails(meta: WsWorkunits.WUDetailsMetaResponse, scopes: WsWorkunits.Scope[], options: FetchDetailsNormalizedOptions = { stdDevThresholds: [] }): { meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] } {
+        const stdDevThresholds = options?.stdDevThresholds ?? [];
         const columns: { [id: string]: any } = {
             id: {
                 Measure: "label"
@@ -779,9 +787,9 @@ export class Workunit extends StateObject<UWorkunitState, IWorkunitState> implem
         };
     }
 
-    fetchDetailsNormalized(request: RecursivePartial<WsWorkunits.WUDetails> = {}): Promise<{ meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] }> {
+    fetchDetailsNormalized(request: RecursivePartial<WsWorkunits.WUDetails> = {}, options: FetchDetailsNormalizedOptions = { stdDevThresholds: [] }): Promise<{ meta: WsWorkunits.WUDetailsMetaResponse, columns: { [id: string]: any }, data: IScope[] }> {
         return Promise.all([this.fetchDetailsMeta(), this.fetchDetailsRaw(request)]).then(promises => {
-            return this.normalizeDetails(promises[0], promises[1]);
+            return this.normalizeDetails(promises[0], promises[1], options);
         });
     }
 
