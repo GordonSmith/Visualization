@@ -2,30 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "test-browser-start",
-            "type": "node",
+            "name": "test-browser",
+            "type": "msedge",
             "request": "launch",
-            "program": "${workspaceRoot}/../../node_modules/vitest/vitest.mjs",
-            "console": "integratedTerminal",
-            "args": [
-                "run",
-                "--inspect-brk",
-                "--mode",
-                "browser",
-                "--no-file-parallelism"
+            "url": "http://localhost:8888",
+            "webRoot": "${workspaceFolder}",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
             ],
-            "presentation": {
-                "hidden": true
-            },
-        },
-        {
-            "name": "test-browser-attach",
-            "type": "chrome",
-            "request": "attach",
-            "port": 9229,
-            "presentation": {
-                "hidden": true
-            }
         },
         {
             "name": "test-node",
@@ -43,16 +28,6 @@
                 "${workspaceFolder}/**/*.js",
                 "!**/node_modules/**"
             ],
-        }
-    ],
-    "compounds": [
-        {
-            "name": "test-browser",
-            "configurations": [
-                "test-browser-attach",
-                "test-browser-start"
-            ],
-            "stopAll": true
         }
     ]
 }

@@ -28,18 +28,19 @@
         "stamp": "node ../../node_modules/@hpcc-js/bundle/src/stamp.js",
         "lint": "eslint ./src",
         "docs": "typedoc --options tdoptions.json .",
-        "test-serve": "jasmine-browser-runner serve",
-        "test-browser": "jasmine-browser-runner runSpecs",
-        "test-node": "jasmine",
-        "test": "run-p check test-node test-browser",
+        "test-browser": "vitest run --project browser",
+        "test-node": "vitest run --project node",
+        "test": "vitest run",
+        "coverage": "vitest run --coverage",
         "update": "npx -y npm-check-updates -u -t minor",
         "update-major": "npx -y npm-check-updates -u"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.1.2",
-        "@types/jasmine": "5.1.4"
+        "@types/jasmine": "5.1.4",
+        "dts-bundle": "0.7.3",
+        "glob": "11.0.0"
     },
     "repository": {
         "type": "git",

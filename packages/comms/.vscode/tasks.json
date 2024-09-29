@@ -22,18 +22,10 @@
             }
         },
         {
-            "type": "npm",
-            "label": "test-serve",
-            "script": "test-serve",
-            "presentation": {
-                "group": "group-build"
-            }
-        },
-        {
             "label": "build",
             "dependsOn": [
                 "gen-types-watch",
-                "bundle-watch"
+                "bundle-watch",
             ],
             "group": {
                 "kind": "build",

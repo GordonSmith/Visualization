@@ -7,8 +7,7 @@ const connOptions = { baseUrl: ESP_URL };
 let netAddress: string;
 
 describe("test/esp/ecl/DFUWorkunit", function () {
-
-    describe("fixed file life cycle", function () {
+    describe("fixed file life cycle", () => {
         let dfuWu: DFUWorkunit;
         let wu: Workunit;
         it("get LZ IP", function () {
@@ -151,9 +150,9 @@ OUTPUT(usPresidents,,'.::test::abc::123::us_presidents.txt',OVERWRITE);`
                 return response;
             });
         });
-    });
+    }, 30000);
 
-    describe("CSV file life cycle", function () {
+    describe("CSV file life cycle", () => {
         let dfuWu: DFUWorkunit;
         let wu: Workunit;
         it("create workunit", function () {
@@ -294,9 +293,9 @@ OUTPUT(fakePeople,,'.::test::abc::123::fake_people.csv',CSV(HEADING(SINGLE)),OVE
                 return response;
             });
         });
-    });
+    }, 30000);
 
-    describe("JSON file life cycle", function () {
+    describe("JSON file life cycle", () => {
         let dfuWu: DFUWorkunit;
         let wu: Workunit;
         it("create workunit", function () {
@@ -426,5 +425,5 @@ OUTPUT(books,,'.::test::abc::123::books.json',JSON,OVERWRITE);`
                 return response;
             });
         });
-    });
+    }, 30000);
 });

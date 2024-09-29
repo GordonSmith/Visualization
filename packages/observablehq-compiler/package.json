@@ -31,20 +31,19 @@
         "stamp": "node ../../node_modules/@hpcc-js/bundle/src/stamp.js",
         "lint": "eslint ./src",
         "docs": "typedoc --options tdoptions.json .",
-        "test-serve": "jasmine-browser-runner serve",
-        "test-browser": "jasmine-browser-runner runSpecs",
-        "test-node": "jasmine",
-        "test-bin": "node ./bin/ojscc.mjs --version",
-        "test": "run-p check test-node test-browser test-bin",
+        "test-browser": "vitest run --project browser",
+        "test-node": "vitest run --project node",
+        "test": "vitest run",
+        "coverage": "vitest run --coverage",
         "update": "npx -y npm-check-updates -u -t minor",
         "update-major": "npx -y npm-check-updates -u"
     },
     "dependencies": {
+        "@hpcc-js/observable-shim": "^2.6.0",
         "yargs": "17.7.2"
     },
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.1.2",
-        "@hpcc-js/observable-shim": "^2.6.0",
         "@observablehq/runtime": "5.9.8",
         "@types/jasmine": "5.1.4"
     },
