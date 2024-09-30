@@ -4,6 +4,7 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: [
         "@typescript-eslint",
+        "import"
     ],
     extends: [
         "eslint:recommended",
@@ -64,7 +65,12 @@ module.exports = {
                 "avoidEscape": true
             }
         ],
-
+        "import/extensions": ["error", "always", {
+            "js": "never",
+            "jsx": "never",
+            "ts": "never",
+            "tsx": "never"
+        }],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/ban-ts-comment": "off",

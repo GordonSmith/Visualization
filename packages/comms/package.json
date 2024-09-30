@@ -19,7 +19,7 @@
         "types/*"
     ],
     "scripts": {
-        "clean": "rimraf --glob lib* types dist dist-test *.tsbuildinfo .turbo",
+        "clean": "rimraf --glob lib* types dist *.tsbuildinfo .turbo",
         "bundle": "node esbuild.js",
         "bundle-watch": "npm run bundle -- --development --watch",
         "gen-types": "tsc --project tsconfig.json",
@@ -55,8 +55,7 @@
         "wsdl-topology": "node ./lib-cjs/index.js -k --url=http://localhost:8010/WsTopology?wsdl --outDir=./src/services/wsdl",
         "wsdl-workunits": "node ./lib-cjs/index.js -k --url=http://localhost:8010/WsWorkunits?wsdl --outDir=./src/services/wsdl",
         "wsdl-all": "npm-run-all --aggregate-output -c --serial compile-util --parallel wsdl-access wsdl-account wsdl-cloud wsdl-codesign wsdl-dali wsdl-dfu wsdl-dfuxref wsdl-elk wsdl-esdlconfig wsdl-fileio wsdl-filespray wsdl-logaccess wsdl-machine wsdl-packageprocess wsdl-smc wsdl-resources wsdl-store wsdl-topology wsdl-workunits",
-        "wsdl": "npm-run-all --aggregate-output -c --serial compile-util --parallel wsdl-access wsdl-account wsdl-cloud wsdl-codesign wsdl-dali wsdl-dfu wsdl-dfuxref wsdl-elk wsdl-fileio wsdl-filespray wsdl-logaccess wsdl-packageprocess wsdl-smc wsdl-store wsdl-topology wsdl-workunits",
-        "test:browser": "vitest --workspace=..\\..\\vitest.workspace.ts"
+        "wsdl": "npm-run-all --aggregate-output -c --serial compile-util --parallel wsdl-access wsdl-account wsdl-cloud wsdl-codesign wsdl-dali wsdl-dfu wsdl-dfuxref wsdl-elk wsdl-fileio wsdl-filespray wsdl-logaccess wsdl-packageprocess wsdl-smc wsdl-store wsdl-topology wsdl-workunits"
     },
     "dependencies": {
         "@hpcc-js/ddl-shim": "^2.21.0",

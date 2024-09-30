@@ -74,7 +74,7 @@ export function tip() {
             }
         }
 
-        function _placement_attempt(_dir, _top_offset?, _left_offset?) {
+        function _placement_attempt(this: any, _dir, _top_offset?, _left_offset?) {
             _top_offset = _top_offset ? _top_offset : 0;
             _left_offset = _left_offset ? _left_offset : 0;
             nodel.style("white-space", "nowrap");
@@ -216,9 +216,9 @@ export function tip() {
         return tip;
     };
 
-    function d3TipDirection() { return "n"; }
-    function d3TipOffset() { return [0, 0]; }
-    function d3TipHTML() { return " "; }
+    function d3TipDirection(...args: any[]) { return "n"; }
+    function d3TipOffset(...args: any[]) { return [0, 0]; }
+    function d3TipHTML(...args: any[]) { return " "; }
 
     const directionCallbacks = map({
         n: directionNorth,

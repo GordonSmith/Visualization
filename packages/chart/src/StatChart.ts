@@ -33,6 +33,7 @@ export class StatChart extends HTMLWidget {
     protected _selectElement: any;
     protected _tickFormatter: (_: number) => string;
 
+    protected _bellCurveDiv: any;
     protected _bellCurve: Scatter = new Scatter()
         .columns(["", "Std. Dev."])
         .paletteID("Quartile")
@@ -47,6 +48,7 @@ export class StatChart extends HTMLWidget {
         .yAxisGuideLines(false) as Scatter
         ;
 
+    protected _candleDiv: any;
     protected _candle = new QuartileCandlestick()
         .columns(["Min", "25%", "50%", "75%", "Max"])
         .edgePadding(0)
@@ -117,9 +119,11 @@ export class StatChart extends HTMLWidget {
     enter(domNode, element) {
         super.enter(domNode, element);
 
-        this._bellCurve.target(element.append("div").node());
+        this._bellCurveDiv = element.append("div");
+        this._bellCurve.target(this._bellCurveDiv.node());
 
-        this._candle.target(element.append("div").node());
+        this._candleDiv = element.append("div");
+        this._candle.target(this._candleDiv.node());
 
         this._selectElement = element.append("div")
             .style("position", "absolute")
@@ -133,6 +137,12 @@ export class StatChart extends HTMLWidget {
         this._selectElement.append("option").attr("value", "min_max").text("Min / Max");
         this._selectElement.append("option").attr("value", "25_75").text("25% / 75%");
         this._selectElement.append("option").attr("value", "normal").text("Normal");
+    }
+
+    exit(domNode, element) {
+        this._bellCurve.exit(this._bellCurveDiv.node(), this._bellCurveDiv);
+        this._candle.exit(this._candleDiv.node(), this._candleDiv);
+        super.exit(domNode, element);
     }
 
     protected bellTicks(mode: View): AxisTicks {
@@ -222,7 +232,7 @@ export class StatChart extends HTMLWidget {
         this.updateCandle();
     }
 }
-StatChart.prototype._class += " chart_Stat";
+StatChart.prototype._class += " chart_StatChart";
 
 export interface StatChart {
     view(): StatChartView;

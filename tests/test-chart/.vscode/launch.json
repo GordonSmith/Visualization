@@ -9,12 +9,12 @@
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+            "runtimeExecutable": "${workspaceRoot}/../../node_modules/.bin/mocha",
             "windows": {
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha.cmd"
+                "runtimeExecutable": "${workspaceRoot}/../../node_modules/.bin/mocha.cmd"
             },
             "linux": {
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha"
+                "runtimeExecutable": "${workspaceRoot}/../../node_modules/.bin/mocha"
             },
             "runtimeArgs": [
                 "-u",
@@ -32,7 +32,7 @@
         },
         {
             "name": "Chrome Debug",
-            "type": "chrome",
+            "type": "msedge",
             "request": "launch",
             "url": "file:///${workspaceRoot}/test.html",
             "trace": true,
@@ -44,7 +44,7 @@
         },
         {
             "name": "Chrome Debug WS",
-            "type": "chrome",
+            "type": "msedge",
             "request": "launch",
             "url": "http://desktop-amd:8080/tests/test-util/test.html",
             "trace": true,
