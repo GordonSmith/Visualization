@@ -51,9 +51,12 @@
         "docs": "typedoc --options tdoptions.json .",
         "dev-start": "ws",
         "test-cli": "node ./bin/ojscc.mjs --version",
-        "test-node": "mocha ./dist-test/index.mjs --reporter spec",
-        "test": "run-s test-cli test-node",
-        "update": "npx --yes npm-check-updates -u -t minor"
+        "test-browser": "vitest run --project browser",
+        "test-node": "vitest run --project node",
+        "test": "vitest run",
+        "coverage": "vitest run --coverage",
+        "update": "npx -y npm-check-updates -u -t minor",
+        "update-major": "npx -y npm-check-updates -u"
     },
     "dependencies": {
         "@hpcc-js/observable-shim": "^2.6.0",

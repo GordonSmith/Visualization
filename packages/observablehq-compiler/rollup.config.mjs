@@ -46,17 +46,4 @@ export default [{
         moduleSideEffects: []
     },
     plugins
-}, {
-    input: "lib-es6/__tests__/index",
-    external: external,
-    output: [{
-        file: "dist-test/index.mjs",
-        format: "es",
-        sourcemap: true,
-        globals: globals,
-        name: pkg.name
-    }],
-    plugins: [
-        ...plugins,
-    ]
 }];

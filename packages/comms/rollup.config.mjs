@@ -30,7 +30,7 @@ export default [{
         globals: globals,
         name: pkg.name
     }, {
-        file: pkg.module + ".js",
+        file: pkg.module,
         format: "es",
         sourcemap: true,
         globals: globals
@@ -39,17 +39,19 @@ export default [{
 }, {
     input: "lib-es6/index.node",
     external: external,
-    output: [{
-        file: pkg.main,
-        format: "cjs",
-        sourcemap: true,
-        globals: globals,
-        name: pkg.name
-    }, {
-        file: pkg.module + ".js",
-        format: "es",
-        sourcemap: true,
-        globals: globals
-    }],
+    output: [
+        {
+            file: pkg.main,
+            format: "cjs",
+            sourcemap: true,
+            globals: globals,
+            name: pkg.name
+            // }, {
+            //     file: pkg.module,
+            //     format: "es",
+            //     sourcemap: true,
+            //     globals: globals
+        }
+    ],
     plugins: plugins
 }];
