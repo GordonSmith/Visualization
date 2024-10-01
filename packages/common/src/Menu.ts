@@ -1,8 +1,8 @@
 import { event as d3Event, select as d3Select } from "d3-selection";
-import { Icon } from "./Icon";
-import { IMenu } from "./IMenu";
-import { List } from "./List";
-import { SVGWidget } from "./SVGWidget";
+import { Icon } from "./Icon.ts";
+import { IMenu } from "./IMenu.ts";
+import { List } from "./List.ts";
+import { SVGWidget } from "./SVGWidget.ts";
 
 import "../src/Menu.css";
 

@@ -1,8 +1,8 @@
-import { textColor } from "./Palette";
-import { Shape } from "./Shape";
-import { SVGWidget } from "./SVGWidget";
-import { Text } from "./Text";
-import { ISize } from "./Widget";
+import { textColor } from "./Palette.ts";
+import { Shape } from "./Shape.ts";
+import { SVGWidget } from "./SVGWidget.ts";
+import { Text } from "./Text.ts";
+import { ISize } from "./Widget.ts";
 
 import "../src/TextBox.css";
 

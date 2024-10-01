@@ -3,8 +3,8 @@ import { map as d3Map, nest as d3Nest } from "d3-collection";
 import { csvFormatRows as d3CsvFormatRows, csvParse as d3CsvParse, tsvFormatRows as d3TsvFormatRows, tsvParse as d3TsvParse } from "d3-dsv";
 import { format as d3Format } from "d3-format";
 import { timeFormat as d3TimeFormat, timeParse as d3TimeParse } from "d3-time-format";
-import { PropertyExt } from "./PropertyExt";
-import * as Utility from "./Utility";
+import { PropertyExt } from "./PropertyExt.ts";
+import * as Utility from "./Utility.ts";
 
 const d3Aggr = {
     min: d3Min,

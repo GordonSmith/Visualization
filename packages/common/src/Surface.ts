@@ -1,10 +1,10 @@
 import { select as d3Select } from "d3-selection";
 import "d3-transition";
-import { Icon } from "./Icon";
-import { Menu } from "./Menu";
-import { Shape } from "./Shape";
-import { SVGWidget } from "./SVGWidget";
-import { Text } from "./Text";
+import { Icon } from "./Icon.ts";
+import { Menu } from "./Menu.ts";
+import { Shape } from "./Shape.ts";
+import { SVGWidget } from "./SVGWidget.ts";
+import { Text } from "./Text.ts";
 
 import "../src/Surface.css";
 

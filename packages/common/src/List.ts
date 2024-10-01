@@ -1,6 +1,6 @@
-import { IList } from "./IList";
-import { SVGWidget } from "./SVGWidget";
-import { TextBox } from "./TextBox";
+import { IList } from "./IList.ts";
+import { SVGWidget } from "./SVGWidget.ts";
+import { TextBox } from "./TextBox.ts";
 
 import "../src/List.css";
 

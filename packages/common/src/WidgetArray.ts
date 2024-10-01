@@ -1,5 +1,5 @@
-import { publish } from "./PropertyExt";
-import { Widget } from "./Widget";
+import { publish } from "./PropertyExt.ts";
+import { Widget } from "./Widget.ts";
 
 export class WidgetArray extends Widget {
 

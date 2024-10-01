@@ -1,7 +1,7 @@
-import { FAChar } from "./FAChar";
-import { textColor } from "./Palette";
-import { Shape } from "./Shape";
-import { SVGWidget } from "./SVGWidget";
+import { FAChar } from "./FAChar.ts";
+import { textColor } from "./Palette.ts";
+import { Shape } from "./Shape.ts";
+import { SVGWidget } from "./SVGWidget.ts";
 
 import "../src/Icon.css";
 

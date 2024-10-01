@@ -1,5 +1,5 @@
 import { select as d3Select } from "d3-selection";
-import { HTMLWidget } from "./HTMLWidget";
+import { HTMLWidget } from "./HTMLWidget.ts";
 
 export class Image extends HTMLWidget {
     private _imgElement;

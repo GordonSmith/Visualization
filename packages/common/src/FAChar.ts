@@ -1,6 +1,6 @@
-import { SVGWidget } from "./SVGWidget";
-import { Text } from "./Text";
-import * as Utility from "./Utility";
+import { SVGWidget } from "./SVGWidget.ts";
+import { Text } from "./Text.ts";
+import * as Utility from "./Utility.ts";
 
 import "../src/FAChar.css";
 

@@ -1,9 +1,9 @@
 import { local as d3Local, select as d3Select } from "d3-selection";
-import { Entity } from "./Entity";
-import { HTMLWidget } from "./HTMLWidget";
-import { publish } from "./PropertyExt";
-import * as Utility from "./Utility";
-import { InputField } from "./Widget";
+import { Entity } from "./Entity.ts";
+import { HTMLWidget } from "./HTMLWidget.ts";
+import { publish } from "./PropertyExt.ts";
+import * as Utility from "./Utility.ts";
+import { InputField } from "./Widget.ts";
 
 import "../src/EntityRect.css";
 

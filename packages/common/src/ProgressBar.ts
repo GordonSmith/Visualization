@@ -1,4 +1,4 @@
-import { PropertyExt, publish } from "./PropertyExt";
+import { PropertyExt, publish } from "./PropertyExt.ts";
 
 export class ProgressBar extends PropertyExt {
 

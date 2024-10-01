@@ -1,6 +1,6 @@
 import { hashSum } from "@hpcc-js/util";
 import { event as d3Event } from "d3-selection";
-import { Class } from "./Class";
+import { Class } from "./Class.ts";
 
 const GEN_PUB_STUBS: boolean = false;
 

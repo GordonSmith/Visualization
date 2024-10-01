@@ -1,9 +1,9 @@
 import { select as d3Select } from "d3-selection";
 import "d3-transition";
-import { Field, Grid } from "./Database";
-import { } from "./Platform";
-import { PropertyExt } from "./PropertyExt";
-import { debounce, textRect, TextRect, textSize, TextSize } from "./Utility";
+import { Field, Grid } from "./Database.ts";
+import { } from "./Platform.ts";
+import { PropertyExt } from "./PropertyExt.ts";
+import { debounce, textRect, TextRect, textSize, TextSize } from "./Utility.ts";
 
 import "../src/Widget.css";
 

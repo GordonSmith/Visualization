@@ -12,6 +12,7 @@ function applyMixins(derivedCtor: any, baseCtors: any[]) {
 }
 
 export class Class {
+    static _class: string;
     _class: string;
 
     class(): string;
