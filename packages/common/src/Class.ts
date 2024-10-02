@@ -15,6 +15,10 @@ export class Class {
     static _class: string;
     _class: string;
 
+    constructor() {
+        this._class = Object.getPrototypeOf(this)._class;
+    }
+
     class(): string;
     class(_: string): this;
     class(_?: string): string | this {

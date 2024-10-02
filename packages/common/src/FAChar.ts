@@ -61,12 +61,23 @@ export class FAChar extends SVGWidget {
         // console.log("Double click:", this);
     }
 
-    char: { (): string; (_: string): FAChar; };
-    fontSize: { (): number; (_: number): FAChar; };
-    text_colorFill: { (): string; (_: string): FAChar; };
-    text_fontFamily: { (): string; (_: string): FAChar; };
+    // char: { (): string; (_: string): FAChar; };
+    // fontSize: { (): number; (_: number): FAChar; };
+    // text_colorFill: { (): string; (_: string): FAChar; };
+    // text_fontFamily: { (): string; (_: string): FAChar; };
 }
 FAChar.prototype._class += " common_FAChar";
+
+export interface FAChar {
+    char(): string;
+    char(_: string): this;
+    fontSize(): number;
+    fontSize(_: number): this;
+    text_colorFill(): string;
+    text_colorFill(_: string): this;
+    text_fontFamily(): string;
+    text_fontFamily(_: string): this;
+}
 
 FAChar.prototype.publish("char", "", "set", "Font Awesome Item", Utility.faKeys(), { tags: ["Private"] });
 FAChar.prototype.publish("fontSize", null, "number", "Font Size", null, { tags: ["Private"] });

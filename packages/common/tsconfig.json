@@ -7,7 +7,7 @@
         "emitDeclarationOnly": true,
         "declaration": true,
         "declarationDir": "types",
-        "strict": true,
+        "strict": false,
         "noImplicitAny": false,
         "noImplicitThis": false,
         "strictNullChecks": false,

@@ -125,10 +125,17 @@ export class Menu extends SVGWidget implements IMenu {
     postHideMenu() {
     }
 
-    faChar: { (): string; (_: string): Menu; };
-    paddingPercent: { (): number; (_: number): Menu; };
+    // faChar: { (): string; (_: string): Menu; };
+    // paddingPercent: { (): number; (_: number): Menu; };
 }
 Menu.prototype._class += " common_Menu";
+
+export interface Menu {
+    faChar(): string;
+    faChar(_: string): this;
+    paddingPercent(): number;
+    paddingPercent(_: number): this;
+}
 
 Menu.prototype.publishProxy("faChar", "_icon", null, "\uf0c9");
 Menu.prototype.publishProxy("paddingPercent", "_icon", null, 10);

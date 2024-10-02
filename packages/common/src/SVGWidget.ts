@@ -144,8 +144,6 @@ export class SVGGlowFilter {
 export class SVGWidget extends Widget {
     static _class = "common_SVGWidget";
 
-    _tag;
-
     protected _boundingBox;
     protected transition;
     protected _drawStartPos: "center" | "origin";

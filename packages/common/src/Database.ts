@@ -173,16 +173,24 @@ export class Field extends PropertyExt {
         return this;
     }
 
-    label_default: { (): string; (x: string): Field; };
-    label: { (): string; (x: string): Field; };
-    mask: { (): string; (x: string): Field; };
-    format: { (): string; (x: string): Field; };
+    // label_default: { (): string; (x: string): Field; };
+    // label: { (): string; (x: string): Field; };
+    // mask: { (): string; (x: string): Field; };
+    // format: { (): string; (x: string): Field; };
 }
 Field.prototype._class += " common_Database.Field";
 
 export interface Field {
+    label(): string;
+    label(_: string): this;
+    label_default(): string;
+    label_default(_: string): this;
     type(): FieldType;
     type(_: FieldType): this;
+    mask(): string;
+    mask(_: string): this;
+    format(): string;
+    format(_: string): this;
 }
 
 Field.prototype.publish("label", "", "string", "Label", null, { optional: true });

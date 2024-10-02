@@ -8,7 +8,7 @@
     "xutils/*",
     "packages/api",
     "xpackages/bundle",
-    "xpackages/chart",
+    "packages/chart",
     "xpackages/codemirror",
     "xpackages/codemirror-shim",
     "packages/common",

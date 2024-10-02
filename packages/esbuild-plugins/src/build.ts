@@ -53,15 +53,17 @@ export type TplOptions = {
     format?: Format | "umd";
     globalName?: string;
     libraryName?: string;
+    keepNames?: boolean;
     external?: string[];
     plugins?: Plugin[];
 };
-export function browserTpl(input: string, output: string, { format = "esm", globalName, libraryName, external = [], plugins = [] }: TplOptions = {}) {
+export function browserTpl(input: string, output: string, { format = "esm", globalName, libraryName, keepNames, external = [], plugins = [] }: TplOptions = {}) {
     return buildWatch(input, format, external, {
         outfile: `${output}.${format === "esm" ? "js" : `${format}.js`}`,
         platform: "browser",
         target: "es2022",
         globalName,
+        keepNames,
         plugins: format === "umd" ? [umdWrapper({ libraryName }), ...plugins] : [...plugins]
     } as BuildOptions);
 }
@@ -75,7 +77,7 @@ export function nodeTpl(input: string, output: string, { format = "esm", externa
     });
 }
 
-export function neutralTpl(input: string, output: string, { format = "esm", globalName, libraryName, external = [] }: TplOptions = {}) {
+export function neutralTpl(input: string, output: string, { format = "esm", globalName, libraryName, keepNames, external = [] }: TplOptions = {}) {
     let postfix = "";
     switch (format) {
         case "iife":
@@ -98,6 +100,7 @@ export function neutralTpl(input: string, output: string, { format = "esm", glob
         platform: "neutral",
         target: "es2022",
         globalName,
+        keepNames,
         plugins: format === "umd" ? [umdWrapper({ libraryName })] : []
     } as BuildOptions);
 }
