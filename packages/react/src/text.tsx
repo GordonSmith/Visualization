@@ -1,7 +1,7 @@
 import { Utility } from "@hpcc-js/common";
 import * as React from "@hpcc-js/preact-shim";
-import { Icon } from "./icon";
-import { Rectangle } from "./shape";
+import { Icon } from "./icon.tsx";
+import { Rectangle } from "./shape.tsx";
 
 interface TextLine {
     text: string;

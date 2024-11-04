@@ -1,4 +1,4 @@
-import { HTMLWidget, publish, SVGWidget } from "@hpcc-js/common";
+import { HTMLWidget, SVGWidget } from "@hpcc-js/common";
 import * as React from "@hpcc-js/preact-shim";
 
 export function render<P>(C: React.FunctionComponent<P>, props: Readonly<P>, parent: Element | Document | ShadowRoot | DocumentFragment, replaceNode?: Element | Text) {
@@ -14,8 +14,6 @@ export function svgRender<P>(C: React.FunctionComponent<P>, props: Readonly<P>, 
 
 export class HTMLAdapter<P> extends HTMLWidget {
 
-    @publish({}, "object", "Properties")
-    protected _props: P = {} as P;
     props(): P;
     props(_: Partial<P>): this;
     props(_?: Partial<P>): P | this {
@@ -41,11 +39,17 @@ export class HTMLAdapter<P> extends HTMLWidget {
         render(this._component, this._props, domNode);
     }
 }
+HTMLAdapter.prototype._class += " react_HTMLAdapter";
+
+export interface HTMLAdapter<P> {
+    _props: P;
+
+}
+HTMLAdapter.prototype.publish("props", {}, "object", "Properties");
+
 
 export class SVGAdapter<P> extends SVGWidget {
 
-    @publish({}, "object", "Properties")
-    protected _props: P = {} as P;
     props(): P;
     props(_: Partial<P>): this;
     props(_?: Partial<P>): P | this {
@@ -71,3 +75,9 @@ export class SVGAdapter<P> extends SVGWidget {
         render(this._component, this._props, domNode);
     }
 }
+SVGAdapter.prototype._class += " react_SVGAdapter";
+
+export interface SVGAdapter<P> {
+    _props: P;
+}
+SVGAdapter.prototype.publish("props", {}, "object", "Properties");

@@ -1,8 +1,8 @@
 import { Palette } from "@hpcc-js/common";
 import * as React from "@hpcc-js/preact-shim";
-import { Image } from "./image";
-import { ImageChar } from "./ImageChar";
-import { Shape } from "./shape";
+import { Image } from "./image.tsx";
+import { ImageChar } from "./ImageChar.tsx";
+import { Shape } from "./shape.tsx";
 
 export interface Icon {
     shape?: "circle" | "square" | "rectangle";

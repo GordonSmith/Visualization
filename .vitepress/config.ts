@@ -12,6 +12,7 @@ export default async () => {
         srcDir: ".",
         rewrites: {
         },
+        srcExclude: [],
         lastUpdated: true,
         themeConfig: {
             // https://vitepress.dev/reference/default-theme-config
@@ -25,6 +26,7 @@ export default async () => {
                 {
                     text: "Documentation",
                     items: [
+                        { text: "Codemirror", link: "packages/codemirror/README" },
                     ]
                 }
             ],

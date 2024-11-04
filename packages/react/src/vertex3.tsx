@@ -1,8 +1,8 @@
 import { Utility } from "@hpcc-js/common";
 import * as React from "@hpcc-js/preact-shim";
-import { Icon } from "./icon";
-import { TextBox } from "./text";
-import { VertexProps } from "./vertex";
+import { Icon } from "./icon.tsx";
+import { TextBox } from "./text.tsx";
+import { VertexProps } from "./vertex.tsx";
 
 export interface Vertex3Props extends VertexProps {
     id: string;

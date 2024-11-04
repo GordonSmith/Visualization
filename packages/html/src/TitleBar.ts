@@ -1,5 +1,5 @@
 import { HTMLWidget } from "@hpcc-js/common";
-import { JSXWidget } from "./JSXWidget";
+import { JSXWidget } from "./JSXWidget.ts";
 
 import "../src/TitleBar.css";
 
@@ -9,7 +9,6 @@ export interface IClickHandler {
 
 export class Item extends HTMLWidget {
     protected _owner: IClickHandler;
-    protected _element;
 
     constructor(owner: IClickHandler) {
         super();

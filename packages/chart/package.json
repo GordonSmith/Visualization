@@ -6,6 +6,7 @@
     "exports": {
         ".": {
             "types": "./types/index.d.ts",
+            "styles": "./dist/index.css",
             "default": "./dist/index.js"
         }
     },
