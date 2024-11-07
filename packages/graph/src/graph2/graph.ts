@@ -1,4 +1,4 @@
-﻿import { React, Subgraph, SubgraphProps, Vertex, VertexProps, Edge, EdgeProps } from "@hpcc-js/react";
+﻿import { Subgraph, SubgraphProps, Vertex, VertexProps, Edge, EdgeProps } from "@hpcc-js/react";
 // import { IVertexEdgeProps, VertexEdge } from "./edge";
 import { GraphReactT } from "./graphReactT.ts";
 import { GraphDataProps, HierarchyBase } from "./graphT.ts";

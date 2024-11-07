@@ -45,7 +45,6 @@ HTMLAdapter.prototype._class += " react_HTMLAdapter";
 
 export interface HTMLAdapter<P> {
     _props: P;
-
 }
 HTMLAdapter.prototype.publish("props", {}, "object", "Properties");
 

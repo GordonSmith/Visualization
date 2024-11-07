@@ -13,7 +13,3 @@ export * from "./vertex3.tsx";
 export * from "./vertex4.tsx";
 export * from "./subgraph.tsx";
 export * from "./Span.tsx";
-import React from "react";
-export {
-    React
-};

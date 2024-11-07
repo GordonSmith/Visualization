@@ -3,7 +3,7 @@ import { Class, HTMLWidget, SVGWidget } from "@hpcc-js/common";
 import { Circle, Square, Rectangle, Shape, TextLine, Text, TextBox, LabelledRect, IconLabelledRect, Span, Vertex, Icon, Icons, Image, ImageChar, Annotations, Vertex2, Vertex3, Vertex4, Subgraph, Edge } from "@hpcc-js/react";
 import { HTMLAdapter, SVGAdapter } from "@hpcc-js/react";
 import { describe, it, expect } from "vitest";
-import { classDef, render, renderMedium } from "../../common/tests/index.ts";
+import { classDef, renderMedium } from "../../common/tests/index.ts";
 
 const urlSearch: string = window.location.href.split("?")[1];
 
