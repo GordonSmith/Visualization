@@ -1,10 +1,10 @@
 import React from "react";
 import { Utility } from "@hpcc-js/common";
-import { Icon } from "./icon.tsx";
+import { Icon, IconProps } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 import { VertexProps } from "./vertex.tsx";
 
-export interface IVertex4Annotation extends Icon {
+export interface IVertex4Annotation extends IconProps {
     shapeOffsetX?: number;
     shapeOffsetY?: number;
 }

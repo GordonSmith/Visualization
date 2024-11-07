@@ -3,6 +3,7 @@ export * from "./__package__.ts";
 export * from "./edge.tsx";
 export * from "./ImageChar.tsx";
 export * from "./icon.tsx";
+export * from "./image.tsx";
 export * from "./render.ts";
 export * from "./shape.tsx";
 export * from "./text.tsx";

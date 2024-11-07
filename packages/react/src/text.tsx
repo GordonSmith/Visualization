@@ -3,7 +3,7 @@ import { Utility } from "@hpcc-js/common";
 import { Icon } from "./icon.tsx";
 import { Rectangle } from "./shape.tsx";
 
-interface TextLine {
+export interface TextLineProps {
     text: string;
     height?: number;
     anchor?: string;
@@ -12,7 +12,7 @@ interface TextLine {
     fill?: string;
 }
 
-export const TextLine: React.FunctionComponent<TextLine> = ({
+export const TextLine: React.FunctionComponent<TextLineProps> = ({
     text,
     height = 12,
     anchor = "middle",
@@ -81,7 +81,7 @@ export const Text: React.FunctionComponent<TextProps> = ({
     return <g>{TextLines}</g>;
 };
 
-export interface TextBox {
+export interface TextBoxProps {
     text: string;
     height?: number;
     fontFamily?: string;
@@ -95,7 +95,7 @@ export interface TextBox {
     onSizeUpdate?: (size: { width: number, height: number }) => void;
 }
 
-export const TextBox: React.FunctionComponent<TextBox> = ({
+export const TextBox: React.FunctionComponent<TextBoxProps> = ({
     text,
     height = 12,
     fontFamily = "Verdana",
@@ -146,15 +146,9 @@ export const TextBox: React.FunctionComponent<TextBox> = ({
     </>;
 };
 
-export interface LabelledRect extends TextBox {
+export interface LabelledRect extends TextBoxProps {
     width?: number;
     fontSize?: number;
-}
-
-export interface IconLabelledRect extends LabelledRect {
-    icon: string;
-    iconFontFamily: string;
-    iconFontSize: number;
 }
 
 export const LabelledRect: React.FunctionComponent<LabelledRect> = ({
@@ -208,6 +202,12 @@ export const LabelledRect: React.FunctionComponent<LabelledRect> = ({
         </g>
     </>;
 };
+
+export interface IconLabelledRect extends LabelledRect {
+    icon: string;
+    iconFontFamily?: string;
+    iconFontSize?: number;
+}
 
 export const IconLabelledRect: React.FunctionComponent<IconLabelledRect> = ({
     icon,

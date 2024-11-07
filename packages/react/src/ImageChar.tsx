@@ -1,7 +1,7 @@
 import React from "react";
 import { Utility } from "@hpcc-js/common";
 
-interface ImageChar {
+export interface ImageCharProps {
     x?: number;
     y?: number;
     height?: number;
@@ -13,7 +13,7 @@ interface ImageChar {
     fontWeight?: number;
 }
 
-export const ImageChar: React.FunctionComponent<ImageChar> = ({
+export const ImageChar: React.FunctionComponent<ImageCharProps> = ({
     x,
     y = 0,
     height = 12,

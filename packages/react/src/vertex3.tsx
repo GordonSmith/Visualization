@@ -1,7 +1,7 @@
 import React from "react";
 import { Utility } from "@hpcc-js/common";
-import { Icon } from "./icon.tsx";
-import { TextBox } from "./text.tsx";
+import { Icon, IconProps } from "./icon.tsx";
+import { TextBox, TextBoxProps } from "./text.tsx";
 import { VertexProps } from "./vertex.tsx";
 
 export interface Vertex3Props extends VertexProps {
@@ -12,8 +12,8 @@ export interface Vertex3Props extends VertexProps {
     textHeight?: number;
     textPadding?: number;
     textboxStrokeWidth?: number;
-    icon?: Icon;
-    annotations?: Icon[];
+    icon?: IconProps;
+    annotations?: IconProps[];
     annotationsHeight?: number;
     annotationGutter?: number;
     textFill?: string;
@@ -21,11 +21,11 @@ export interface Vertex3Props extends VertexProps {
     textboxStroke?: string;
     textFontFamily?: string;
     cornerRadius?: number;
-    subText?: TextBox;
+    subText?: TextBoxProps;
     onSizeUpdate?: (size: { width: number, height: number }) => void;
     showLabel?: boolean;
     noLabelRadius?: number;
-    expansionIcon?: Icon;
+    expansionIcon?: IconProps;
     scale?: number;
 }
 

@@ -1,15 +1,15 @@
 import React from "react";
-import { Icon } from "./icon.tsx";
+import { Icon, IconProps } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 
-export interface Annotations {
+export interface AnnotationsProps {
     x: number;
     y: number;
     annotationIDs: string[];
     stepSize?: number;
 }
 
-export const Annotations: React.FunctionComponent<Annotations> = ({
+export const Annotations: React.FunctionComponent<AnnotationsProps> = ({
     x,
     y,
     annotationIDs = [],
@@ -35,7 +35,7 @@ export interface VertexProps {
     text: string;
     textHeight?: number;
     textPadding?: number;
-    icon?: Icon;
+    icon?: IconProps;
     annotationsHeight?: number;
     annotationIDs?: string[];
     textFill?: string;
