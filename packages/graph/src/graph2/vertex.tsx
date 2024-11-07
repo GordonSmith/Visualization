@@ -1,5 +1,5 @@
-// , Shape, Text,
-import { React, Text } from "@hpcc-js/react";
+import React from "react";
+import { Text } from "@hpcc-js/react";
 import { VertexBaseProps } from "./layouts/placeholders.ts";
 
 export interface BasicVertexProps extends VertexBaseProps {
@@ -25,7 +25,7 @@ export const BasicVertex: React.FunctionComponent<BasicVertexProps> = ({
     return <g transform={`scale(${scale})`}>
         <circle cx="0" cy="0" r={circleRadius} fill={circleFill} stroke={circleStroke} style={{ strokeWidth: circleStrokeWidth }} />
         <g transform={`translate(0 ${circleRadius + textHeight})`}>
-            <Text text={text} fill={textFill} height={textHeight}></Text>
+            <Text text={text} fill={textFill} height={textHeight} />
         </g>
     </g>;
 };

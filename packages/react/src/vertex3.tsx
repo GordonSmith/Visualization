@@ -1,5 +1,5 @@
+import React from "react";
 import { Utility } from "@hpcc-js/common";
-import * as React from "@hpcc-js/preact-shim";
 import { Icon } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 import { VertexProps } from "./vertex.tsx";
@@ -98,7 +98,7 @@ export const Vertex3: React.FunctionComponent<Vertex3Props> = ({
         fullAnnotationWidth += annoShapeWidth + annotationGutter;
         const annoOffsetX = fullAnnotationWidth - (annoShapeWidth / 2);
         annotationArr.push(
-            <g key={idx} class="vertex3-anno" data-click={"annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${annoOffsetX} ${annoOffsetY})`}>
+            <g key={idx} className="vertex3-anno" data-click={"annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${annoOffsetX} ${annoOffsetY})`}>
                 <Icon
                     {...anno}
                     shape="square"

@@ -16,6 +16,7 @@ export class Item extends HTMLWidget {
         this._tag = "a";
     }
 }
+Item.prototype._class += " html_Item";
 
 export class Button extends Item {
     private _icon: string;
@@ -39,6 +40,7 @@ export class Button extends Item {
             ;
     }
 }
+Button.prototype._class += " html_Button";
 
 export class ToggleButton extends Button {
 
@@ -55,6 +57,7 @@ export class ToggleButton extends Button {
         this._element.classed("selected", this.selected());
     }
 }
+ToggleButton.prototype._class += " html_ToggleButton";
 export interface ToggleButton {
     selected(): boolean;
     selected(_: boolean): this;
@@ -72,6 +75,7 @@ export class Spacer extends Item {
             ;
     }
 }
+Spacer.prototype._class += " html_Spacer";
 
 export class TitleBar extends JSXWidget {
     protected _divMain;

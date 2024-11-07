@@ -1,5 +1,5 @@
+import React from "react";
 import { Utility } from "@hpcc-js/common";
-import * as React from "@hpcc-js/preact-shim";
 import { Icon } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 import { Annotations, VertexProps } from "./vertex.tsx";

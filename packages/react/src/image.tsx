@@ -1,4 +1,4 @@
-import * as React from "@hpcc-js/preact-shim";
+import React from "react";
 
 interface Image {
     href: string;

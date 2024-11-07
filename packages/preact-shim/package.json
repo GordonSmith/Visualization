@@ -29,12 +29,12 @@
         "lint-fix": "eslint --fix src/**/*.ts",
         "docs": "typedoc --options tdoptions.json .",
         "update": "npx --yes npm-check-updates -u -t minor",
-        "update-major": "npx -yes npm-check-updates -u"
+        "update-major": "npx --yes npm-check-updates -u"
     },
     "dependencies": {},
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.2.0",
-        "preact": "10.24.0"
+        "preact": "10.24.3"
     },
     "repository": {
         "type": "git",

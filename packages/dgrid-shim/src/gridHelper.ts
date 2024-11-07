@@ -10,7 +10,7 @@ export const GridHelper = declare(null, {
     noDataMessage: "<span class='dojoxGridNoData'>...empty...</span>",
     loadingMessage: "<span class='dojoxGridNoData'>loading...</span>",
 
-    postCreate: function postCreate(inherited) {
+    postCreate: function postCreate(_inherited) {
         this.inherited(postCreate, arguments);
 
         this.__hpcc_tooltip_header = new Tooltip({

@@ -11,8 +11,8 @@ export * from "./vertex2.tsx";
 export * from "./vertex3.tsx";
 export * from "./vertex4.tsx";
 export * from "./subgraph.tsx";
-
-import * as React from "@hpcc-js/preact-shim";
+export * from "./Span.tsx";
+import React from "react";
 export {
     React
 };

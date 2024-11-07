@@ -5,7 +5,7 @@
             "name": "test-browser",
             "type": "msedge",
             "request": "launch",
-            "url": "http://localhost:63315",
+            "url": "http://localhost:8888",
             "webRoot": "${workspaceFolder}",
             "outFiles": [
                 "${workspaceFolder}/**/*.js",

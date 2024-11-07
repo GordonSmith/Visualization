@@ -29,10 +29,9 @@
         "lint-fix": "eslint --fix src/**/*.ts",
         "docs": "typedoc --options tdoptions.json .",
         "update": "npx --yes npm-check-updates -u -t minor",
-        "update-major": "npx -yes npm-check-updates -u"
+        "update-major": "npx --yes npm-check-updates -u"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.2.0",
         "@lumino/algorithm": "1.9.2",

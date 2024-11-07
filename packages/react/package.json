@@ -32,15 +32,19 @@
         "test": "vitest run",
         "coverage": "vitest run --coverage",
         "update": "npx --yes npm-check-updates -u -t minor",
-        "update-major": "npx -yes npm-check-updates -u"
+        "update-major": "npx --yes npm-check-updates -u"
     },
     "dependencies": {
-        "@hpcc-js/common": "^3.0.0",
-        "@hpcc-js/preact-shim": "^3.0.0"
+        "@hpcc-js/common": "^3.1.0"
     },
     "devDependencies": {
-        "@hpcc-js/esbuild-plugins": "^1.2.0"
-
+        "@hpcc-js/esbuild-plugins": "^1.2.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+    },
+    "peerDependencies": {
+        "react": "^17.0.0 || ^18.0.0",
+        "react-dom": "^17.0.0 || ^18.0.0"
     },
     "repository": {
         "type": "git",

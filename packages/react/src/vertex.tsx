@@ -1,4 +1,4 @@
-import * as React from "@hpcc-js/preact-shim";
+import React from "react";
 import { Icon } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 
@@ -67,7 +67,9 @@ export const Vertex: React.FunctionComponent<VertexProps> = ({
     const [textBoxHeight, setTextBoxHeightUpdate] = React.useState(0);
 
     React.useEffect(() => {
-        onSizeUpdate && onSizeUpdate({ width: 0, height: 0 });
+        if (onSizeUpdate) {
+            onSizeUpdate({ width: 0, height: 0 });
+        }
     }, [textBoxWidth, textBoxHeight, onSizeUpdate]);
 
     icon = {

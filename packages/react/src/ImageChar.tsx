@@ -1,5 +1,5 @@
+import React from "react";
 import { Utility } from "@hpcc-js/common";
-import * as React from "@hpcc-js/preact-shim";
 
 interface ImageChar {
     x?: number;
@@ -10,6 +10,7 @@ interface ImageChar {
     fontFamily?: string;
     char?: string;
     yOffset?: number;
+    fontWeight?: number;
 }
 
 export const ImageChar: React.FunctionComponent<ImageChar> = ({
@@ -19,7 +20,8 @@ export const ImageChar: React.FunctionComponent<ImageChar> = ({
     fill,
     stroke,
     fontFamily = "FontAwesome",
-    char = ""
+    char = "",
+    fontWeight
 }) => {
 
     const renderChar = React.useMemo(() => {
@@ -31,9 +33,10 @@ export const ImageChar: React.FunctionComponent<ImageChar> = ({
         y={y}
         fill={fill}
         stroke={stroke}
-        font-family={fontFamily}
-        font-size={`${height}px`}
-        dominant-baseline="middle"
-        style="text-anchor: middle;alignment-baseline:middle;"
+        fontFamily={fontFamily}
+        fontSize={`${height}px`}
+        fontWeight={fontWeight}
+        dominantBaseline="middle"
+        style={{ textAnchor: "middle", alignmentBaseline: "middle" }}
     >{renderChar}</text>;
 };

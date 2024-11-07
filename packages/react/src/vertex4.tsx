@@ -1,6 +1,5 @@
-/* eslint-disable no-debugger, no-console */
+import React from "react";
 import { Utility } from "@hpcc-js/common";
-import * as React from "@hpcc-js/preact-shim";
 import { Icon } from "./icon.tsx";
 import { TextBox } from "./text.tsx";
 import { VertexProps } from "./vertex.tsx";
@@ -34,7 +33,7 @@ export interface IVertex4 extends VertexProps {
 }
 
 export const Vertex4: React.FunctionComponent<IVertex4> = ({
-    categoryID = "",
+    // categoryID = "",
     text = "",
     textHeight = 10,
     textPadding = 4,
@@ -99,7 +98,7 @@ export const Vertex4: React.FunctionComponent<IVertex4> = ({
     const textOffsetX = fullAnnotationWidth - (labelShapeWidth / 2);
 
     const textShapeHeight = textHeight + (annotationGutter * 2) + (textboxStrokeWidth * 2);
-    const annoWidthArr = annotations.map((anno, i) => {
+    const annoWidthArr = annotations.map((anno) => {
         return Utility.textSize(anno.imageChar, anno.imageFontFamily, anno.height, false).width;
     });
     const annotationArr = [];
@@ -110,7 +109,7 @@ export const Vertex4: React.FunctionComponent<IVertex4> = ({
         _labelAnnoOffsetX += annoWidthArr[i] + annotationGutter;
         const annoOffsetX = _labelAnnoOffsetX - (annoWidthArr[i] / 2);
         annotationArr.push(
-            <g key={i} class="vertex3-anno" data-click={"annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${annoOffsetX} ${annoOffsetY})`}>
+            <g key={i} className="vertex3-anno" data-click={"annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${annoOffsetX} ${annoOffsetY})`}>
                 <Icon
                     {...anno}
                     shape="rectangle"
@@ -133,7 +132,7 @@ export const Vertex4: React.FunctionComponent<IVertex4> = ({
         const x = anno.shapeOffsetX;
         const y = anno.shapeOffsetY;
         iconAnnotationArr.push(
-            <g key={i} class="vertex3-iconAnno" data-click={"icon-annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${x} ${y})`}>
+            <g key={i} className="vertex3-iconAnno" data-click={"icon-annotation"} data-click-data={JSON.stringify(anno)} transform={`translate(${x} ${y})`}>
                 <Icon
                     {...anno}
                     shape={anno.shape ?? "square"}
