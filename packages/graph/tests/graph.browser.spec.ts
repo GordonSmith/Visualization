@@ -373,48 +373,50 @@ describe("@hpcc-js/graph", () => {
                     if (item.prototype instanceof HTMLWidget || item.prototype instanceof SVGWidget) {
                         switch (item.prototype.constructor) {
                             case Edge:
-                                const graph = new Graph();
-                                const vertices: any[] = [];
-                                const edges: any[] = [];
-                                const palette = Palette.ordinal("dark2");
+                                {
+                                    const graph = new Graph();
+                                    const vertices: any[] = [];
+                                    const edges: any[] = [];
+                                    const palette = Palette.ordinal("dark2");
 
-                                const rawData = data.simple;
-                                rawData.nodes.forEach(function (node) {
-                                    vertices.push(
-                                        new Vertex()
-                                            .text(node.name)
-                                            .textbox_shape_colorStroke(palette(node.icon))
-                                            .textbox_shape_colorFill("whitesmoke")
-                                            .icon_diameter(60)
-                                            .icon_shape_colorStroke("transparent")
-                                            .icon_shape_colorFill("transparent")
-                                            .icon_image_colorFill("#333333")
-                                            .textbox_shape_colorStroke("transparent")
-                                            .textbox_shape_colorFill("transparent")
-                                            .textbox_text_colorFill("#333333")
-                                            .iconAnchor("middle")
-                                            .faChar(node.icon)
-                                    )
-                                        ;
-                                }, graph);
+                                    const rawData = data.simple;
+                                    rawData.nodes.forEach(function (node) {
+                                        vertices.push(
+                                            new Vertex()
+                                                .text(node.name)
+                                                .textbox_shape_colorStroke(palette(node.icon))
+                                                .textbox_shape_colorFill("whitesmoke")
+                                                .icon_diameter(60)
+                                                .icon_shape_colorStroke("transparent")
+                                                .icon_shape_colorFill("transparent")
+                                                .icon_image_colorFill("#333333")
+                                                .textbox_shape_colorStroke("transparent")
+                                                .textbox_shape_colorFill("transparent")
+                                                .textbox_text_colorFill("#333333")
+                                                .iconAnchor("middle")
+                                                .faChar(node.icon)
+                                        )
+                                            ;
+                                    }, graph);
 
-                                rawData.links.forEach(function (link, idx) {
-                                    edges.push(
-                                        new Edge()
-                                            .sourceVertex(vertices[link.source])
-                                            .targetVertex(vertices[link.target])
-                                            .sourceMarker("circle")
-                                            .targetMarker("arrow")
-                                            .text("Hello!")
-                                            .strokeDasharray(idx === 0 ? "15, 10, 5, 10, 15" : "")
-                                            .strokeColor(idx === 0 ? "cyan" : "")
-                                            .weight(50)
-                                    )
-                                        ;
-                                }, graph);
+                                    rawData.links.forEach(function (link, idx) {
+                                        edges.push(
+                                            new Edge()
+                                                .sourceVertex(vertices[link.source])
+                                                .targetVertex(vertices[link.target])
+                                                .sourceMarker("circle")
+                                                .targetMarker("arrow")
+                                                .text("Hello!")
+                                                .strokeDasharray(idx === 0 ? "15, 10, 5, 10, 15" : "")
+                                                .strokeColor(idx === 0 ? "cyan" : "")
+                                                .weight(50)
+                                        )
+                                            ;
+                                    }, graph);
 
-                                graph.data({ vertices, edges });
-                                render(graph);
+                                    graph.data({ vertices, edges });
+                                    render(graph);
+                                }
                                 break;
                             case AdjacencyGraph:
                                 render(new AdjacencyGraph()
@@ -428,39 +430,41 @@ describe("@hpcc-js/graph", () => {
                                 );
                                 break;
                             case Graph:
-                                const graph2 = new Graph();
-                                const vertices2: any[] = [];
-                                const edges2: any[] = [];
-                                const palette2 = Palette.ordinal("dark2");
+                                {
+                                    const graph2 = new Graph();
+                                    const vertices2: any[] = [];
+                                    const edges2: any[] = [];
+                                    const palette2 = Palette.ordinal("dark2");
 
-                                const rawData2 = data.simple;
-                                rawData2.nodes.forEach(function (node) {
-                                    vertices2.push(
-                                        new Vertex()
-                                            .text(node.name)
-                                            .textbox_shape_colorStroke(palette2(node.icon))
-                                            .textbox_shape_colorFill("whitesmoke")
-                                            .icon_diameter(30)
-                                            .icon_shape_colorStroke(palette2(node.icon))
-                                            .icon_shape_colorFill(palette2(node.icon))
-                                            .faChar(node.icon)
-                                    );
-                                }, graph2);
+                                    const rawData2 = data.simple;
+                                    rawData2.nodes.forEach(function (node) {
+                                        vertices2.push(
+                                            new Vertex()
+                                                .text(node.name)
+                                                .textbox_shape_colorStroke(palette2(node.icon))
+                                                .textbox_shape_colorFill("whitesmoke")
+                                                .icon_diameter(30)
+                                                .icon_shape_colorStroke(palette2(node.icon))
+                                                .icon_shape_colorFill(palette2(node.icon))
+                                                .faChar(node.icon)
+                                        );
+                                    }, graph2);
 
-                                rawData2.links.forEach(function (link, idx) {
-                                    edges2.push(
-                                        new Edge()
-                                            .sourceVertex(vertices2[link.source])
-                                            .targetVertex(vertices2[link.target])
-                                            .sourceMarker("circle")
-                                            .targetMarker("arrow")
-                                            .text("")
-                                            .weight(50)
-                                    );
-                                }, graph2);
+                                    rawData2.links.forEach(function (link, idx) {
+                                        edges2.push(
+                                            new Edge()
+                                                .sourceVertex(vertices2[link.source])
+                                                .targetVertex(vertices2[link.target])
+                                                .sourceMarker("circle")
+                                                .targetMarker("arrow")
+                                                .text("")
+                                                .weight(50)
+                                        );
+                                    }, graph2);
 
-                                graph2.data({ vertices: vertices2, edges: edges2 });
-                                render(graph2);
+                                    graph2.data({ vertices: vertices2, edges: edges2 });
+                                    render(graph2);
+                                }
                                 break;
                             case GraphT:
                                 {
@@ -521,61 +525,67 @@ describe("@hpcc-js/graph", () => {
                                 }
                                 break;
                             case Graph2:
-                                const subgraphsB = [
-                                    { id: "10", text: "Adults" }
-                                ];
+                                {
+                                    const subgraphsB = [
+                                        { id: "10", text: "Adults" }
+                                    ];
 
-                                const verticesB = [
-                                    { id: "0", text: "Daddy", annotations: [] },
-                                    { id: "1", text: "Mummy", annotations: [] },
-                                    { id: "2", text: "Baby", annotations: [] }
-                                ];
+                                    const verticesB = [
+                                        { id: "0", text: "Daddy", annotations: [] },
+                                        { id: "1", text: "Mummy", annotations: [] },
+                                        { id: "2", text: "Baby", annotations: [] }
+                                    ];
 
-                                const edgesB = [
-                                    { id: "0", source: verticesB[0], target: verticesB[2] },
-                                    { id: "1", source: verticesB[1], target: verticesB[2] }
-                                ];
+                                    const edgesB = [
+                                        { id: "0", source: verticesB[0], target: verticesB[2] },
+                                        { id: "1", source: verticesB[1], target: verticesB[2] }
+                                    ];
 
-                                const hierarchyB = [
-                                    { id: "0", parent: subgraphsB[0], child: verticesB[0] },
-                                    { id: "1", parent: subgraphsB[0], child: verticesB[1] }
-                                ];
+                                    const hierarchyB = [
+                                        { id: "0", parent: subgraphsB[0], child: verticesB[0] },
+                                        { id: "1", parent: subgraphsB[0], child: verticesB[1] }
+                                    ];
 
-                                const graphB = new Graph2()
-                                    .data({ subgraphs: subgraphsB, vertices: verticesB, edges: edgesB, hierarchy: hierarchyB })
-                                    ;
+                                    const graphB = new Graph2()
+                                        .data({ subgraphs: subgraphsB, vertices: verticesB, edges: edgesB, hierarchy: hierarchyB })
+                                        ;
 
-                                render(graphB);
+                                    render(graphB);
+                                }
                                 break;
                             case DataGraph:
-                                const graphD = new DataGraph()
-                                    .categories((Array(11) as any).fill().map((_row: any, idx: number) => ({ id: "" + idx, faChar: "fa-user" })))
-                                    .annotations((Array(11) as any).fill().map((_row: any, idx: number) => ({ id: "" + idx, faChar: "fa-plus" })))
-                                    .vertexColumns(DataGraphVerticesColumns)
-                                    .vertexCategoryColumn("group")
-                                    .vertexIDColumn("id")
-                                    .vertexLabelColumn("label")
-                                    .vertexAnnotationColumns([
-                                        new AnnotationColumn().columnID("ann1").annotationID("1"),
-                                        new AnnotationColumn().columnID("ann2").annotationID("2"),
-                                        new AnnotationColumn().columnID("ann3").annotationID("3")
-                                    ])
-                                    .vertices(DataGraphVertices)
-                                    .edgeColumns(["id", "source", "target", "weight"])
-                                    .edgeIDColumn("id")
-                                    .edgeSourceColumn("source")
-                                    .edgeTargetColumn("target")
-                                    .edgeWeightColumn("weight")
-                                    .edges(DataGraphEdges)
-                                    ;
-                                render(graphD);
+                                {
+                                    const graphD = new DataGraph()
+                                        .categories((Array(11) as any).fill().map((_row: any, idx: number) => ({ id: "" + idx, faChar: "fa-user" })))
+                                        .annotations((Array(11) as any).fill().map((_row: any, idx: number) => ({ id: "" + idx, faChar: "fa-plus" })))
+                                        .vertexColumns(DataGraphVerticesColumns)
+                                        .vertexCategoryColumn("group")
+                                        .vertexIDColumn("id")
+                                        .vertexLabelColumn("label")
+                                        .vertexAnnotationColumns([
+                                            new AnnotationColumn().columnID("ann1").annotationID("1"),
+                                            new AnnotationColumn().columnID("ann2").annotationID("2"),
+                                            new AnnotationColumn().columnID("ann3").annotationID("3")
+                                        ])
+                                        .vertices(DataGraphVertices)
+                                        .edgeColumns(["id", "source", "target", "weight"])
+                                        .edgeIDColumn("id")
+                                        .edgeSourceColumn("source")
+                                        .edgeTargetColumn("target")
+                                        .edgeWeightColumn("weight")
+                                        .edges(DataGraphEdges)
+                                        ;
+                                    render(graphD);
+                                }
                                 break;
                             case Sankey:
-                                render(new Sankey()
-                                    .columns(dataBreach.columns)
-                                    .data(dataBreach.data)
-                                    .mappings([new SankeyColumn().column("Covered Entity Type"), new SankeyColumn().column("Type of Breach")])
-                                );
+                                {
+                                    render(new Sankey()
+                                        .columns(dataBreach.columns)
+                                        .data(dataBreach.data)
+                                        .mappings([new SankeyColumn().column("Covered Entity Type"), new SankeyColumn().column("Type of Breach")])
+                                    );
+                                }
                                 break;
                             case SankeyGraph:
                                 render(new SankeyGraph()

@@ -51,7 +51,7 @@ export const Text: React.FunctionComponent<TextProps> = ({
         if (onSizeUpdate) {
             onSizeUpdate({ width: totalWidth, height: totalHeight });
         }
-    }, [totalWidth, totalHeight]);
+    }, [totalWidth, totalHeight, onSizeUpdate]);
 
     const parts = React.useMemo(() => {
         console.log("text", text);

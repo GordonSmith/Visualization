@@ -1,11 +1,5 @@
-import * as Preact from "@hpcc-js/preact-shim";
-import type * as React from "react";
-import { SubgraphProps, VertexProps, EdgeProps } from "@hpcc-js/react";
+import { SubgraphProps, VertexProps, EdgeProps, render } from "@hpcc-js/react";
 import { GraphT, RendererT } from "./graphT.ts";
-
-export function render<P>(C: React.FunctionComponent<P>, props: Readonly<P>, parent: Element | Document | ShadowRoot | DocumentFragment, replaceNode?: Element | Text) {
-    Preact.render(Preact.h(C as Preact.FunctionComponent<P>, props), parent, replaceNode);
-}
 
 function adapter<T>(reactRenderer: React.FunctionComponent<T>): RendererT<T> {
     return (props: T, element: SVGGElement) => render(reactRenderer, props, element);

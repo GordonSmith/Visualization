@@ -1,6 +1,12 @@
 import React from "react";
+import { render as reactRender } from "react-dom";
 import { createRoot, Root } from "react-dom/client";
 import { HTMLWidget, SVGWidget } from "@hpcc-js/common";
+
+export function render<P>(C: React.FunctionComponent<P>, props: Readonly<P>, parent: Element | Document | ShadowRoot | DocumentFragment) {
+    const re = React.createElement(C, props);
+    reactRender(re, parent);
+}
 
 export class HTMLAdapter<P> extends HTMLWidget {
 

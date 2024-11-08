@@ -1,6 +1,13 @@
 export * from "./__package__.ts";
-export { createElement, Component, Fragment, h, render, type FunctionComponent } from "preact";
-export { useCallback, useEffect, useMemo, useReducer, useState } from "preact/hooks";
+import { createElement } from "preact/compat";
+// export type { FunctionComponent } from "preact";
+export { useMemo } from "preact/hooks";
+export { createRoot } from "preact/compat/client";
+const React = {
+    createElement
+};
+
+export default React;
 
 /*
  * A Preact 11+ implementation of the `replaceNode` parameter from Preact 10.
