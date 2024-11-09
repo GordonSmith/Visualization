@@ -1,6 +1,7 @@
 import { d3Event, drag as d3Drag, Palette, select as d3Select, Selection, Spacer, SVGGlowFilter, SVGZoomWidget, ToggleButton, Utility, Widget, BaseType as D3BaseType } from "@hpcc-js/common";
 import { IconEx, Icons, render } from "@hpcc-js/react";
 import { Graph2 as GraphCollection, hashSum } from "@hpcc-js/util";
+import { HTMLTooltip } from "@hpcc-js/html";
 import { interpolateNumberArray as d3InterpolateNumberArray } from "d3-interpolate";
 import "d3-transition";
 import { interpolatePath as d3InterpolatePath } from "d3-interpolate-path";
@@ -10,7 +11,6 @@ import type { VertexBaseProps, EdgeBaseProps, GraphDataProps, HierarchyBase, Sub
 import { EdgePlaceholder, SubgraphPlaceholder, VertexPlaceholder, isEdgePlaceholder } from "./layouts/placeholders.ts";
 import { Engine, graphviz as gvWorker } from "./layouts/graphvizWorker.ts";
 import { Tree, RadialTree, Dendrogram, RadialDendrogram } from "./layouts/tree.ts";
-import { HTMLTooltip } from "./HTMLTooltip.ts";
 
 import "../../src/graph2/graph.css";
 

@@ -63,7 +63,6 @@ SankeyColumn.prototype.publish("aggrColumn", null, "set", "Aggregation Field", f
 
 export class Sankey extends SVGWidget {
     Column;
-    _palette;
     _d3Sankey;
     _d3SankeyPath;
     _selection;
@@ -274,6 +273,7 @@ Sankey.prototype.Column = SankeyColumn;
 Sankey.prototype.mixin(Utility.SimpleSelectionMixin);
 
 export interface Sankey {
+    _palette;
     paletteID(): string;
     paletteID(_: string): this;
     mappings(): SankeyColumn[];

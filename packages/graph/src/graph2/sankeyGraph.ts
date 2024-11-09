@@ -10,7 +10,6 @@ export class SankeyGraph extends SVGWidget {
 
     protected _d3Sankey: any;
     protected _selection: any;
-    _palette: any;
 
     constructor() {
         super();
@@ -247,14 +246,6 @@ export class SankeyGraph extends SVGWidget {
         */
     }
 
-    paletteID: { (): string; (_: string): SankeyGraph; };
-    vertexStrokeWidth: { (): number; (_: number): SankeyGraph; };
-    vertexStrokeColor: { (): string; (_: string): SankeyGraph; };
-    vertexWidth: { (): number; (_: number): SankeyGraph; };
-    vertexPadding: { (): number; (_: number): SankeyGraph; };
-    xAxisMovement: { (): boolean; (_: boolean): SankeyGraph; };
-    yAxisMovement: { (): boolean; (_: boolean): SankeyGraph; };
-
     exit(domNode, element) {
         super.exit(domNode, element);
     }
@@ -272,43 +263,7 @@ SankeyGraph.prototype.mixin(Utility.SimpleSelectionMixin);
 SankeyGraph.prototype._palette = Palette.ordinal("category10");
 
 export interface SankeyGraph {
-    /*
-    @publish([], "any", "Vertex Columns", null, { internal: true })
-    vertexColumns: publish<this, string[]>;
-    @publish([], "any", "Vertices (Nodes)", null, { internal: true })
-    vertices: publish<this, Array<Array<string | number | boolean>>>;
-    @publish("", "set", "Vertex Category ID column", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexCategoryColumn: publish<this, string>;
-    @publish("", "set", "Vertex ID column", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexIDColumn: publish<this, string>;
-    @publish("", "set", "Vertex label column", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexLabelColumn: publish<this, string>;
-    @publish("", "set", "Vertex centroid column (boolean)", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexCentroidColumn: publish<this, string>;
-    @publish("?", "string", "Vertex default FAChar")
-    vertexFAChar: publish<this, string>;
-    @publish("", "set", "Vertex FAChar column", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexFACharColumn: publish<this, string>;
-    @publish("", "set", "Vertex tooltip column", function (this: SankeyGraph) { return this.vertexColumns(); }, { optional: true })
-    vertexTooltipColumn: publish<this, string>;
-    @publish([], "propertyArray", "Annotations", null, { autoExpand: AnnotationColumn })
-    vertexAnnotationColumns: publish<this, AnnotationColumn[]>;
-
-    @publish([], "any", "Edge columns", null, { internal: true })
-    edgeColumns: publish<this, string[]>;
-    @publish([], "any", "Edges (Edges)", null, { internal: true })
-    edges: publish<this, Array<Array<string | number | boolean>>>;
-    @publish("", "set", "Edge ID column", function (this: SankeyGraph) { return this.edgeColumns(); }, { optional: true })
-    edgeIDColumn: publish<this, string>;
-    @publish("", "set", "Edge label column", function (this: SankeyGraph) { return this.edgeColumns(); }, { optional: true })
-    edgeLabelColumn: publish<this, string>;
-    @publish("", "set", "Edge source ID column", function (this: SankeyGraph) { return this.edgeColumns(); }, { optional: true })
-    edgeSourceColumn: publish<this, string>;
-    @publish("", "set", "Edge target ID column", function (this: SankeyGraph) { return this.edgeColumns(); }, { optional: true })
-    edgeTargetColumn: publish<this, string>;
-    @publish("", "set", "Edge target ID column", function (this: SankeyGraph) { return this.edgeColumns(); }, { optional: true })
-    edgeWeightColumn: publish<this, string>;
-    */
+    _palette: any;
     vertexColumns(): string[];
     vertexColumns(_: string[]): this;
     vertices(): Array<Array<string | number | boolean>>;
@@ -344,6 +299,21 @@ export interface SankeyGraph {
     edgeTargetColumn(_: string): this;
     edgeWeightColumn(): string;
     edgeWeightColumn(_: string): this;
+
+    palletteID(): string;
+    palletteID(_: string): this;
+    vertexStrokeWidth(): number;
+    vertexStrokeWidth(_: number): this;
+    vertexStrokeColor(): string;
+    vertexStrokeColor(_: string): this;
+    vertexWidth(): number;
+    vertexWidth(_: number): this;
+    vertexPadding(): number;
+    vertexPadding(_: number): this;
+    xAxisMovement(): boolean;
+    xAxisMovement(_: boolean): this;
+    yAxisMovement(): boolean;
+    yAxisMovement(_: boolean): this;
 }
 
 SankeyGraph.prototype.publish("paletteID", "category10", "set", "Color palette for this widget", SankeyGraph.prototype._palette.switch());

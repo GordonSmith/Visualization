@@ -5,4 +5,3 @@ export * from "./dataGraph.ts";
 export * from "./sankeyGraph.ts";
 export * from "./subgraph.tsx";
 export * from "./vertex.tsx";
-export * from "./HTMLTooltip.ts";
