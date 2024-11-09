@@ -300,8 +300,8 @@ export interface SankeyGraph {
     edgeWeightColumn(): string;
     edgeWeightColumn(_: string): this;
 
-    palletteID(): string;
-    palletteID(_: string): this;
+    paletteID(): string;
+    paletteID(_: string): this;
     vertexStrokeWidth(): number;
     vertexStrokeWidth(_: number): this;
     vertexStrokeColor(): string;

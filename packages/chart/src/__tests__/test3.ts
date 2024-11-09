@@ -1,5 +1,5 @@
 import { Column } from "../Column";
-import { Line } from "../Line"; Line;
+// import { Line } from "../Line";
 import { Pie } from "../Pie";
 
 export class Test3 extends Column {

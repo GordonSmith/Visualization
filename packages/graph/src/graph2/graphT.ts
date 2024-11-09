@@ -605,9 +605,11 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
 
     moveVertexPlaceholder(vp: VertexPlaceholder<V>, transition: boolean, moveNeighbours: boolean): this {
         const { x, y } = this.projectPlacholder(vp);
-        vp.element && (transition ? vp.element.transition().duration(this.transitionDuration()) as unknown as Selection<SVGPathElement, EdgePlaceholder<V, E>, SVGGElement, any> : vp.element)
-            .attr("transform", `translate(${x} ${y})`)
-            ;
+        if (vp.element) {
+            (transition ? vp.element.transition().duration(this.transitionDuration()) as unknown as Selection<SVGPathElement, EdgePlaceholder<V, E>, SVGGElement, any> : vp.element)
+                .attr("transform", `translate(${x} ${y})`)
+                ;
+        }
         if (moveNeighbours) {
             this._graphData.vertexEdges(vp.id).forEach(e => this.moveEdgePlaceholder(e, transition));
         }

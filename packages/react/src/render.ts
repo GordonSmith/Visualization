@@ -54,7 +54,6 @@ export interface HTMLAdapter<P> {
 }
 HTMLAdapter.prototype.publish("props", {}, "object", "Properties");
 
-
 export class SVGAdapter<P> extends SVGWidget {
 
     protected _root: Root;

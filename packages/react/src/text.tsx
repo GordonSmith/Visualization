@@ -54,7 +54,6 @@ export const Text: React.FunctionComponent<TextProps> = ({
     }, [totalWidth, totalHeight, onSizeUpdate]);
 
     const parts = React.useMemo(() => {
-        console.log("text", text);
         return text.split("\n");
     }, [text]);
 
@@ -62,7 +61,7 @@ export const Text: React.FunctionComponent<TextProps> = ({
         const size = Utility.textSize(parts, fontFamily, height);
         setTotalWidth(size.width);
         setTotalHeight(size.height);
-    }, [parts]);
+    }, [fontFamily, height, parts]);
 
     const TextLines = React.useMemo(() => {
         const yOffset = -(totalHeight / 2) + (height / 2);
@@ -173,13 +172,13 @@ export const LabelledRect: React.FunctionComponent<LabelledRect> = ({
         const size = Utility.textSize(text, fontFamily, fontSize);
         setActualWidthUpdate(size.width + padding * 2);
         setActualHeightUpdate(size.height + padding * 2);
-    }, [text, fontFamily, fontSize]);
+    }, [text, fontFamily, fontSize, padding]);
 
     React.useLayoutEffect(() => {
         if (onSizeUpdate) {
             onSizeUpdate({ width: acutalWidth, height: actualHeight });
         }
-    }, [acutalWidth, actualHeight, padding]);
+    }, [acutalWidth, actualHeight, padding, onSizeUpdate]);
 
     return <>
         <Rectangle
