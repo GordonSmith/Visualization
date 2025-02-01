@@ -2,7 +2,7 @@ import { Graph2 as GraphCollection } from "@hpcc-js/util";
 import { curveBasis as d3CurveBasis, curveCardinal as d3CurveCardinal, line as d3Line } from "d3-shape";
 import { EdgePlaceholder, SubgraphPlaceholder, VertexPlaceholder } from "./placeholders.ts";
 import { EdgeLayout } from "./tree.ts";
-import { intersection } from "./pathIntersection.ts";
+import { rectangleIntersection } from "./pathIntersection.ts";
 
 export type Point = [number, number];
 
@@ -105,8 +105,8 @@ export class Layout implements ILayout {
     edgeLine(ep: EdgePlaceholder): Line {
         const sPos = { ...this._graph.projectPlacholder(ep.source), w: ep.source?.renderResult?.extent?.width ?? 0, h: ep.source?.renderResult?.extent?.height ?? 0 };
         const tPos = { ...this._graph.projectPlacholder(ep.target), w: ep.target?.renderResult?.extent?.width ?? 0, h: ep.target?.renderResult?.extent?.height ?? 0 };
-        const sIntersect = intersection(sPos, { start: sPos, end: tPos });
-        const tIntersect = intersection(tPos, { start: sPos, end: tPos });
+        const sIntersect = rectangleIntersection(sPos, { start: sPos, end: tPos });
+        const tIntersect = rectangleIntersection(tPos, { start: sPos, end: tPos });
         return {
             source: {
                 x: sIntersect ? sIntersect.x : sPos.x,

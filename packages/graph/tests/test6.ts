@@ -78,6 +78,7 @@ export class Test6 extends GraphHtml {
             .layout("ForceDirected")
             .applyScaleOnLayout(true)
             .allowDragging(true)
+            .edgeStrokeWidth(1.5)
             .on("vertex_click", (row, col, sel, data) => {
                 console.log("vertex_click", row, col, sel);
             })
