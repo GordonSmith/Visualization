@@ -22,7 +22,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@hpcc-js/loader": "^2.9.0",
+        "@hpcc-js/loader": "^2.104.2",
         "marked": "^0.7.0",
         "prismjs": "^1.17.1"
     },
