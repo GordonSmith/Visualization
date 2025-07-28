@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "NodeNext",
+        "resolveJsonModule": true,
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "strict": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "allowImportingTsExtensions": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": [
+            "DOM",
+            "ESNext",
+            "ES2020"
+        ],
+        "typeRoots": []
+    }
+}

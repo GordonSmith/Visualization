@@ -1,15 +1,13 @@
 {
-    "name": "test-types",
-    "version": "1.0.0",
+    "name": "@hpcc-tests/type-leaks",
     "private": true,
+    "version": "1.0.0",
     "type": "module",
     "scripts": {
         "test": "vitest run"
     },
     "devDependencies": {
-        "@typescript-eslint/typescript-estree": "^8.29.0",
-        "glob": "^11.0.0",
-        "typescript": "^5.8.3",
-        "vitest": "^3.2.4"
+        "@typescript-eslint/typescript-estree": "8.38.0",
+        "glob": "11.0.3"
     }
 }

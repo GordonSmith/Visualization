@@ -126,6 +126,10 @@ When working with this codebase:
 7. **Documentation**: Update gallery examples and README files
 8. **Build configuration**: Use consistent Rollup setup across packages
 
+### Linting preferences
+- Use double quotes for strings
+- Linting settings are defined in the `eslint.config.js` file
+
 ## HPCC Platform Integration
 
 This framework is designed to work with the **HPCC Systems** big data platform:

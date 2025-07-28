@@ -34,6 +34,8 @@
     "lint-skypack": "npx -y @skypack/package-check",
     "lint-eslint": "eslint src/**/*.ts",
     "lint": "run-p lint-eslint lint-skypack",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "update": "npx --yes npm-check-updates -u -t minor"
   },
   "dependencies": {

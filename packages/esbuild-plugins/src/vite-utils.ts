@@ -167,7 +167,7 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
                 mangle: {
                     keep_classnames: true,
                 }
-            },
+            } as any,
             sourcemap: true,
             ...(configOverrides.build ? Object.fromEntries(Object.entries(configOverrides.build).filter(([key]) => key !== "lib" && key !== "rollupOptions")) : {})
         },

@@ -7,7 +7,8 @@
   "jsdelivr": "dist/index.umd.min.js",
   "workspaces": [
     "packages/*",
-    "demos/*"
+    "demos/*",
+    "tests/*"
   ],
   "scripts": {
     "install-deps": "npx -y playwright install --with-deps",
@@ -17,13 +18,6 @@
     "build": "lerna run build",
     "lint": "lerna run --no-bail lint",
     "lint-fix": "lerna run --no-bail lint -- --fix",
-    "test-browser": "vitest run --project browser",
-    "test-browser-esm": "cd tests/browser-esm && npm i && npm test",
-    "test-browser-umd": "cd tests/browser-umd && npm i && npm test",
-    "test-node": "vitest run --project node",
-    "test-node-esm": "cd tests/node-esm && npm i && npm test",
-    "test-node-cjs": "cd tests/node-cjs && npm i && npm test",
-    "test-type-leaks": "cd tests/type-leaks && npm i && npm test",
     "test": "lerna run test",
     "test-ci": "cross-env ci=1 lerna run test",
     "test-all": "vitest run",

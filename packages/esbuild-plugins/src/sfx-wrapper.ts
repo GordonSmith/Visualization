@@ -1,5 +1,6 @@
-import { readFile } from "fs/promises";
-import { existsSync } from "fs";
+import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { extname, join, dirname, basename } from "node:path";
 import { Base91 } from "@hpcc-js/wasm-base91";
 import { Zstd } from "@hpcc-js/wasm-zstd";
 import type { Plugin, PluginBuild } from "esbuild";
@@ -82,8 +83,12 @@ export async function wrap(path: string) {
     const zstd = await Zstd.load();
 
     const wasm = await readFile(path);
-    path = path.replace(/\.js$/, ".xxx");
-    const wasmJsPath = path.replace(/\.wasm$/, ".js");
+
+    // Properly handle path manipulation using Node.js path module
+    const dir = dirname(path);
+    const name = basename(path, extname(path));
+    const wasmJsPath = join(dir, `${name}.js`).replace(/\\/g, "/");
+
     const base91Wasm = base91.encode(wasm);
     const compressedWasm = zstd.compress(wasm);
     const base91CompressedWasm = base91.encode(compressedWasm);

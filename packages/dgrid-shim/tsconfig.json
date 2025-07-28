@@ -1,12 +1,16 @@
 {
-    "extends": "../tsconfig.settings.json",
+    "extends": "../tsconfig.json",
     "compilerOptions": {
         "rootDir": "./src",
         "outDir": "./lib-es6",
-        "module": "es6",
         "declarationDir": "./types",
+        "target": "ES5",
+        "module": "NodeNext",
+        "emitDeclarationOnly": false,
+        "allowImportingTsExtensions": false,
+        "noImplicitAny": false,
     },
     "include": [
-        "./src/**/*"
+        "./src/index.ts"
     ]
 }

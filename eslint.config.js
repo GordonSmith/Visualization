@@ -111,7 +111,14 @@ export default [
             "@typescript-eslint/no-var-require": "off",
             "@typescript-eslint/no-unsafe-declaration-merging": "off",
             "@typescript-eslint/no-empty-object-type": "off",
+            "@typescript-eslint/no-unused-expressions": "warn"
             // "react-hooks/exhaustive-deps": "warn"
+        }
+    },
+    {
+        files: ["**/tests/**/*"],
+        rules: {
+            "@typescript-eslint/no-unused-expressions": "off"
         }
     }
 ];
