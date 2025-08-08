@@ -17,7 +17,7 @@
         "@hpcc-js/dgrid": "0.1.6",
         "@hpcc-js/graph": "0.1.1",
         "@hpcc-js/layout": "0.1.6",
-        "@hpcc-js/marshaller": "0.1.6",
+        "@hpcc-js/marshaller": "0.1.8",
         "es6-promise": "4.2.8",
         "tslib": "1.10.0"
     },
