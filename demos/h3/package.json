@@ -28,7 +28,7 @@
     "dependencies": {
         "@hpcc-js/api": "^2",
         "@hpcc-js/common": "^2",
-        "@hpcc-js/comms": "^2",
+        "@hpcc-js/comms": "^3.6.3",
         "@hpcc-js/dgrid": "^2",
         "@hpcc-js/dgrid-shim": "^2",
         "@hpcc-js/graph": "^2",
