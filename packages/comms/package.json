@@ -39,7 +39,7 @@
         "@hpcc-js/util": "^2.18.0",
         "node-fetch": "2.3.0",
         "safe-buffer": "5.1.2",
-        "tmp": "0.0.33",
+        "tmp": "0.2.4",
         "xmldom": "0.1.27"
     },
     "devDependencies": {
