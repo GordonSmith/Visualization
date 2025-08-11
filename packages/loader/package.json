@@ -41,7 +41,7 @@
         "@hpcc-js/chart": "^2.37.0",
         "@hpcc-js/codemirror": "^2.20.0",
         "@hpcc-js/common": "^2.30.0",
-        "@hpcc-js/comms": "^2.14.0",
+        "@hpcc-js/comms": "^3.6.3",
         "@hpcc-js/composite": "^2.5.40",
         "@hpcc-js/dgrid": "^2.8.22",
         "@hpcc-js/eclwatch": "^2.8.35",
