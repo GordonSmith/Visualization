@@ -221,9 +221,6 @@ export class Pie extends SVGWidget {
         arc.enter().append("g")
             .attr("class", (d, i) => "arc series series-" + this.cssTag(d.data[0]))
             .attr("opacity", 0)
-            .attr("tabindex", 0) // Make focusable
-            .attr("role", "button") // ARIA role for accessibility
-            .attr("aria-label", (d) => `${d.data[0]}: ${d.data[1]}`) // ARIA label for screen readers
             .call(this._selection.enter.bind(this._selection))
             .on("click", function (d) {
                 context.click(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
@@ -247,6 +244,9 @@ export class Pie extends SVGWidget {
             })
             .merge(arc).transition()
             .attr("opacity", 1)
+            .attr("tabindex", context.tabNavigation() ? 0 : undefined) // Make focusable
+            .attr("role", context.tabNavigation() ? "button" : undefined) // ARIA role for accessibility
+            .attr("aria-label", context.tabNavigation() ? (d: any) => `${d.column}: ${d.value instanceof Array ? d.value[1] - d.value[0] : d.value}` : undefined) // ARIA label for screen readers
             .each(function (d, i) {
                 const quad = context.getQuadrant(midAngle(d));
                 context._quadIdxArr[quad].push(i);
@@ -258,8 +258,6 @@ export class Pie extends SVGWidget {
                     ;
             })
             ;
-
-        // Note: Tabster configuration is handled via attributes in the arc creation above
 
         //  Exit  ---
         arc.exit().transition()
@@ -520,6 +518,10 @@ export interface Pie {
 
     //  SimpleSelectionMixin
     _selection: Utility.SimpleSelection;
+
+    // Tab Navigation
+    tabNavigation(): boolean;
+    tabNavigation(_: boolean): this;
 }
 Pie.prototype.publish("showLabels", true, "boolean", "If true, wedge labels will display");
 Pie.prototype.publish("showSeriesValue", false, "boolean", "Append data series value next to label", null, { disable: w => !w.showLabels() });
@@ -534,3 +536,4 @@ Pie.prototype.publish("startAngle", 0, "number", "Starting angle of the first (a
 Pie.prototype.publish("labelHeight", 12, "number", "Font size of labels (pixels)", null, { disable: w => !w.showLabels() });
 Pie.prototype.publish("slicePadding", 0.01, "number", "Padding between pie slices (converted to pixels)", null, { tags: ["Basic"], range: { min: 0, step: 0.01, max: 0.2 } });
 Pie.prototype.publish("sortDataByValue", "descending", "set", "Sort data by value", ["none", "ascending", "descending"]);
+Pie.prototype.publish("tabNavigation", false, "boolean", "Enable or disable tab navigation");

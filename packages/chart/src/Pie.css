@@ -12,9 +12,11 @@
 }
 
 .chart_Pie .arc.selected path {
-    stroke: #dc3545;
-    stroke-width: 2px;
-    paint-order: fill stroke;
+    stroke: #dc3545 !important;
+    stroke-width: 3px !important;
+    paint-order: fill stroke !important;
+    filter: drop-shadow(0 0 3px rgba(220, 53, 69, 0.4));
+    transition: all 0.2s ease;
 }
 
 .chart_Pie polyline {
@@ -32,15 +34,15 @@
 
 .chart_Pie .arc:focus path {
     stroke: #007bff !important;
-    stroke-width: 4px !important;
+    stroke-width: 3px !important;
     paint-order: fill stroke !important;
-    filter: drop-shadow(0 0 8px rgba(0, 123, 255, 0.6));
+    filter: drop-shadow(0 0 4px rgba(0, 123, 255, 0.4));
     transition: all 0.2s ease;
 }
 
 .chart_Pie .arc.selected:focus path {
     stroke: #6f42c1 !important;
-    filter: drop-shadow(0 0 10px rgba(111, 66, 193, 0.8));
+    filter: drop-shadow(0 0 5px rgba(111, 66, 193, 0.5));
 }
 
 .chart_Pie .arc:focus-visible {
