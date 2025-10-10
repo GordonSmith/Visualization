@@ -1,10 +1,11 @@
 import { I2DChart, ITooltip } from "@hpcc-js/api";
-import { InputField, SVGWidget, Utility } from "@hpcc-js/common";
+import { d3Event, InputField, SVGWidget, Utility } from "@hpcc-js/common";
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
 import { format as d3Format } from "d3-format";
 import { interpolate as d3Interpolate } from "d3-interpolate";
 import { select as d3Select } from "d3-selection";
 import { arc as d3Arc, pie as d3Pie } from "d3-shape";
+import { createTabster, getTabster, type Types as TabsterTypes } from "tabster";
 
 import "../src/Pie.css";
 
@@ -33,6 +34,8 @@ export class Pie extends SVGWidget {
     private _maxLabelBottom = 0;
     private _seriesValueFormatter;
     private _seriesPercentageFormatter;
+    protected _tabster: TabsterTypes.TabsterCore | null = null;
+
     constructor() {
         super();
         I2DChart.call(this);
@@ -140,11 +143,17 @@ export class Pie extends SVGWidget {
 
     _slices;
     _labels;
-    enter(_domNode, element) {
-        super.enter(_domNode, element);
-        this._selection.widgetElement(element);
+    enter(domNode, element) {
+        super.enter(domNode, element);
+        this._selection
+            .widgetElement(element)
+            .skipBringToTop(true)
+            ;
         this._slices = element.append("g");
         this._labels = element.append("g");
+
+        this._tabster = getTabster(domNode.ownerDocument?.defaultView) || createTabster(domNode.ownerDocument?.defaultView);
+
         const context = this;
         this
             .tooltipHTML(function (d) {
@@ -179,13 +188,19 @@ export class Pie extends SVGWidget {
         }
         this._smallValueLabelHeight = this.calcSmallValueLabelHeight();
         this._totalValue = this.calcTotalValue();
-        const innerRadius = this.calcInnerRadius();
         const outerRadius = this.calcOuterRadius();
+        const innerRadius = Math.max(this.calcInnerRadius(), Math.min(outerRadius / 30, 6));
         const labelRadius = outerRadius + 12;
+        const paddingValue = this.slicePadding();
+
+        // Use a small pad angle for visual separation
+        const padAngleRadians = paddingValue > 0 ? Math.min(paddingValue, 0.05) : 0;
+
         this.d3Arc
             .innerRadius(innerRadius)
             .padRadius(outerRadius)
             .outerRadius(outerRadius)
+            .padAngle(padAngleRadians)
             ;
 
         this._quadIdxArr = [[], [], [], []];
@@ -206,12 +221,21 @@ export class Pie extends SVGWidget {
         arc.enter().append("g")
             .attr("class", (d, i) => "arc series series-" + this.cssTag(d.data[0]))
             .attr("opacity", 0)
+            .attr("tabindex", 0) // Make focusable
+            .attr("role", "button") // ARIA role for accessibility
+            .attr("aria-label", (d) => `${d.data[0]}: ${d.data[1]}`) // ARIA label for screen readers
             .call(this._selection.enter.bind(this._selection))
             .on("click", function (d) {
                 context.click(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
             })
             .on("dblclick", function (d) {
                 context.dblclick(context.rowToObj(d.data), context.columns()[1], context._selection.selected(this));
+            })
+            .on("keydown", function (evt, d) {
+                const event = d3Event();
+                if (event.code === "Space" || event.key === "Enter") {
+                    context._selection.click(this);
+                }
             })
             .each(function (d, i) {
                 d3Select(this).append("path")
@@ -234,6 +258,8 @@ export class Pie extends SVGWidget {
                     ;
             })
             ;
+
+        // Note: Tabster configuration is handled via attributes in the arc creation above
 
         //  Exit  ---
         arc.exit().transition()
@@ -429,7 +455,7 @@ export class Pie extends SVGWidget {
         }
 
         this.d3Pie
-            .padAngle(0.0025)
+            .padAngle(0) // No geometric padding - CSS-only solution
             .startAngle(startAngle)
             .endAngle(2 * Math.PI + startAngle)
             .value(function (d) {
@@ -456,6 +482,8 @@ export interface Pie {
     startAngle(_: number): this;
     labelHeight(): number;
     labelHeight(_: number): this;
+    slicePadding(): number;
+    slicePadding(_: number): this;
     seriesPercentageFormat(): string;
     seriesPercentageFormat(_: string): this;
     showLabels(): boolean;
@@ -504,4 +532,5 @@ Pie.prototype.publish("innerRadius", 0, "number", "Sets inner pie hole radius as
 Pie.prototype.publish("minOuterRadius", 20, "number", "Minimum outer radius (pixels)");
 Pie.prototype.publish("startAngle", 0, "number", "Starting angle of the first (and largest) wedge (degrees)");
 Pie.prototype.publish("labelHeight", 12, "number", "Font size of labels (pixels)", null, { disable: w => !w.showLabels() });
+Pie.prototype.publish("slicePadding", 0.01, "number", "Padding between pie slices (converted to pixels)", null, { tags: ["Basic"], range: { min: 0, step: 0.01, max: 0.2 } });
 Pie.prototype.publish("sortDataByValue", "descending", "set", "Sort data by value", ["none", "ascending", "descending"]);

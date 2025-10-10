@@ -31,7 +31,7 @@
     <h1>ESM Quick Test</h1>
     <div id="placeholder"></div>
     <script type="module">
-        import { Area, Column } from "@hpcc-js/chart";
+        import { Area, Column, Pie } from "./src/index.ts";
 
         const simple = {
             ND: {
@@ -57,20 +57,35 @@
             }
         };
 
-        window.__widget = new Column()
+
+        // window.__widget = new Column()
+        //     .target("placeholder")
+        //     .columns(["Category", "Series-1", "Series-2"])
+        //     .data([
+        //         ["A", 34, 21],
+        //         ["B", 55, 34],
+        //         ["C", 54, 90],
+        //         ["D", 80, 153],
+        //         ["E", 86, 92],
+        //         ["F", 144, 233]
+        //     ])
+        //     .tooltipValueFormat(",.0f")
+        //     .showValue(true)
+        //     .xAxisFocus(true)
+        //     .render()
+        //     ;
+
+        window.__widget = new Pie()
             .target("placeholder")
             .columns(["Category", "Series-1", "Series-2"])
             .data([
-                ["A", 34, 21],
-                ["B", 55, 34],
-                ["C", 54, 90],
-                ["D", 80, 153],
-                ["E", 86, 92],
-                ["F", 144, 233]
+                ["B", 55],
+                ["C", 54],
+                ["D", 80],
+                ["E", 86],
+                ["A", 34],
+                ["F", 144]
             ])
-            .tooltipValueFormat(",.0f")
-            .showValue(true)
-            .xAxisFocus(true)
             .render()
             ;
     </script>

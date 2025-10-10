@@ -63,7 +63,8 @@
         "d3-time-format": "^2",
         "d3-transition": "^1",
         "d3-zoom": "^1",
-        "d3v4-bullet": "1.0.7"
+        "d3v4-bullet": "1.0.7",
+        "tabster": "8.5.6"
     },
     "repository": {
         "type": "git",
