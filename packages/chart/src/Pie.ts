@@ -489,10 +489,14 @@ export interface Pie {
     sortDataByValue(): "none" | "ascending" | "descending";
     sortDataByValue(_: "none" | "ascending" | "descending"): this;
 
-    paletteID(_?: string): string | Pie;
-    useClonedPalette(_?: boolean): boolean | Pie;
-    outerText(_?: boolean): boolean | Pie;
+    paletteID(): string;
+    paletteID(_: string): this;
+    useClonedPalette(): boolean;
+    useClonedPalette(_: boolean): this;
+    outerText(): boolean;
+    outerText(_: boolean): this;
     innerRadius(): number;
+    innerRadius(_: number): this;
     innerRadius_exists(): boolean;
 
     //  I2DChart
