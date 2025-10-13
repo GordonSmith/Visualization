@@ -3,7 +3,7 @@ import { d3Event, InputField, Text } from "@hpcc-js/common";
 import { format as d3Format } from "d3-format";
 import { scaleBand as d3ScaleBand } from "d3-scale";
 import { local as d3Local, select as d3Select } from "d3-selection";
-import { createTabster, getTabster, type Types as TabsterTypes } from "tabster";
+// import { createTabster, getGroupper, getTabster, type Types as TabsterTypes } from "tabster";
 import { XYAxis } from "./XYAxis.ts";
 
 import "../src/Column.css";
@@ -22,7 +22,7 @@ export class Column extends XYAxis {
     private textLocal = d3Local<Text>();
     private stackedTextLocal = d3Local<Text>();
     private isHorizontal: boolean;
-    protected _tabster: TabsterTypes.TabsterCore | null = null;
+    // protected _tabster: TabsterTypes.TabsterCore | null = null;
 
     constructor() {
         super();
@@ -37,7 +37,10 @@ export class Column extends XYAxis {
     layerEnter(host: XYAxis, element, duration: number = 250) {
         super.layerEnter(host, element, duration);
 
-        this._tabster = getTabster(element.node()?.ownerDocument?.defaultView) || createTabster(element.node()?.ownerDocument?.defaultView);
+        // this._tabster = getTabster(element.node()?.ownerDocument?.defaultView) || createTabster(element.node()?.ownerDocument?.defaultView);
+        // if (this._tabster) {
+        //     getGroupper(this._tabster);
+        // }
 
         const context = this;
         this
@@ -88,6 +91,27 @@ export class Column extends XYAxis {
         const isHorizontal = host.orientation() === "horizontal";
         this.isHorizontal = isHorizontal;
         const context = this;
+
+        // Configure Tabster Groupper on the host's parent HTML div (not SVG element)
+        // Tabster works with HTML DOM, not SVG, so we apply to host's _parentRelativeDiv
+        const hostWidget = host as any; // Cast to access protected _parentRelativeDiv
+        if (this.tabNavigation() && hostWidget._parentRelativeDiv) {
+            hostWidget._parentRelativeDiv
+                .attr("tabindex", "0")
+                .attr("data-tabster", JSON.stringify({
+                    groupper: {
+                        tabbability: 2
+                    }
+                }))
+                .attr("role", "group")
+                .attr("aria-label", `${this.columns()[0] || "Chart"} data`);
+        } else if (hostWidget._parentRelativeDiv) {
+            hostWidget._parentRelativeDiv
+                .attr("tabindex", null)
+                .attr("data-tabster", null)
+                .attr("role", null)
+                .attr("aria-label", null);
+        }
 
         this._palette = this._palette.switch(this.paletteID());
         if (this.useClonedPalette()) {
@@ -208,7 +232,7 @@ export class Column extends XYAxis {
                     ;
                 const domainLength = host.yAxisStacked() ? dataLen : columnScale.bandwidth();
                 columnGEnter.merge(columnGRect as any)
-                    .attr("tabindex", context.tabNavigation() ? 0 : undefined) // Make focusable
+                    .attr("tabindex", context.tabNavigation() ? 0 : undefined) // Tabster Groupper manages these inner focusables
                     .attr("role", context.tabNavigation() ? "button" : undefined) // ARIA role for accessibility
                     .attr("aria-label", context.tabNavigation() ? (d: any) => `${d.column}: ${d.value instanceof Array ? d.value[1] - d.value[0] : d.value}` : undefined) // ARIA label for screen readers
                     .each(function (this: SVGElement, d: any) {

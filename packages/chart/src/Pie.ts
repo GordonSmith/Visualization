@@ -5,7 +5,7 @@ import { format as d3Format } from "d3-format";
 import { interpolate as d3Interpolate } from "d3-interpolate";
 import { select as d3Select } from "d3-selection";
 import { arc as d3Arc, pie as d3Pie } from "d3-shape";
-import { createTabster, getTabster, type Types as TabsterTypes } from "tabster";
+// import { createTabster, getGroupper, getTabster, getTabsterAttribute, Types, GroupperTabbabilities, setTabsterAttribute } from "tabster";
 
 import "../src/Pie.css";
 
@@ -34,7 +34,8 @@ export class Pie extends SVGWidget {
     private _maxLabelBottom = 0;
     private _seriesValueFormatter;
     private _seriesPercentageFormatter;
-    protected _tabster: TabsterTypes.TabsterCore | null = null;
+    // protected _tabster: Types.TabsterCore | null = null;
+    // protected _groupper: Types.GroupperAPI | null = null;
 
     constructor() {
         super();
@@ -143,18 +144,23 @@ export class Pie extends SVGWidget {
 
     _slices;
     _labels;
+
     enter(domNode, element) {
         super.enter(domNode, element);
         this._selection
             .widgetElement(element)
             .skipBringToTop(true)
             ;
+
         this._slices = element.append("g");
         this._labels = element.append("g");
 
-        this._tabster = getTabster(domNode.ownerDocument?.defaultView) || createTabster(domNode.ownerDocument?.defaultView);
+        // Initialize Tabster and Groupper
+        // this._tabster = getTabster(domNode.ownerDocument?.defaultView) || createTabster(domNode.ownerDocument?.defaultView);
+        // this._groupper = getGroupper(this._tabster);
 
         const context = this;
+
         this
             .tooltipHTML(function (d) {
                 switch (context.tooltipStyle()) {
@@ -179,6 +185,11 @@ export class Pie extends SVGWidget {
     update(_domNode, element) {
         super.update(_domNode, element);
         const context = this;
+        // element
+        //     .attr("tabindex", this.tabNavigation() ? "0" : null)
+        //     ;
+        // setTabsterAttribute(this._parentRelativeDiv.node(), this.tabNavigation() ? { groupper: { tabbability: 2 }, focusable: {} } : {}, true);
+
         this.updateD3Pie();
         this._palette = this._palette.switch(this.paletteID());
         this._seriesValueFormatter = d3Format(this.seriesValueFormat() as string);
@@ -230,7 +241,8 @@ export class Pie extends SVGWidget {
             })
             .on("keydown", function (evt, d) {
                 const event = d3Event();
-                if (event.code === "Space" || event.key === "Enter") {
+                if (context.tabNavigation() && (event.code === "Space" || event.key === "Enter")) {
+                    event.preventDefault();
                     context._selection.click(this);
                 }
             })
@@ -244,9 +256,9 @@ export class Pie extends SVGWidget {
             })
             .merge(arc).transition()
             .attr("opacity", 1)
-            .attr("tabindex", context.tabNavigation() ? 0 : undefined) // Make focusable
+            .attr("tabindex", context.tabNavigation() ? "0" : undefined) // Tabster Groupper manages these inner focusables
             .attr("role", context.tabNavigation() ? "button" : undefined) // ARIA role for accessibility
-            .attr("aria-label", context.tabNavigation() ? (d: any) => `${d.column}: ${d.value instanceof Array ? d.value[1] - d.value[0] : d.value}` : undefined) // ARIA label for screen readers
+            .attr("aria-label", context.tabNavigation() ? (d: any) => `${d.data[0]}: ${d.data[1]}` : undefined) // ARIA label for screen readers
             .each(function (d, i) {
                 const quad = context.getQuadrant(midAngle(d));
                 context._quadIdxArr[quad].push(i);

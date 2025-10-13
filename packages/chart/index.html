@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div id="placeholder"></div>
+    <div id="placeholder" tabindex="0"></div>
     <script type="module">
         import { Area, Bar, Column, Pie } from "./src/index.ts";
 
@@ -146,12 +146,13 @@
         //     .render()
         //     ;
     </script>
-    <div id="placeholder2"></div>
+
+    <div id="placeholder2" tabindex="0"></div>
     <script type="module">
         import { Area, Column, Pie } from "./src/index.ts";
 
         window.__pie = new Pie()
-            .target("placeholder")
+            .target("placeholder2")
             .columns(["Category", "Series-1", "Series-2"])
             .data([
                 ["B", 55],
@@ -161,10 +162,12 @@
                 ["A", 34],
                 ["F", 144]
             ])
+            .tabNavigation(false)
             .render()
             ;
     </script>
     <script>
+
         function doResize() {
             window.__column?.resize()?.render();
             window.__pie?.resize()?.render();
@@ -187,6 +190,8 @@
                 ;
             console.log('Tab Navigation:', e.target.checked);
         });
+
+
     </script>
 </body>
 
