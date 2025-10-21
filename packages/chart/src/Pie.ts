@@ -1,9 +1,8 @@
 import { I2DChart, ITooltip } from "@hpcc-js/api";
-import { InputField, SVGWidget, Utility } from "@hpcc-js/common";
+import { InputField, select as d3Select, SVGWidget, Utility } from "@hpcc-js/common";
 import { degreesToRadians, normalizeRadians } from "@hpcc-js/util";
 import { format as d3Format } from "d3-format";
 import { interpolate as d3Interpolate } from "d3-interpolate";
-import { select as d3Select } from "d3-selection";
 import { arc as d3Arc, pie as d3Pie } from "d3-shape";
 
 import "../src/Pie.css";

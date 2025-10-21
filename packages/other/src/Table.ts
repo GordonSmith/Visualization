@@ -1,4 +1,4 @@
-import { d3Event, HTMLWidget, Platform, select as d3Select, selectAll as d3SelectAll, Utility, Widget } from "@hpcc-js/common";
+import { HTMLWidget, Platform, select as d3Select, selectAll as d3SelectAll, Utility, Widget } from "@hpcc-js/common";
 import { Paginator } from "./Paginator.ts";
 
 import "../src/Table.css";
@@ -315,16 +315,16 @@ export class Table extends HTMLWidget {
         }));
         const rowsUpdate = rowsSel.enter().append("tr")
             .attr("class", "tr_" + this.id())
-            .on("click.selectionBag", function (_d) {
+            .on("click.selectionBag", function (event, _d) {
                 if (_d.row) {
                     const d = _d.row;
                     const i = _d.rowIdx;
-                    context.selectionBagClick(d, i);
+                    context.selectionBagClick(event, d, i);
                     context.applyRowStyles(context.getBodyRow(i));
                     context.applyFirstColRowStyles(context.getFixedRow(i));
                 }
             }, true)  //  capture=true:  event is caught on the way down the DOM before the cell click.
-            .on("mouseover", function (_d) {
+            .on("mouseover", function (event, _d) {
                 if (_d.row) {
                     const i = _d.rowIdx;
                     const fixedLeftRows = context.getFixedRow(i);
@@ -806,8 +806,8 @@ export class Table extends HTMLWidget {
         return this;
     }
 
-    selectionBagClick(d, i) {
-        if (this.multiSelect() && d3Event().shiftKey && this._selectionPrevClick) {
+    selectionBagClick(event, d, i) {
+        if (this.multiSelect() && event.shiftKey && this._selectionPrevClick) {
             let inRange = false;
             const rows = [];
             const selection = this.tableData().filter(function (row, i2) {
@@ -823,7 +823,7 @@ export class Table extends HTMLWidget {
             }, this);
             this.selection(selection);
         } else if (this.multiSelect()) {
-            this._selectionBag.click(this._createSelectionObject(d), d3Event);
+            this._selectionBag.click(this._createSelectionObject(d), event);
             this._selectionPrevClick = d;
         } else {
             const selObj = this._createSelectionObject(d);

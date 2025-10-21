@@ -41,10 +41,9 @@
     },
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.5.2",
-        "d3-collection": "^1",
         "d3-color": "3.1.0",
-        "d3-format": "^1",
-        "d3-selection": "^1"
+        "d3-format": "^3",
+        "d3-selection": "^3"
     },
     "repository": {
         "type": "git",

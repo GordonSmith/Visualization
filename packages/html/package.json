@@ -43,8 +43,8 @@
     },
     "devDependencies": {
         "@hpcc-js/esbuild-plugins": "^1.5.2",
-        "d3-format": "^1",
-        "d3-selection": "^1"
+        "d3-format": "^3",
+        "d3-selection": "^3"
     },
     "peerDependencies": {},
     "repository": {

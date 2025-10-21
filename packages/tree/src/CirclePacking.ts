@@ -1,5 +1,5 @@
 import { ITree } from "@hpcc-js/api";
-import { d3Event, SVGWidget } from "@hpcc-js/common";
+import { SVGWidget } from "@hpcc-js/common";
 import { rgb as d3Rgb } from "d3-color";
 import { hierarchy as d3Hierarchy, pack as d3Pack } from "d3-hierarchy";
 import { interpolateZoom as d3InterpolateZoom } from "d3-interpolate";
@@ -69,11 +69,11 @@ export class CirclePacking extends SVGWidget {
                 return d.color;
             })
             .on("click", function (d) { context.click(d.data, null, null); })
-            .on("dblclick", function (d) {
+            .on("dblclick", function (event, d) {
                 if (this._focus !== d) {
-                    context.zoom(d);
+                    context.zoom(d, event.altKey);
                 }
-                d3Event().stopPropagation();
+                event.stopPropagation();
             })
             ;
         this.circle.append("title").text(function (d) { return d.data.label; });
@@ -93,11 +93,11 @@ export class CirclePacking extends SVGWidget {
         this.zoomTo([root.x, root.y, root.r * 2]);
     }
 
-    zoom(newFocus) {
+    zoom(newFocus, altKey = false) {
         this._focus = newFocus;
         const context = this;
         const transition = this.svg.transition()
-            .duration(d3Event().altKey ? 7500 : 750)
+            .duration(altKey ? 7500 : 750)
             .tween("zoom", function () {
                 const i = d3InterpolateZoom(context.view, [context._focus.x, context._focus.y, context._focus.r * 2]);
                 return function (t) { context.zoomTo(i(t)); };

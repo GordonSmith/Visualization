@@ -1,4 +1,4 @@
-import { d3Event, select as d3Select, SVGZoomWidget, Utility } from "@hpcc-js/common";
+import { select as d3Select, SVGZoomWidget, Utility } from "@hpcc-js/common";
 import { HTMLTooltip } from "@hpcc-js/html";
 import { scaleLinear as d3ScaleLinear } from "d3-scale";
 import { React, render, LabelledRect } from "@hpcc-js/react";
@@ -213,7 +213,7 @@ export class ReactGantt extends SVGZoomWidget {
             .join(
                 enter => enter.append("g")
                     .attr("class", "item")
-                    .on("click.selectionBag", function (d, i) {
+                    .on("click.selectionBag", function (event, d, i) {
                         const _id = d.id === undefined ? i : d.id;
                         if (context._selection.isSelected({ _id, element: d.element })) {
                             context._selection.clear();
@@ -223,13 +223,13 @@ export class ReactGantt extends SVGZoomWidget {
                                     _id,
                                     element: () => d.element
                                 },
-                                d3Event
+                                event
                             );
                         }
                         context.selectionChanged();
-                        d3Event().stopPropagation();
+                        event.stopPropagation();
                     })
-                    .on("click", function (this: SVGElement, d) {
+                    .on("click", function (this: SVGElement, event, d) {
                         const selected = d.element.classed("selected");
                         if (d[context.columns().length]) {
                             d.__lparam = d[context.columns().length];
@@ -243,17 +243,16 @@ export class ReactGantt extends SVGZoomWidget {
                         }
                         context.click(d, "", selected);
                     })
-                    .on("mousein", function (d) {
+                    .on("mousein", function (event, d) {
                         context.highlightItem(d3Select(this), d);
                         const selected = d.element.classed("selected");
                         context.mousein(d, "", selected);
                     })
-                    .on("mouseover", function (d) {
-                        const d3evt = d3Event();
+                    .on("mouseover", function (event, d) {
                         context._tooltip._triggerElement = d.element;
                         context._tooltip._cursorLoc = [
-                            d3evt.clientX,
-                            d3evt.clientY
+                            event.clientX,
+                            event.clientY
                         ];
                         context._tooltip
                             .data(d)

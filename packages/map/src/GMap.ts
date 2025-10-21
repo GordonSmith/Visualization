@@ -1,7 +1,6 @@
 import { HTMLWidget } from "@hpcc-js/common";
 import { AbsoluteSurface } from "@hpcc-js/layout";
 import { promiseTimeout } from "@hpcc-js/util";
-import { map as d3Map } from "d3-collection";
 import * as _GoogleMapsLoader from "google-maps";
 
 const GoogleMapsLoader = _GoogleMapsLoader.default || _GoogleMapsLoader;
@@ -456,8 +455,8 @@ export class GMap extends HTMLWidget {
             context._prevStreetView = context.streetView();
         });
 
-        this._circleMap = d3Map([]);
-        this._pinMap = d3Map([]);
+        this._circleMap = new Map();
+        this._pinMap = new Map();
 
         this._prevCenterLat = this.centerLat();
         this._prevCenterLong = this.centerLong();
@@ -609,9 +608,9 @@ export class GMap extends HTMLWidget {
 
         const circle_enter = [];
         const circle_update = [];
-        const circle_exit = d3Map(this._circleMap.keys(), function (d: any) { return d; });
+        const circle_exit = new Map(Array.from(this._circleMap.keys()).map((d: any) => [d, true]));
         this.data().forEach(function (row) {
-            circle_exit.remove(rowID(row));
+            circle_exit.delete(rowID(row));
             if (row[3] && !this._circleMap.has(rowID(row))) {
                 circle_enter.push(row);
             } else if (row[3] && this._circleMap.has(rowID(row))) {
@@ -631,9 +630,9 @@ export class GMap extends HTMLWidget {
         }, this);
 
         const context = this;
-        circle_exit.each(function (row) {
+        circle_exit.forEach(function (value, row) {
             context._circleMap.get(row).setMap(null);
-            context._circleMap.remove(row);
+            context._circleMap.delete(row);
         });
     }
 
@@ -644,9 +643,9 @@ export class GMap extends HTMLWidget {
 
         const pin_enter = [];
         const pin_update = [];
-        const pin_exit = d3Map(this._pinMap.keys(), function (d: any) { return d; });
+        const pin_exit = new Map(Array.from(this._pinMap.keys()).map((d: any) => [d, true]));
         this.data().forEach(function (row) {
-            pin_exit.remove(rowID(row));
+            pin_exit.delete(rowID(row));
             if (row[2] && !this._pinMap.has(rowID(row))) {
                 pin_enter.push(row);
             } else if (row[2] && this._pinMap.has(rowID(row))) {
@@ -666,9 +665,9 @@ export class GMap extends HTMLWidget {
         }, this);
 
         const context = this;
-        pin_exit.each(function (row) {
+        pin_exit.forEach(function (value, row) {
             context._pinMap.get(row).setMap(null);
-            context._pinMap.remove(row);
+            context._pinMap.delete(row);
         });
     }
 

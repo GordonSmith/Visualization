@@ -1,8 +1,7 @@
 import { INDChart, ITooltip } from "@hpcc-js/api";
-import { InputField, Text } from "@hpcc-js/common";
+import { InputField, local as d3Local, select as d3Select, Text } from "@hpcc-js/common";
 import { format as d3Format } from "d3-format";
 import { scaleBand as d3ScaleBand } from "d3-scale";
-import { local as d3Local, select as d3Select } from "d3-selection";
 import { XYAxis } from "./XYAxis.ts";
 
 import "../src/Column.css";

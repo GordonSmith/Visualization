@@ -1,4 +1,4 @@
-import { d3Event, drag as d3Drag, Palette, select as d3Select, Selection, Spacer, SVGGlowFilter, SVGZoomWidget, Button, ToggleButton, Utility, Widget } from "@hpcc-js/common";
+import { drag as d3Drag, Palette, select as d3Select, Selection, Spacer, SVGGlowFilter, SVGZoomWidget, Button, ToggleButton, Utility, Widget } from "@hpcc-js/common";
 import { Graph2 as GraphCollection, hashSum } from "@hpcc-js/util";
 import { HTMLTooltip } from "@hpcc-js/html";
 import { interpolateNumberArray as d3InterpolateNumberArray } from "d3-interpolate";
@@ -147,10 +147,10 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
                     }
                 }
             })
-            .on("drag", function (d) {
+            .on("drag", function (event, d) {
                 if (context.allowDragging()) {
-                    d.fx = d.sx + context.rproject(d3Event().x - d.sx);
-                    d.fy = d.sy + context.rproject(d3Event().y - d.sy);
+                    d.fx = d.sx + context.rproject(event.x - d.sx);
+                    d.fy = d.sy + context.rproject(event.y - d.sy);
                     context._graphData.vertexEdges(d.id).forEach(e => delete e.points);
                     context.moveVertexPlaceholder(d, false, true);
                     const selection = context.selection();
@@ -172,7 +172,7 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
                     }
                 }
             })
-            .on("end", function (d) {
+            .on("end", function (event, d) {
                 let doClick = true;
                 if (context.allowDragging()) {
                     doClick = Math.abs(d.sx - d.fx) < 1 && Math.abs(d.sy - d.fy) < 1;
@@ -194,14 +194,13 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
                     d3Select(this).classed("grabbed", false);
                 }
                 if (doClick) {
-                    const event = d3Event();
                     context._selection.click({
                         _id: String(d.id),
                         element: () => d.element as any
                     }, event.sourceEvent);
                     context.selectionChanged();
                     const selected = d.element.classed("selected");
-                    const eventOrigin = context.resolveEventOrigin();
+                    const eventOrigin = context.resolveEventOrigin(event);
                     if (event?.sourceEvent?.button === 2) {
                         context.vertex_contextmenu(d.props.origData || d.props, "", selected, eventOrigin);
                     } else {
@@ -218,9 +217,8 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
             ;
     }
 
-    resolveEventOrigin(): { origin: string, data?: SG | V | E } {
-        const d3evt = d3Event();
-        const eventPath = d3evt?.sourceEvent?.path ?? d3evt?.sourceEvent?.composedPath() ?? d3evt?.path ?? d3evt?.composedPath();
+    resolveEventOrigin(event): { origin: string, data?: SG | V | E } {
+        const eventPath = event?.sourceEvent?.path ?? event?.sourceEvent?.composedPath() ?? event?.path ?? event?.composedPath();
         const element = eventPath?.find(n => n?.hasAttribute && n?.hasAttribute("data-click"));
         const origin = element ? element.getAttribute("data-click") : "";
         const dataStr = element ? element.getAttribute("data-click-data") : "";
@@ -675,14 +673,14 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
             .join(
                 enter => enter.append("g")
                     .attr("class", "graphEdge")
-                    .on("click.selectionBag", function (d) {
+                    .on("click.selectionBag", function (event, d) {
                         context._selection.click({
                             _id: String(d.id),
                             element: () => d.element as any
-                        }, d3Event());
+                        }, event);
                         context.selectionChanged();
                     })
-                    .on("click", function (this: SVGElement, d) {
+                    .on("click", function (this: SVGElement, event, d) {
                         const selected = d.element.classed("selected");
                         context.edge_click(d.props.origData || d.props, "", selected);
                     })
@@ -741,20 +739,20 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
             .join(
                 enter => enter.append("g")
                     .attr("class", "graphVertex")
-                    .on("dblclick", function (this: SVGElement, d) {
-                        d3Event().stopPropagation();
+                    .on("dblclick", function (this: SVGElement, event, d) {
+                        event.stopPropagation();
                     })
-                    .on("contextmenu", function (this: SVGElement, d) {
-                        d3Event().preventDefault();
+                    .on("contextmenu", function (this: SVGElement, event, d) {
+                        event.preventDefault();
                     })
-                    .on("mousein", function (d) {
+                    .on("mousein", function (event, d) {
                         Utility.safeRaise(this);
                         context.highlightVertex(d3Select(this), d);
                         const selected = d.element.classed("selected");
-                        const eventOrigin = context.resolveEventOrigin();
+                        const eventOrigin = context.resolveEventOrigin(event);
                         context.vertex_mousein(d.props.origData || d.props, "", selected, eventOrigin);
                     })
-                    .on("mouseover", function (d) {
+                    .on("mouseover", function (event, d) {
                         Utility.safeRaise(this);
                         context.highlightVertex(d3Select(this), d);
                         const selected = d.element.classed("selected");
@@ -772,13 +770,13 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
                                 .render()
                                 ;
                         }
-                        const eventOrigin = context.resolveEventOrigin();
+                        const eventOrigin = context.resolveEventOrigin(event);
                         context.vertex_mouseover(d.props.origData || d.props, "", selected, eventOrigin);
                     })
-                    .on("mouseout", function (d) {
+                    .on("mouseout", function (event, d) {
                         context.highlightVertex(null, null);
                         const selected = d.element.classed("selected");
-                        const eventOrigin = context.resolveEventOrigin();
+                        const eventOrigin = context.resolveEventOrigin(event);
                         context.vertex_mouseout(d.props.origData || d.props, "", selected, eventOrigin);
                         if (d.props.tooltip) {
                             context._tooltip.mouseout();
@@ -840,14 +838,14 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
             .join(
                 enter => enter.append("g")
                     .attr("class", "subgraphPlaceholder")
-                    .on("click.selectionBag", function (d) {
+                    .on("click.selectionBag", function (event, d) {
                         context._selection.click({
                             _id: String(d.id),
                             element: () => d.element as any
-                        }, d3Event());
+                        }, event);
                         context.selectionChanged();
                     })
-                    .on("click", function (this: SVGElement, d) {
+                    .on("click", function (this: SVGElement, event, d) {
                         const selected = d.element.classed("selected");
                         context.subgraph_click(d.props.origData || d.props, "", selected);
                     })

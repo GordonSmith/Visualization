@@ -1,6 +1,5 @@
 //  Based on  https://github.com/GordonSmith/d3-tip forked from https://github.com/Caged/d3-tip
 
-import { map } from "d3-collection";
 import { select, selection } from "d3-selection";
 
 export function tip() {
@@ -218,17 +217,17 @@ export function tip() {
     function d3TipOffset() { return [0, 0]; }
     function d3TipHTML() { return " "; }
 
-    const directionCallbacks = map({
-        n: directionNorth,
-        s: directionSouth,
-        e: directionEast,
-        w: directionWest,
-        nw: directionNorthWest,
-        ne: directionNorthEast,
-        sw: directionSouthWest,
-        se: directionSouthEast
-    });
-    const directions = directionCallbacks.keys();
+    const directionCallbacks = new Map([
+        ["n", directionNorth],
+        ["s", directionSouth],
+        ["e", directionEast],
+        ["w", directionWest],
+        ["nw", directionNorthWest],
+        ["ne", directionNorthEast],
+        ["sw", directionSouthWest],
+        ["se", directionSouthEast]
+    ]);
+    const directions = Array.from(directionCallbacks.keys());
 
     function directionNorth() {
         const bbox = getScreenBBox(window);

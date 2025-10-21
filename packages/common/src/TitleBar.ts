@@ -1,4 +1,3 @@
-import { event as d3Event } from "d3-selection";
 import { HTMLWidget } from "./HTMLWidget.ts";
 import { fa5Class } from "./Utility.ts";
 import { Widget } from "./Widget.ts";
@@ -20,9 +19,9 @@ export class Button extends HTMLWidget {
         const context = this;
         this._i = this._element
             .attr("href", "#")
-            .on("click", function () {
+            .on("click", function (event) {
                 context.click();
-                d3Event.preventDefault();
+                event.preventDefault();
             })
             .on("mousemove", this.mouseMove)
             .on("mouseout", this.mouseOut)
@@ -90,12 +89,12 @@ StickyButton.prototype.publish("selected", false, "boolean");
 export class ToggleButton extends StickyButton {
 
     enter(domNode: HTMLElement, element) {
-        element.on("click.sel", (d, idx, groups) => {
+        element.on("click.sel", (event, d, idx, groups) => {
             this
                 .selected(!this.selected())
                 .render()
                 ;
-            d3Event.preventDefault();
+            event.preventDefault();
         });
         super.enter(domNode, element);
     }
@@ -269,9 +268,9 @@ export class SelectionButton extends StickyButton {
     _owner: SelectionBar;
 
     enter(domNode: HTMLElement, element) {
-        element.on("click.sel", (d, idx, groups) => {
+        element.on("click.sel", (event, d, idx, groups) => {
             this.selected(true).render();
-            d3Event.preventDefault();
+            event.preventDefault();
         });
         super.enter(domNode, element);
     }

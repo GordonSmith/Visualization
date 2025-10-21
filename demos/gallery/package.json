@@ -20,7 +20,7 @@
         "update-major": "npx --yes npm-check-updates -u"
     },
     "dependencies": {
-        "d3-random": "1.1.2",
+        "d3-random": "3.0.1",
         "es6-promise": "4.2.8",
         "tslib": "2.8.1"
     },
@@ -53,6 +53,6 @@
         "@hpcc-js/timeline": "^3.0.0",
         "@hpcc-js/tree": "^3.0.0",
         "@hpcc-js/util": "^3.3.12",
-        "d3-selection": "^1"
+        "d3-selection": "^3"
     }
 }

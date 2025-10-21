@@ -1,5 +1,4 @@
 import { deviation as d3Deviation, max as d3Max, mean as d3Mean, median as d3Median, min as d3Min, sum as d3Sum, variance as d3Variance } from "d3-array";
-import { map as d3Map, nest as d3Nest } from "d3-collection";
 import { csvFormatRows as d3CsvFormatRows, csvParse as d3CsvParse, tsvFormatRows as d3TsvFormatRows, tsvParse as d3TsvParse } from "d3-dsv";
 import { format as d3Format } from "d3-format";
 import { timeFormat as d3TimeFormat, timeParse as d3TimeParse } from "d3-time-format";
@@ -15,6 +14,92 @@ const d3Aggr = {
     deviation: d3Deviation,
     sum: d3Sum
 };
+
+// Simple polyfill for d3.nest() which was removed in D3 v6
+function d3Nest() {
+    const keys: any[] = [];
+    let rollupFunc: any = null;
+
+    function nest(array: any[]) {
+        if (keys.length === 0) return array;
+        return nestByKey(array, 0);
+    }
+
+    function nestByKey(array: any[], depth: number) {
+        if (depth >= keys.length) {
+            return rollupFunc ? rollupFunc(array) : array;
+        }
+
+        const keyFunc = keys[depth];
+        const map = new Map();
+
+        array.forEach(item => {
+            const key = keyFunc(item);
+            if (!map.has(key)) {
+                map.set(key, []);
+            }
+            map.get(key).push(item);
+        });
+
+        const result: any[] = [];
+        map.forEach((value, key) => {
+            const nested = nestByKey(value, depth + 1);
+            result.push({
+                key: key,
+                values: nested,
+                value: nested  // Support both values and value properties
+            });
+        });
+        return result;
+    }
+
+    return {
+        key: function (func: any) {
+            keys.push(func);
+            return this;
+        },
+        rollup: function (func: any) {
+            rollupFunc = func;
+            return this;
+        },
+        entries: function (array: any[]) {
+            return nest(array);
+        },
+        map: function (array: any[], mapType?: any) {
+            const entries = nest(array);
+            if (mapType) {
+                // If a Map constructor is passed, use it
+                return entriesToMap(entries);
+            }
+            // Otherwise return a plain object
+            return entriesToObject(entries);
+        }
+    };
+}
+
+function entriesToObject(entries: any[]): any {
+    const obj: any = {};
+    entries.forEach(entry => {
+        if (entry.values && entry.values.length > 0 && entry.values[0].key !== undefined) {
+            obj[entry.key] = entriesToObject(entry.values);
+        } else {
+            obj[entry.key] = entry.values || entry.value;
+        }
+    });
+    return obj;
+}
+
+function entriesToMap(entries: any[]): Map<any, any> {
+    const map = new Map();
+    entries.forEach(entry => {
+        if (entry.values && entry.values.length > 0 && entry.values[0].key !== undefined) {
+            map.set(entry.key, entriesToMap(entry.values));
+        } else {
+            map.set(entry.key, entry.values || entry.value);
+        }
+    });
+    return map;
+}
 
 let lastFoundFormat = null;
 
@@ -784,7 +869,7 @@ export class RollupView extends LegacyView {
         return this.nest().map(this._whichData(opts));
     }
     d3Map(opts) {
-        return this.nest().map(this._whichData(opts), d3Map);
+        return this.nest().map(this._whichData(opts), Map);
     }
     _walkData(entries, prevRow = []) {
         let retVal = [];
