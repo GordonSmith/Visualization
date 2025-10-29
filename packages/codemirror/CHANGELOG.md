@@ -53,6 +53,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.7.0](https://github.com/GordonSmith/Visualization/compare/codemirror-v3.6.0...codemirror-v3.7.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* Add SQL support to codemirror ([5c9226c](https://github.com/GordonSmith/Visualization/commit/5c9226c1b3100f1fc246612d90de09a6895be7bc))
+* Add SQL support to codemirror ([e66a715](https://github.com/GordonSmith/Visualization/commit/e66a715ff3e378e393d2eef03e78f81b0cbd2472))
+* add YAML support to codemirror ([bf7cb0f](https://github.com/GordonSmith/Visualization/commit/bf7cb0fd321036620264e3fe332d84ce5343df77))
+* Bundle css files into index.js ([7d6b930](https://github.com/GordonSmith/Visualization/commit/7d6b930016648de1e0410617cf75e4c68430f7c3))
+* Bundle css files into index.js ([f2cd6bc](https://github.com/GordonSmith/Visualization/commit/f2cd6bc8ff666bf5ae756b69ac8f0a677e02819e))
+* **codemirror:** expose codemirror line class methods ([114cc46](https://github.com/GordonSmith/Visualization/commit/114cc46e0c9aa009dac830154080ebe355c5e159))
+* **codemirror:** expose codemirror line class methods ([2dc8884](https://github.com/GordonSmith/Visualization/commit/2dc88845cd4166a1e6739e6ad76c2caf221b456f))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade codemirror to v3 ([b74cffd](https://github.com/GordonSmith/Visualization/commit/b74cffdb7f39fc863ff3953e7210c329f41282bb))
+* Upgrade codemirror to v3 ([377d6b5](https://github.com/GordonSmith/Visualization/commit/377d6b54cf476b9e0c6773cd31f99ddc42a8d6dc))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* sync test port numbers ([d1b8764](https://github.com/GordonSmith/Visualization/commit/d1b8764acfeeb17ca91cec8b8f8428f40062b81d))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/common bumped from ^3.5.0 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.6.0](https://github.com/hpcc-systems/Visualization/compare/codemirror-v3.5.2...codemirror-v3.6.0) (2025-10-23)
 
 
