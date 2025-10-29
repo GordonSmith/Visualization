@@ -39,6 +39,41 @@ Signed-off-by: Gordon Smith <GordonJSmith@gmail.com>
 
 
 
+## [9.6.0](https://github.com/GordonSmith/Visualization/compare/dataflow-v9.5.0...dataflow-v9.6.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* Switch to esbuild and ESM first packaging (comms) ([88e38de](https://github.com/GordonSmith/Visualization/commit/88e38de8a71b6a701c9cf87412d247ff9bfe845c))
+* Switch to esbuild and ESM first packaging (comms) ([3bc7e54](https://github.com/GordonSmith/Visualization/commit/3bc7e54da7a70d5bfc57ea4b1a87fb02913cbf40))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* common up nodejs bundle rules ([0cc25c3](https://github.com/GordonSmith/Visualization/commit/0cc25c3d3533395e4f01e5b2c03ebaa7ff8207a3))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* sync test port numbers ([d1b8764](https://github.com/GordonSmith/Visualization/commit/d1b8764acfeeb17ca91cec8b8f8428f40062b81d))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [9.5.0](https://github.com/hpcc-systems/Visualization/compare/dataflow-v9.4.3...dataflow-v9.5.0) (2025-10-23)
 
 

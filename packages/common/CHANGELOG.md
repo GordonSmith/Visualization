@@ -139,6 +139,49 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.6.0](https://github.com/GordonSmith/Visualization/compare/common-v3.5.0...common-v3.6.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Switch to esbuild (common, api, chart) ([c054df0](https://github.com/GordonSmith/Visualization/commit/c054df0e39237e1210f8a735e10f5781d1de1bec))
+* Switch to esbuild (common, api, chart) ([a855017](https://github.com/GordonSmith/Visualization/commit/a855017b8b35ee53ca4a3a060973bf4b87c8916b))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade graph, html and react to v3 ([b5bb00d](https://github.com/GordonSmith/Visualization/commit/b5bb00dfc2aacc8137ba028cd987ed3433ddc365))
+* Upgrade graph, html and react to v3 ([a1aa027](https://github.com/GordonSmith/Visualization/commit/a1aa02785ed97c4ee18b3a83ab341f0423956b7c))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+* Upgrade map to v3 ([962c56a](https://github.com/GordonSmith/Visualization/commit/962c56a5141af6e7a428063476c8bc543cb9cb60))
+* Upgrade map to v3 ([87da3c6](https://github.com/GordonSmith/Visualization/commit/87da3c6728f78f5137d5a045d3bd7f961fcbd31c))
+
+
+### Bug Fixes
+
+* Revert arguments removal ([ee5201f](https://github.com/GordonSmith/Visualization/commit/ee5201f08361e23d87c8be5b3e2f054751efd374))
+* Revert arguments removal ([20c34f1](https://github.com/GordonSmith/Visualization/commit/20c34f17c8a49bc4a608631f4d1f7b4140b5270e))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Unable to select "Accent" ordinal palette ([9b113a7](https://github.com/GordonSmith/Visualization/commit/9b113a751210f4acb1ada003eacffd69eb9691a3))
+* Unable to select "Accent" ordinal palette ([3031db5](https://github.com/GordonSmith/Visualization/commit/3031db53a9d4e81e91693a4a5f902298c45fd3dc))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/util bumped from ^3.4.0 to ^3.5.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.5.0](https://github.com/hpcc-systems/Visualization/compare/common-v3.4.2...common-v3.5.0) (2025-10-23)
 
 

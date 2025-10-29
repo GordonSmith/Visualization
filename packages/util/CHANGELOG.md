@@ -65,6 +65,46 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/util-v3.4.0...util-v3.5.0) (2025-10-29)
+
+
+### Features
+
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Bump WsWorkunits services ([7badf83](https://github.com/GordonSmith/Visualization/commit/7badf837476bd3c5426a2d169ee139de58c103c7))
+* Bump WsWorkunits services ([9ee2210](https://github.com/GordonSmith/Visualization/commit/9ee221012ba7d2caccc4986409527573c8388c34))
+* Switch to esbuild (common, api, chart) ([c054df0](https://github.com/GordonSmith/Visualization/commit/c054df0e39237e1210f8a735e10f5781d1de1bec))
+* Switch to esbuild (common, api, chart) ([a855017](https://github.com/GordonSmith/Visualization/commit/a855017b8b35ee53ca4a3a060973bf4b87c8916b))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* Switch to esbuild and ESM first packaging (comms) ([88e38de](https://github.com/GordonSmith/Visualization/commit/88e38de8a71b6a701c9cf87412d247ff9bfe845c))
+* Switch to esbuild and ESM first packaging (comms) ([3bc7e54](https://github.com/GordonSmith/Visualization/commit/3bc7e54da7a70d5bfc57ea4b1a87fb02913cbf40))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* Improve type-leaks test ([379961d](https://github.com/GordonSmith/Visualization/commit/379961dedff41a4546003da34936380664acfc84))
+* Improve type-leaks test ([0dbd604](https://github.com/GordonSmith/Visualization/commit/0dbd604b181056fe93af069377a8ceb0c1391543))
+* optimize WUDetails call ([#4422](https://github.com/GordonSmith/Visualization/issues/4422)) ([1521608](https://github.com/GordonSmith/Visualization/commit/1521608300037f1f06beac7c423ee192e21bf7fb))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* sync test port numbers ([d1b8764](https://github.com/GordonSmith/Visualization/commit/d1b8764acfeeb17ca91cec8b8f8428f40062b81d))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.4.0](https://github.com/hpcc-systems/Visualization/compare/util-v3.3.12...util-v3.4.0) (2025-10-23)
 
 

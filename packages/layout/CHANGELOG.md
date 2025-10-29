@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/layout-v3.4.0...layout-v3.5.0) (2025-10-29)
+
+
+### Features
+
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade form + composite to v3 ([f297d81](https://github.com/GordonSmith/Visualization/commit/f297d81de0ed3dff5fa51328d0a482df3aac7d23))
+* Upgrade form + composite to v3 ([ea5c9b7](https://github.com/GordonSmith/Visualization/commit/ea5c9b774a841e0c0935ad04f94821a9ae4431d2))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Switch to dgrid for layouts ([5ef8847](https://github.com/GordonSmith/Visualization/commit/5ef8847932da4f4b10906363b681f4a7f275c40b))
+* Switch to dgrid for layouts ([fca977d](https://github.com/GordonSmith/Visualization/commit/fca977d991ddadc4e498c59a55c255599ea6aa54))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/api bumped from ^3.4.0 to ^3.5.0
+    * @hpcc-js/chart bumped from ^3.5.0 to ^3.6.0
+    * @hpcc-js/common bumped from ^3.5.0 to ^3.6.0
+    * @hpcc-js/dgrid bumped from ^3.5.0 to ^3.6.0
+    * @hpcc-js/util bumped from ^3.4.0 to ^3.5.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.4.0](https://github.com/hpcc-systems/Visualization/compare/layout-v3.3.1...layout-v3.4.0) (2025-10-23)
 
 

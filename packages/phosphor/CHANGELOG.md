@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/GordonSmith/Visualization/compare/phosphor-v3.3.0...phosphor-v3.4.0) (2025-10-29)
+
+
+### Features
+
+* Bundle css files into index.js ([7d6b930](https://github.com/GordonSmith/Visualization/commit/7d6b930016648de1e0410617cf75e4c68430f7c3))
+* Bundle css files into index.js ([f2cd6bc](https://github.com/GordonSmith/Visualization/commit/f2cd6bc8ff666bf5ae756b69ac8f0a677e02819e))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+* Upgrade phosphor to V3 ([c6496af](https://github.com/GordonSmith/Visualization/commit/c6496af08939a99277c9241e1c47b686a7408146))
+* Upgrade phosphor to V3 ([61a2134](https://github.com/GordonSmith/Visualization/commit/61a2134efbee89774fbf58ea5455f2c3801d2527))
+
+
+### Bug Fixes
+
+* Dock panel scrollbars are illogical ([e3052e2](https://github.com/GordonSmith/Visualization/commit/e3052e23c5ef75ef6a59aff2592bd741019e5cec))
+* Dock panel scrollbars are illogical ([953aa9c](https://github.com/GordonSmith/Visualization/commit/953aa9c3c2fe1ab7caf4817f0c0519d3eadb5971))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/common bumped from ^3.5.0 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.3.0](https://github.com/hpcc-systems/Visualization/compare/phosphor-v3.2.13...phosphor-v3.3.0) (2025-10-23)
 
 

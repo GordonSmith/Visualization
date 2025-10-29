@@ -1,5 +1,56 @@
 # Changelog
 
+## [1.6.0](https://github.com/GordonSmith/Visualization/compare/markdown-it-plugins-v1.5.0...markdown-it-plugins-v1.6.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Add markdown-it-plugin ([75af572](https://github.com/GordonSmith/Visualization/commit/75af57284b02bb71e0b1f7895265b07aa68ce95a))
+* Add markdown-it-plugin ([213c556](https://github.com/GordonSmith/Visualization/commit/213c556659b25e95ce4041a55379451b1fbf1328))
+* Additional VitePress Support ([309b446](https://github.com/GordonSmith/Visualization/commit/309b446d97dfd5dd261a39bb09488434ea8f1c91))
+* Additional VitePress Support ([80b8089](https://github.com/GordonSmith/Visualization/commit/80b8089e96f1841c52f05e10c6a1c880b739a521))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade graph, html and react to v3 ([b5bb00d](https://github.com/GordonSmith/Visualization/commit/b5bb00dfc2aacc8137ba028cd987ed3433ddc365))
+* Upgrade graph, html and react to v3 ([a1aa027](https://github.com/GordonSmith/Visualization/commit/a1aa02785ed97c4ee18b3a83ab341f0423956b7c))
+
+
+### Bug Fixes
+
+* Add integrations tests for browser and node ([e91cd0d](https://github.com/GordonSmith/Visualization/commit/e91cd0d2dc324dc7b18c92d1b1593a69ccd5500b))
+* Add integrations tests for browser and node ([f09add9](https://github.com/GordonSmith/Visualization/commit/f09add9af78fed56ba2aa1382574ded0750ea4ba))
+* Add missing build steps ([5247e18](https://github.com/GordonSmith/Visualization/commit/5247e18efa7ac44d95f10f1a3ee251d1c01b8564))
+* Add missing build steps ([564506d](https://github.com/GordonSmith/Visualization/commit/564506d94d4538b8bf57d4e27919efff6ea357a4))
+* Bump observablehq compiler version ([68e14b7](https://github.com/GordonSmith/Visualization/commit/68e14b7f5a4514c69ec623bdcacad275c9c87f59))
+* common up nodejs bundle rules ([0cc25c3](https://github.com/GordonSmith/Visualization/commit/0cc25c3d3533395e4f01e5b2c03ebaa7ff8207a3))
+* ecl-lang getting overwritten bye vite ([642f418](https://github.com/GordonSmith/Visualization/commit/642f4183ceab31ec2ba892e30b65f93c51de649e))
+* ecl-lang getting overwritten bye vite ([2de9b3a](https://github.com/GordonSmith/Visualization/commit/2de9b3a97638d6075485b4881e834bc7d7440f57))
+* Improve type-leaks test ([379961d](https://github.com/GordonSmith/Visualization/commit/379961dedff41a4546003da34936380664acfc84))
+* Improve type-leaks test ([0dbd604](https://github.com/GordonSmith/Visualization/commit/0dbd604b181056fe93af069377a8ceb0c1391543))
+* Note title displays twice ([709843c](https://github.com/GordonSmith/Visualization/commit/709843c7efae963a8e75857b177798b1a446fa05))
+* Note title displays twice ([b8f0115](https://github.com/GordonSmith/Visualization/commit/b8f011594b054c020aef6e0edfdb929085496e33))
+* resync lock file ([3bcd220](https://github.com/GordonSmith/Visualization/commit/3bcd2204061fd20b672a69858ecf90b037678b1b))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Support NodeJS 24 build env. ([8894980](https://github.com/GordonSmith/Visualization/commit/88949804fd1f6b8e5a3b331b0dba9e8df47fbb26))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/observablehq-compiler bumped from ^3.6.0 to ^3.7.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [1.5.0](https://github.com/hpcc-systems/Visualization/compare/markdown-it-plugins-v1.4.7...markdown-it-plugins-v1.5.0) (2025-10-23)
 
 

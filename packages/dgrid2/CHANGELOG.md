@@ -24,6 +24,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/dgrid2-v3.4.0...dgrid2-v3.5.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade dgrid2 to v3 ([ea6f502](https://github.com/GordonSmith/Visualization/commit/ea6f5022de0e5b5618f593c73ce3dd33bfed4fcf))
+* Upgrade dgrid2 to v3 ([3e2105a](https://github.com/GordonSmith/Visualization/commit/3e2105a427937d0b202194f4538cc12e9becb04d))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* bump versions ([e9719b8](https://github.com/GordonSmith/Visualization/commit/e9719b875e4c65936921d2e6a0f76ab008b88114))
+* dgrid2 producing tsc errors ([0c1057b](https://github.com/GordonSmith/Visualization/commit/0c1057bd28bc4452e9d11afd672c5a0b5a3ce902))
+* dgrid2 producing tsc errors ([f834768](https://github.com/GordonSmith/Visualization/commit/f83476824124eec99c27c4923d19ff208f5ac420))
+* Revert react back to preact ([c75ca63](https://github.com/GordonSmith/Visualization/commit/c75ca63c2cf0eaebf1d5bae22e775e86c77125f3))
+* Revert react back to preact ([9c2e0f0](https://github.com/GordonSmith/Visualization/commit/9c2e0f0cbf7c43561b7f2c0707d5fb95971bd5ef))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/common bumped from ^3.5.0 to ^3.6.0
+    * @hpcc-js/util bumped from ^3.4.0 to ^3.5.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.4.0](https://github.com/hpcc-systems/Visualization/compare/dgrid2-v3.3.2...dgrid2-v3.4.0) (2025-10-23)
 
 

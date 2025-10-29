@@ -45,6 +45,42 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.3.0](https://github.com/GordonSmith/Visualization/compare/tree-v3.2.0...tree-v3.3.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* switch to "main" from trunk ([99e2723](https://github.com/GordonSmith/Visualization/commit/99e272308e283ac58dc2c14d8236f92ba53b6960))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade tree to v3 ([165b078](https://github.com/GordonSmith/Visualization/commit/165b078a9b8642f5530ff86bce0007196f148109))
+* Upgrade tree to v3 ([0b1c585](https://github.com/GordonSmith/Visualization/commit/0b1c5851e41377ebb3eafe1b4d4c00c6b4f8a0ba))
+
+
+### Bug Fixes
+
+* bump versions ([e9719b8](https://github.com/GordonSmith/Visualization/commit/e9719b875e4c65936921d2e6a0f76ab008b88114))
+* Bump versions to latest ([e200466](https://github.com/GordonSmith/Visualization/commit/e20046603a824cb5bd1a8ab2a51d6f76805bb226))
+* Bump versions to latest ([8c541d7](https://github.com/GordonSmith/Visualization/commit/8c541d75e06bfbe1030ab003b5cccf4af68bc430))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/api bumped from ^3.4.0 to ^3.5.0
+    * @hpcc-js/common bumped from ^3.5.0 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.6.0 to ^1.7.0
+
 ## [3.2.0](https://github.com/hpcc-systems/Visualization/compare/tree-v3.1.0...tree-v3.2.0) (2025-10-23)
 
 

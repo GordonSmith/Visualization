@@ -38,6 +38,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [3.4.0](https://github.com/GordonSmith/Visualization/compare/dgrid-shim-v3.3.0...dgrid-shim-v3.4.0) (2025-10-29)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+
+
+### Bug Fixes
+
+* **dgrid-shim:** max page when pagination counts are unknown ([cd8e33e](https://github.com/GordonSmith/Visualization/commit/cd8e33ea4bdbb692e554880db3fec9943741350a))
+* **dgrid-shim:** max page when pagination counts are unknown ([8615155](https://github.com/GordonSmith/Visualization/commit/8615155d38dec31055d374cc76f011d43e2ef02b))
+* **dgrid-shim:** max page when pagination counts are unknown ([e39a421](https://github.com/GordonSmith/Visualization/commit/e39a42185562e35cd319b29095d6052753c2e3c8))
+* **dgrid-shim:** max page when pagination counts are unknown ([6b9674d](https://github.com/GordonSmith/Visualization/commit/6b9674d3dc1dd78458c3de4438b5f055fca2f79d))
+* Paged dgrid failing in strict mode ([c2df63e](https://github.com/GordonSmith/Visualization/commit/c2df63e833b84a15485056f3a46019c54cc9da82))
+* Paged dgrid failing in strict mode ([9a738c1](https://github.com/GordonSmith/Visualization/commit/9a738c11a9e72c6204273540c0fc056b6789872b))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Support NodeJS 24 build env. ([8894980](https://github.com/GordonSmith/Visualization/commit/88949804fd1f6b8e5a3b331b0dba9e8df47fbb26))
+
 ## [3.3.0](https://github.com/hpcc-systems/Visualization/compare/dgrid-shim-v3.2.0...dgrid-shim-v3.3.0) (2025-10-23)
 
 
