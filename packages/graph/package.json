@@ -53,7 +53,7 @@
     "dependencies": {
         "@hpcc-js/api": "^2.8.25",
         "@hpcc-js/common": "^2.30.0",
-        "@hpcc-js/react": "^2.10.0",
+        "@hpcc-js/react": "^3.1.0",
         "@hpcc-js/util": "^2.18.0"
     },
     "devDependencies": {
