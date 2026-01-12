@@ -42,10 +42,10 @@
         "@hpcc-js/common": "^2.30.0",
         "@hpcc-js/dgrid": "^2.8.22",
         "@hpcc-js/form": "^2.8.31",
-        "@hpcc-js/html": "^2.8.18",
-        "@hpcc-js/layout": "^2.16.34",
-        "@hpcc-js/other": "^2.13.37",
-        "@hpcc-js/phosphor": "^2.14.17"
+        "@hpcc-js/html": "^3.1.0",
+        "@hpcc-js/layout": "^3.1.0",
+        "@hpcc-js/other": "^3.1.0",
+        "@hpcc-js/phosphor": "^3.1.0"
     },
     "devDependencies": {
         "@hpcc-js/bundle": "^2.10.14",
