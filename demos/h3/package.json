@@ -29,7 +29,7 @@
         "@hpcc-js/api": "^2",
         "@hpcc-js/common": "^2",
         "@hpcc-js/comms": "^2",
-        "@hpcc-js/dgrid": "^2",
+        "@hpcc-js/dgrid": "^3.1.0",
         "@hpcc-js/dgrid-shim": "^2",
         "@hpcc-js/graph": "^2",
         "@hpcc-js/layout": "^2",
