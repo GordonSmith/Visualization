@@ -309,7 +309,7 @@ export class GraphT<SG extends SubgraphBaseProps, V extends VertexBaseProps, E e
         return this;
     }
 
-    graphData(): GraphCollection<VertexPlaceholder<V>, EdgePlaceholder<V, E>> {
+    graphData(): GraphCollection<VertexPlaceholder<V>, EdgePlaceholder<V, E>, SubgraphPlaceholder<SG>> {
         return this._graphData;
     }
 
