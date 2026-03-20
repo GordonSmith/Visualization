@@ -4,6 +4,15 @@
     --gv-select-stroke: light-dark(#0078d4, #4cc2ff);
     --gv-select-fill: light-dark(#deecf9, #1b3a5c);
 
+    --gv-unknown-stroke: light-dark(#616161, #9e9e9e);
+    --gv-unknown-fill: light-dark(#e0e0e0, #2a2a3e);
+    --gv-complete-stroke: light-dark(#2e7d32, #66bb6a);
+    --gv-complete-fill: light-dark(#e8f5e9, #1b3a1e);
+    --gv-failed-stroke: light-dark(#c62828, #ef5350);
+    --gv-failed-fill: light-dark(#ffebee, #3a1b1b);
+    --gv-running-stroke: light-dark(#e65100, #ffa726);
+    --gv-running-fill: light-dark(#fff3e0, #3a2a1b);
+
     background-color: var(--gv-bg);
     stroke: var(--gv-fg);
 }
@@ -16,4 +25,119 @@
 .graph_GraphvizWidget text {
     fill: var(--gv-fg);
     stroke: none;
+}
+
+.graph_GraphvizWidget .node.selected>path,
+.graph_GraphvizWidget .node.selected>polygon,
+.graph_GraphvizWidget .node.selected>ellipse,
+.graph_GraphvizWidget .node.selected>polyline,
+.graph_GraphvizWidget .cluster.selected>path,
+.graph_GraphvizWidget .cluster.selected>polygon,
+.graph_GraphvizWidget .cluster.selected>ellipse,
+.graph_GraphvizWidget .cluster.selected>polyline {
+    stroke: var(--gv-select-stroke);
+}
+
+.graph_GraphvizWidget .node.selected>path:first-of-type,
+.graph_GraphvizWidget .node.selected>polygon:first-of-type,
+.graph_GraphvizWidget .node.selected>ellipse:first-of-type,
+.graph_GraphvizWidget .node.selected>polyline:first-of-type,
+.graph_GraphvizWidget .cluster.selected>path:first-of-type,
+.graph_GraphvizWidget .cluster.selected>polygon:first-of-type,
+.graph_GraphvizWidget .cluster.selected>ellipse:first-of-type,
+.graph_GraphvizWidget .cluster.selected>polyline:first-of-type {
+    fill: var(--gv-select-fill);
+}
+
+.graph_GraphvizWidget .edge.selected path,
+.graph_GraphvizWidget .edge.selected polygon,
+.graph_GraphvizWidget .edge.selected ellipse,
+.graph_GraphvizWidget .edge.selected polyline {
+    stroke: var(--gv-select-stroke);
+}
+
+.graph_GraphvizWidget .edge.selected polygon,
+.graph_GraphvizWidget .edge.selected ellipse,
+.graph_GraphvizWidget .edge.selected polyline {
+    fill: var(--gv-select-stroke);
+}
+
+.graph_GraphvizWidget .selected text {
+    fill: var(--gv-select-stroke);
+}
+
+/* State: unknown */
+.graph_GraphvizWidget .unknown>path,
+.graph_GraphvizWidget .unknown>polygon,
+.graph_GraphvizWidget .unknown>ellipse,
+.graph_GraphvizWidget .unknown>polyline {
+    stroke: var(--gv-unknown-stroke);
+}
+
+.graph_GraphvizWidget .unknown>path:first-of-type,
+.graph_GraphvizWidget .unknown>polygon:first-of-type,
+.graph_GraphvizWidget .unknown>ellipse:first-of-type,
+.graph_GraphvizWidget .unknown>polyline:first-of-type {
+    fill: var(--gv-unknown-fill);
+}
+
+.graph_GraphvizWidget .unknown text {
+    fill: var(--gv-unknown-stroke);
+}
+
+/* State: complete */
+.graph_GraphvizWidget .complete>path,
+.graph_GraphvizWidget .complete>polygon,
+.graph_GraphvizWidget .complete>ellipse,
+.graph_GraphvizWidget .complete>polyline {
+    stroke: var(--gv-complete-stroke);
+}
+
+.graph_GraphvizWidget .complete>path:first-of-type,
+.graph_GraphvizWidget .complete>polygon:first-of-type,
+.graph_GraphvizWidget .complete>ellipse:first-of-type,
+.graph_GraphvizWidget .complete>polyline:first-of-type {
+    fill: var(--gv-complete-fill);
+}
+
+.graph_GraphvizWidget .complete text {
+    fill: var(--gv-complete-stroke);
+}
+
+/* State: failed */
+.graph_GraphvizWidget .failed>path,
+.graph_GraphvizWidget .failed>polygon,
+.graph_GraphvizWidget .failed>ellipse,
+.graph_GraphvizWidget .failed>polyline {
+    stroke: var(--gv-failed-stroke);
+}
+
+.graph_GraphvizWidget .failed>path:first-of-type,
+.graph_GraphvizWidget .failed>polygon:first-of-type,
+.graph_GraphvizWidget .failed>ellipse:first-of-type,
+.graph_GraphvizWidget .failed>polyline:first-of-type {
+    fill: var(--gv-failed-fill);
+}
+
+.graph_GraphvizWidget .failed text {
+    fill: var(--gv-failed-stroke);
+}
+
+/* State: running */
+.graph_GraphvizWidget .running>path,
+.graph_GraphvizWidget .running>polygon,
+.graph_GraphvizWidget .running>ellipse,
+.graph_GraphvizWidget .running>polyline {
+    stroke: var(--gv-running-stroke);
+}
+
+.graph_GraphvizWidget .running>path:first-of-type,
+.graph_GraphvizWidget .running>polygon:first-of-type,
+.graph_GraphvizWidget .running>ellipse:first-of-type,
+.graph_GraphvizWidget .running>polyline:first-of-type {
+    fill: var(--gv-running-fill);
+}
+
+.graph_GraphvizWidget .running text {
+    fill: var(--gv-running-stroke);
 }

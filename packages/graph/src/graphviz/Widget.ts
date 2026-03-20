@@ -1,4 +1,4 @@
-import { d3Event, select as d3Select, SVGZoomWidget } from "@hpcc-js/common";
+import { d3Event, SVGZoomWidget } from "@hpcc-js/common";
 import { decodeID, encodeID, format } from "./util.ts";
 import { Store } from "./Store.ts";
 import type { Vertex, Edge, Subgraph, Graph } from "./types.ts";
@@ -76,9 +76,6 @@ export class Widget extends SVGZoomWidget {
     }
 
     clearSelection(broadcast: boolean = false) {
-        Object.keys(this._selection).filter(name => !!name).forEach(name => {
-            d3Select(`#${encodeID(name)}`).classed("selected", false);
-        });
         this._selection = {};
         this._selectionChanged(broadcast);
     }
@@ -108,6 +105,41 @@ export class Widget extends SVGZoomWidget {
             this._selectionChanged(broadcast);
         }
         return this;
+    }
+
+    setClass(className: string, ids?: string[]): this {
+        if (ids) {
+            for (const id of ids) {
+                const elem = this._renderElement.select(`#${encodeID(id)}`);
+                if (!elem.empty()) {
+                    elem.classed(className, true);
+                }
+            }
+        } else {
+            this._renderElement.selectAll(".node,.edge,.cluster")
+                .classed(className, true);
+        }
+        return this;
+    }
+
+    clearClass(className: string, ids?: string[]): this {
+        if (ids) {
+            for (const id of ids) {
+                const elem = this._renderElement.select(`#${encodeID(id)}`);
+                if (!elem.empty()) {
+                    elem.classed(className, false);
+                }
+            }
+        } else {
+            this._renderElement.selectAll(".node,.edge,.cluster")
+                .classed(className, false);
+        }
+        return this;
+    }
+
+    hasClass(className: string, id: string): boolean {
+        const elem = this._renderElement.select(`#${encodeID(id)}`);
+        return !elem.empty() && elem.classed(className);
     }
 
     itemBBox(scopeID: string) {
@@ -141,23 +173,8 @@ export class Widget extends SVGZoomWidget {
     _selectionChanged(broadcast = false) {
         const context = this;
         this._renderElement.selectAll(".node,.edge,.cluster")
-            .each(function (this: SVGElement) {
-                const selected = !!context._selection[decodeID(this.id)];
-                const isEdge = this.classList.contains("edge");
-                const shapeEls = d3Select(this).selectAll("path,polygon,ellipse,polyline");
-                shapeEls
-                    .style("stroke", selected ? "var(--gv-select-stroke)" : undefined)
-                    ;
-                shapeEls
-                    .filter(function (_, i) {
-                        if (isEdge) return (this as SVGElement).tagName !== "path";
-                        return i === 0;
-                    })
-                    .style("fill", selected ? (isEdge ? "var(--gv-select-stroke)" : "var(--gv-select-fill)") : undefined)
-                    ;
-                d3Select(this).selectAll("text")
-                    .style("fill", selected ? "var(--gv-select-stroke)" : undefined)
-                    ;
+            .classed("selected", function (this: SVGElement) {
+                return !!context._selection[decodeID(this.id)];
             })
             ;
         if (broadcast) {

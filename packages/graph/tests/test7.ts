@@ -1,3 +1,4 @@
+import { set } from "@hpcc-js/common";
 import { Graphviz } from "../src/index.ts";
 
 const arrowTypes = Object.values(Graphviz.ArrowType);
@@ -78,7 +79,7 @@ const SUBGRAPH_ARR: Graphviz.Subgraph[] = [
 ];
 
 const GRAPH: Graphviz.Graph = {
-    // defaultVertexFill: "white",
+    // defaultVertexFill: "transparent",
     // defaultVertexStroke: "#FF0000",
     // defaultEdgeStroke: "#00FF00",
     // defaultSubgraphFill: "#fcfcfc",
@@ -98,5 +99,11 @@ export class Test7 extends Graphviz.Widget {
             subgraphs: SUBGRAPH_ARR,
             graph: GRAPH
         });
+        setTimeout(() => {
+            this.setClass("unknown", ["s17", "s19", "s21", "s23", "s25", "s27", "s29", "s31"]);
+            this.setClass("complete", ["s1", "s3", "s5", "s7", "s9", "s11", "s13", "s15"]);
+            this.setClass("failed", ["s0", "s2", "s4", "s6", "s8", "s10", "s12", "s14"]);
+            this.setClass("running", ["s16", "s18", "s20", "s22", "s24", "s26", "s28", "s30"]);
+        }, 2000);
     }
 }
