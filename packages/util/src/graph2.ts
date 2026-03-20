@@ -7,7 +7,7 @@ export interface GraphItemT {
 }
 
 export interface ChildGraphItemT extends GraphItemT {
-    parent?: ID | (() => ID);
+    parentID?: ID | (() => ID);
 }
 
 export interface VertexT extends ChildGraphItemT {
@@ -196,13 +196,19 @@ export class Graph2<V extends VertexT = object, E extends EdgeT = object, S exte
         return this;
     }
 
-    _sourceFunc = (_: any): ID => typeof _.source === "function" ? _.source() : _.source;
+    _parentFunc = (_: any): ID => typeof _.parentID === "function" ? _.parentID() : _.parentID;
+    parentFunc(_: (_: S | V | E) => ID): this {
+        this._parentFunc = _;
+        return this;
+    }
+
+    _sourceFunc = (_: any): ID => typeof _.sourceID === "function" ? _.sourceID() : _.sourceID;
     sourceFunc(_: (_: E) => ID): this {
         this._sourceFunc = _;
         return this;
     }
 
-    _targetFunc = (_: any): ID => typeof _.target === "function" ? _.target() : _.target;
+    _targetFunc = (_: any): ID => typeof _.targetID === "function" ? _.targetID() : _.targetID;
     targetFunc(_: (_: E) => ID): this {
         this._targetFunc = _;
         return this;
@@ -216,6 +222,22 @@ export class Graph2<V extends VertexT = object, E extends EdgeT = object, S exte
 
     id(_: S | V | E): ID {
         return this._idFunc(_);
+    }
+
+    safeID(id: string) {
+        return id.replace(/\s/, "_");
+    }
+
+    parentID(_: S | V | E): ID | undefined {
+        return this._parentFunc(_);
+    }
+
+    sourceID(_: E): ID {
+        return this._sourceFunc(_);
+    }
+
+    targetID(_: E): ID {
+        return this._targetFunc(_);
     }
 
     type(id: ID): "S" | "V" | "E" | "" {
