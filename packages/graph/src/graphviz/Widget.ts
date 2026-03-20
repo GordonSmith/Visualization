@@ -1,34 +1,15 @@
 import { d3Event, select as d3Select, SVGZoomWidget } from "@hpcc-js/common";
-import { ID, scopedLogger } from "@hpcc-js/util";
-import { format } from "./util.ts";
-import type { Vertex } from "./types.ts";
+import { decodeID, encodeID, format } from "./util.ts";
+import { Store } from "./Store.ts";
+import type { Vertex, Edge, Subgraph, Graph } from "./types.ts";
+import { DotWriter } from "./DotWriter.ts";
+import { isLayoutComplete, layoutCache } from "./layout.ts";
 
 import "./Widget.css";
+import { layout } from "dagre";
+import { isGraphvizWorkerResponse } from "../common/layouts/graphvizWorker.ts";
 
-const logger = scopedLogger("src/graphviz/Widget.ts");
-
-const TypeShape = {
-    "function": 'plain" fillcolor="" style="'
-};
-
-const CHARS = new Set("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-function encodeID(id: string): string {
-    let retVal = "";
-    for (let i = 0; i < id.length; ++i) {
-        if (CHARS.has(id.charAt(i))) {
-            retVal += id.charAt(i);
-        } else {
-            retVal += `__${id.charCodeAt(i)}__`;
-        }
-    }
-    return retVal;
-}
-
-function decodeID(id: string): string {
-    return id.replace(/__(\d+)__/gm, (_match, p1) => String.fromCharCode(+p1));
-}
-
-export class Rect {
+class Rect {
 
     left: number;
     top: number;
@@ -55,8 +36,16 @@ export class Rect {
     }
 }
 
+export interface Data {
+    graph?: Graph;
+    subgraphs?: Subgraph[];
+    vertices: Vertex[];
+    edges: Edge[];
+}
+
 export class Widget extends SVGZoomWidget {
 
+    protected _data: Store = new Store();
     protected _selection: { [id: string]: boolean } = {};
 
     constructor() {
@@ -69,34 +58,17 @@ export class Widget extends SVGZoomWidget {
             ;
     }
 
-    protected _customVertices: Vertex[] = [];
-    prerenderCustomVertices(vertices: Vertex[]): void {
-        const container = document.createElement("div");
-        container.style.position = "absolute";
-        container.style.left = "-9999px";
-        container.style.top = "-9999px";
-        container.style.visibility = "hidden";
-        document.body.appendChild(container);
-
-        const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        container.appendChild(svgEl);
-
-        this._customVertices = vertices.filter(v => !!v.svgTpl);
-        for (const v of this._customVertices) {
-            if (!v.svgTpl) continue;
-            const rendered = format(v.svgTpl, v as Record<string, any>);
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            g.innerHTML = rendered;
-            svgEl.appendChild(g);
-            const bbox = g.getBBox();
-            const padding = 4;
-            v._svgTplWidth = bbox.width + padding;
-            v._svgTplHeight = bbox.height + padding;
-            v._svgTplConcrete = rendered;
-            svgEl.removeChild(g);
-        }
-
-        document.body.removeChild(container);
+    data(): Data;
+    data(_: Data): this;
+    data(_?: Data): this | Data {
+        if (!arguments.length) return {
+            graph: this._data.graph(),
+            subgraphs: this._data.allSubgraphs(),
+            vertices: this._data.allVertices(),
+            edges: this._data.allEdges(),
+        };
+        this._data.load(_.vertices, _.edges, _.subgraphs, _.graph);
+        return this;
     }
 
     exists(id: string) {
@@ -193,18 +165,10 @@ export class Widget extends SVGZoomWidget {
         }
     }
 
-    protected _prevSVG;
+    protected _prevDOT;
     protected _svg = "";
     reset() {
-        this._prevSVG = "";
-        return this;
-    }
-
-    svg(): string;
-    svg(_: string): this;
-    svg(_?: string): this | string {
-        if (arguments.length === 0) return this._svg;
-        this._svg = _;
+        this._prevDOT = "";
         return this;
     }
 
@@ -230,6 +194,23 @@ export class Widget extends SVGZoomWidget {
 
     enter(domNode, element) {
         super.enter(domNode, element);
+        const context = this;
+        this._renderElement
+            .on("click", function () {
+                const event = d3Event();
+                let target = event.target as SVGElement;
+                while (target && target !== event.currentTarget) {
+                    if (target.classList.contains("node") || target.classList.contains("edge") || target.classList.contains("cluster")) {
+                        if (!event.ctrlKey) {
+                            context.clearSelection();
+                        }
+                        context.toggleSelection(decodeID(target.id), true);
+                        return;
+                    }
+                    target = target.parentElement as unknown as SVGElement;
+                }
+            })
+            ;
     }
 
     update(domNode, element) {
@@ -240,7 +221,37 @@ export class Widget extends SVGZoomWidget {
         super.exit(domNode, element);
     }
 
-    protected _injectSvgContent() {
+    protected _customVertices: Vertex[] = [];
+    protected prerenderCustomVertices(vertices: Vertex[]): void {
+        const container = document.createElement("div");
+        container.style.position = "absolute";
+        container.style.left = "-9999px";
+        container.style.top = "-9999px";
+        container.style.visibility = "hidden";
+        document.body.appendChild(container);
+
+        const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        container.appendChild(svgEl);
+
+        this._customVertices = vertices.filter(v => !!v.svgTpl);
+        for (const v of this._customVertices) {
+            if (!v.svgTpl) continue;
+            const rendered = format(v.svgTpl, v as Record<string, any>);
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            g.innerHTML = rendered;
+            svgEl.appendChild(g);
+            const bbox = g.getBBox();
+            const padding = 4;
+            v._svgTplWidth = bbox.width + padding;
+            v._svgTplHeight = bbox.height + padding;
+            v._svgTplConcrete = rendered;
+            svgEl.removeChild(g);
+        }
+
+        document.body.removeChild(container);
+    }
+
+    protected postrenderCustomVertices() {
         for (const v of this._customVertices) {
             const nodeGroup = this._renderElement.select(`#${encodeID(String(v.id))}`);
             if (nodeGroup.empty()) continue;
@@ -274,20 +285,11 @@ export class Widget extends SVGZoomWidget {
                 .replace(/"lightgray"/g, "var(--gv-bg)")
             );
             setTimeout(() => {
-                this._injectSvgContent();
+                this.postrenderCustomVertices();
                 this
                     .zoomToFit(0)
                     ;
-                const context = this;
-                this._renderElement.selectAll(".node,.edge,.cluster")
-                    .on("click", function (this: SVGGElement) {
-                        const event = d3Event();
-                        if (!event.ctrlKey) {
-                            context.clearSelection();
-                        }
-                        context.toggleSelection(decodeID(this.id), true);
-                    })
-                    ;
+
                 resolve();
             }, 0);
         });
@@ -296,9 +298,17 @@ export class Widget extends SVGZoomWidget {
     render(callback?: (w: Widget) => void) {
 
         return super.render(async w => {
-            if (this._prevSVG !== this._svg) {
-                this._prevSVG = this._svg;
-                await this.renderSVG(this._svg);
+            this.prerenderCustomVertices(this._data.allVertices());
+            const dotWriter = new DotWriter(this._data);
+            const dot = dotWriter.writeGraph();
+            if (this._prevDOT !== dot) {
+                this._prevDOT = dot;
+                const layout = await layoutCache.calcSVG(dot);
+                if (isGraphvizWorkerResponse(layout)) {
+                    await this.renderSVG(layout.svg);
+                } else {
+                    console.warn(`Graphviz layout failed: ${layout.error}`);
+                }
             }
             if (callback) {
                 callback(this);

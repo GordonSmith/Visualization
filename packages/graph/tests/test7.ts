@@ -92,18 +92,11 @@ export class Test7 extends Graphviz.Widget {
 
     constructor() {
         super();
-        this.prerenderCustomVertices(store.allVertices());
-        const dotWriter = new Graphviz.DotWriter(store);
-        const dot = dotWriter.writeGraph();
-        const layout = Graphviz.layoutCache.calcSVG(dot);
-        layout.then(response => {
-            if ("svg" in response) {
-                this
-                    .svg(response.svg)
-                    .lazyRender()
-                    ;
-            }
-
+        this.data({
+            vertices: VERTEX_ARR,
+            edges: EDGE_ARR,
+            subgraphs: SUBGRAPH_ARR,
+            graph: GRAPH
         });
     }
 }
