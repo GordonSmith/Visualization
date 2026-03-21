@@ -33,7 +33,20 @@ export class DotWriter {
         this._options = options;
     }
 
-    private _buildVertexTemplate(v: Vertex, isHidden: boolean = false): string {
+    private ensureSVGContainer() {
+        if (!this._svgContainer) {
+            this._svgContainer = document.createElement("div");
+            this._svgContainer.style.position = "absolute";
+            this._svgContainer.style.left = "-9999px";
+            this._svgContainer.style.top = "-9999px";
+            this._svgContainer.style.visibility = "hidden";
+            document.body.appendChild(this._svgContainer);
+            this._svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            this._svgContainer.appendChild(this._svgElement);
+        }
+    }
+
+    private writeVertex(v: Vertex, isHidden: boolean = false): string {
         const g = this._graph;
         const vId = g.id(v);
         if (this._dedupVertices[vId] === true) return "";
@@ -46,26 +59,18 @@ export class DotWriter {
         const fillcolorAttr = v.fill ? ` fillcolor="${v.fill}"` : "";
 
         if (v.svgTpl) {
-            if (!this._svgContainer) {
-                this._svgContainer = document.createElement("div");
-                this._svgContainer.style.position = "absolute";
-                this._svgContainer.style.left = "-9999px";
-                this._svgContainer.style.top = "-9999px";
-                this._svgContainer.style.visibility = "hidden";
-                document.body.appendChild(this._svgContainer);
-                this._svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                this._svgContainer.appendChild(this._svgElement);
+            v._svgTplConcrete = format(v.svgTpl, v as Record<string, any>);
+            if (!v._svgTplWidth || !v._svgTplHeight) {
+                this.ensureSVGContainer();
+                const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                g.innerHTML = v._svgTplConcrete;
+                this._svgElement.appendChild(g);
+                const bbox = g.getBBox();
+                const padding = 4;
+                v._svgTplWidth = bbox.width + padding;
+                v._svgTplHeight = bbox.height + padding;
+                this._svgElement.removeChild(g);
             }
-            const rendered = format(v.svgTpl, v as Record<string, any>);
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            g.innerHTML = rendered;
-            this._svgElement.appendChild(g);
-            const bbox = g.getBBox();
-            const padding = 4;
-            v._svgTplWidth = bbox.width + padding;
-            v._svgTplHeight = bbox.height + padding;
-            v._svgTplConcrete = rendered;
-            this._svgElement.removeChild(g);
             const w = v._svgTplWidth ? v._svgTplWidth / 72 : 1;
             const h = v._svgTplHeight ? v._svgTplHeight / 72 : 1;
             return `"${encodedId}" [id="${encodedId}" label="" shape="${v.shape ?? "rectangle"}" class="${vertexClass}" fixedsize=true width=${w} height=${h}${colorAttr}${fillcolorAttr}${rankAttr}]`;
@@ -75,14 +80,6 @@ export class DotWriter {
         const vertexShape = v.shape ?? "rectangle";
 
         return `"${encodedId}" [id="${encodedId}" label="${encodedLabel}" shape="${vertexShape}" class="${vertexClass}"${colorAttr}${fillcolorAttr}${rankAttr}]`;
-    }
-
-    writeVertex(v: Vertex): string {
-        return this._buildVertexTemplate(v, false);
-    }
-
-    writeHiddenVertex(v: Vertex): string {
-        return this._buildVertexTemplate(v, true);
     }
 
     writeEdge(e: Edge): string {

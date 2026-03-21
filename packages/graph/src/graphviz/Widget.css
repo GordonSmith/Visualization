@@ -66,62 +66,32 @@
     fill: var(--gv-select-stroke);
 }
 
-/* State: unknown */
-.graph_GraphvizWidget .unknown>path,
-.graph_GraphvizWidget .unknown>polygon,
-.graph_GraphvizWidget .unknown>ellipse,
-.graph_GraphvizWidget .unknown>polyline {
-    stroke: var(--gv-unknown-stroke);
+/* Generic state rules */
+.graph_GraphvizWidget :is(.unknown, .complete, .failed, .running)>:is(path, polygon, ellipse, polyline) {
+    stroke: var(--_stroke);
 }
 
-.graph_GraphvizWidget .unknown>path:first-of-type,
-.graph_GraphvizWidget .unknown>polygon:first-of-type,
-.graph_GraphvizWidget .unknown>ellipse:first-of-type,
-.graph_GraphvizWidget .unknown>polyline:first-of-type {
-    fill: var(--gv-unknown-fill);
+.graph_GraphvizWidget :is(.unknown, .complete, .failed, .running)>:is(path, polygon, ellipse, polyline):first-of-type {
+    fill: var(--_fill);
 }
 
-/* State: complete */
-.graph_GraphvizWidget .complete>path,
-.graph_GraphvizWidget .complete>polygon,
-.graph_GraphvizWidget .complete>ellipse,
-.graph_GraphvizWidget .complete>polyline {
-    stroke: var(--gv-complete-stroke);
+/* State definitions */
+.graph_GraphvizWidget .unknown {
+    --_stroke: var(--gv-unknown-stroke);
+    --_fill: var(--gv-unknown-fill);
 }
 
-.graph_GraphvizWidget .complete>path:first-of-type,
-.graph_GraphvizWidget .complete>polygon:first-of-type,
-.graph_GraphvizWidget .complete>ellipse:first-of-type,
-.graph_GraphvizWidget .complete>polyline:first-of-type {
-    fill: var(--gv-complete-fill);
+.graph_GraphvizWidget .complete {
+    --_stroke: var(--gv-complete-stroke);
+    --_fill: var(--gv-complete-fill);
 }
 
-/* State: failed */
-.graph_GraphvizWidget .failed>path,
-.graph_GraphvizWidget .failed>polygon,
-.graph_GraphvizWidget .failed>ellipse,
-.graph_GraphvizWidget .failed>polyline {
-    stroke: var(--gv-failed-stroke);
+.graph_GraphvizWidget .failed {
+    --_stroke: var(--gv-failed-stroke);
+    --_fill: var(--gv-failed-fill);
 }
 
-.graph_GraphvizWidget .failed>path:first-of-type,
-.graph_GraphvizWidget .failed>polygon:first-of-type,
-.graph_GraphvizWidget .failed>ellipse:first-of-type,
-.graph_GraphvizWidget .failed>polyline:first-of-type {
-    fill: var(--gv-failed-fill);
-}
-
-/* State: running */
-.graph_GraphvizWidget .running>path,
-.graph_GraphvizWidget .running>polygon,
-.graph_GraphvizWidget .running>ellipse,
-.graph_GraphvizWidget .running>polyline {
-    stroke: var(--gv-running-stroke);
-}
-
-.graph_GraphvizWidget .running>path:first-of-type,
-.graph_GraphvizWidget .running>polygon:first-of-type,
-.graph_GraphvizWidget .running>ellipse:first-of-type,
-.graph_GraphvizWidget .running>polyline:first-of-type {
-    fill: var(--gv-running-fill);
+.graph_GraphvizWidget .running {
+    --_stroke: var(--gv-running-stroke);
+    --_fill: var(--gv-running-fill);
 }
