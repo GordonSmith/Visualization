@@ -1,6 +1,8 @@
 import { hashSum, scopedLogger } from "@hpcc-js/util";
 import { graphviz } from "../common/graphT.ts";
 import { GraphvizResponse, GraphvizWorkerResponse, GraphvizWorkerError, isGraphvizWorkerResponse } from "../common/layouts/graphvizWorker.ts";
+import { CustomVertex, DotEx } from "./types.ts";
+export { isGraphvizWorkerResponse } from "../common/layouts/graphvizWorker.ts";
 
 const logger = scopedLogger("src/graphviz/layout.ts");
 

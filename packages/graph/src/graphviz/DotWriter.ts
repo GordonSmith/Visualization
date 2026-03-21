@@ -1,69 +1,7 @@
 import { ID } from "@hpcc-js/util";
 import { encodeID, encodeLabel, format } from "./util.ts";
 import type { Store } from "./Store.ts";
-import { EdgeStyle, type Edge, type Subgraph, type Vertex } from "./types.ts";
-
-export enum GraphvizShape {
-    box = "box",
-    polygon = "polygon",
-    ellipse = "ellipse",
-    oval = "oval",
-    circle = "circle",
-    point = "point",
-    egg = "egg",
-    triangle = "triangle",
-    plaintext = "plaintext",
-    plain = "plain",
-    diamond = "diamond",
-    trapezium = "trapezium",
-    parallelogram = "parallelogram",
-    house = "house",
-    pentagon = "pentagon",
-    hexagon = "hexagon",
-    septagon = "septagon",
-    octagon = "octagon",
-    doublecircle = "doublecircle",
-    doubleoctagon = "doubleoctagon",
-    tripleoctagon = "tripleoctagon",
-    invtriangle = "invtriangle",
-    invtrapezium = "invtrapezium",
-    invhouse = "invhouse",
-    Mdiamond = "Mdiamond",
-    Msquare = "Msquare",
-    Mcircle = "Mcircle",
-    rect = "rect",
-    rectangle = "rectangle",
-    square = "square",
-    star = "star",
-    none = "none",
-    underline = "underline",
-    cylinder = "cylinder",
-    note = "note",
-    tab = "tab",
-    folder = "folder",
-    box3d = "box3d",
-    component = "component",
-    promoter = "promoter",
-    cds = "cds",
-    terminator = "terminator",
-    utr = "utr",
-    primersite = "primersite",
-    restrictionsite = "restrictionsite",
-    fivepoverhang = "fivepoverhang",
-    threepoverhang = "threepoverhang",
-    noverhang = "noverhang",
-    assembly = "assembly",
-    signature = "signature",
-    insulator = "insulator",
-    ribosite = "ribosite",
-    rnastab = "rnastab",
-    proteasesite = "proteasesite",
-    proteinstab = "proteinstab",
-    rpromoter = "rpromoter",
-    rarrow = "rarrow",
-    larrow = "larrow",
-    lpromoter = "lpromoter"
-};
+import { CustomVertex, DotEx, EdgeStyle, type Edge, type Subgraph, type Vertex } from "./types.ts";
 
 export interface DotWriterOptions {
     ignoreGlobalStoreOutEdges?: boolean;
@@ -87,6 +25,8 @@ export class DotWriter {
     protected _dedupVertices: { [id: ID]: boolean } = {};
     protected _dedupEdges: { [scopeName: string]: boolean } = {};
     protected _dedupSubgraphs: { [scopeName: string]: boolean } = {};
+    protected _svgContainer: HTMLDivElement | undefined;
+    protected _svgElement: SVGSVGElement | undefined;
 
     constructor(graph: Store, options: DotWriterOptions = defaultDotWriterOptions) {
         this._graph = graph;
@@ -106,6 +46,26 @@ export class DotWriter {
         const fillcolorAttr = v.fill ? ` fillcolor="${v.fill}"` : "";
 
         if (v.svgTpl) {
+            if (!this._svgContainer) {
+                this._svgContainer = document.createElement("div");
+                this._svgContainer.style.position = "absolute";
+                this._svgContainer.style.left = "-9999px";
+                this._svgContainer.style.top = "-9999px";
+                this._svgContainer.style.visibility = "hidden";
+                document.body.appendChild(this._svgContainer);
+                this._svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                this._svgContainer.appendChild(this._svgElement);
+            }
+            const rendered = format(v.svgTpl, v as Record<string, any>);
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            g.innerHTML = rendered;
+            this._svgElement.appendChild(g);
+            const bbox = g.getBBox();
+            const padding = 4;
+            v._svgTplWidth = bbox.width + padding;
+            v._svgTplHeight = bbox.height + padding;
+            v._svgTplConcrete = rendered;
+            this._svgElement.removeChild(g);
             const w = v._svgTplWidth ? v._svgTplWidth / 72 : 1;
             const h = v._svgTplHeight ? v._svgTplHeight / 72 : 1;
             return `"${encodedId}" [id="${encodedId}" label="" shape="${v.shape ?? "rectangle"}" class="${vertexClass}" fixedsize=true width=${w} height=${h}${colorAttr}${fillcolorAttr}${rankAttr}]`;
@@ -208,7 +168,7 @@ subgraph cluster_${encodedId} {
 }`;
     }
 
-    writeGraph(selection: ID[] = []): string {
+    writeGraph(selection: ID[] = []): DotEx {
         this._dedupSubgraphs = {};
         this._dedupVertices = {};
         this._dedupEdges = {};
@@ -260,6 +220,12 @@ subgraph cluster_${encodedId} {
             }
         }
 
+        if (this._svgContainer) {
+            document.body.removeChild(this._svgContainer);
+            this._svgContainer = undefined;
+            this._svgElement = undefined;
+        }
+
         const graph = g.graph();
         const defaultFontname = graph.defaultFontname ?? "Arial";
         graph.defaultSubgraphFontname = graph.defaultSubgraphFontname ?? defaultFontname;
@@ -281,7 +247,7 @@ subgraph cluster_${encodedId} {
         if (graph.defaultEdgeStroke) edgeAttrs.push(`color="${graph.defaultEdgeStroke}"`);
         if (graph.defaultEdgeFill) edgeAttrs.push(`fillcolor="${graph.defaultEdgeFill}"`);
 
-        return `\
+        const dot = `\
 digraph G {
     compound=true;
     ordering=in;
@@ -292,5 +258,10 @@ digraph G {
     ${childTpls.join("\n")}
 
 }`;
+        const customVertices = g.allVertices().filter(v => !!v._svgTplConcrete).map(v => ({ encodedId: encodeID(g.id(v)), svg: v._svgTplConcrete }));
+        return {
+            dot,
+            customVertices
+        };
     }
 }

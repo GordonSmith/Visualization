@@ -1,13 +1,11 @@
 import { d3Event, SVGZoomWidget } from "@hpcc-js/common";
-import { decodeID, encodeID, format } from "./util.ts";
+import { decodeID, encodeID } from "./util.ts";
 import { Store } from "./Store.ts";
-import type { Vertex, Edge, Subgraph, Graph } from "./types.ts";
+import type { Vertex, Edge, Subgraph, Graph, CustomVertex } from "./types.ts";
 import { DotWriter } from "./DotWriter.ts";
-import { isLayoutComplete, layoutCache } from "./layout.ts";
+import { layoutCache, isGraphvizWorkerResponse } from "./layout.ts";
 
 import "./Widget.css";
-import { layout } from "dagre";
-import { isGraphvizWorkerResponse } from "../common/layouts/graphvizWorker.ts";
 
 class Rect {
 
@@ -238,39 +236,9 @@ export class Widget extends SVGZoomWidget {
         super.exit(domNode, element);
     }
 
-    protected _customVertices: Vertex[] = [];
-    protected prerenderCustomVertices(vertices: Vertex[]): void {
-        const container = document.createElement("div");
-        container.style.position = "absolute";
-        container.style.left = "-9999px";
-        container.style.top = "-9999px";
-        container.style.visibility = "hidden";
-        document.body.appendChild(container);
-
-        const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        container.appendChild(svgEl);
-
-        this._customVertices = vertices.filter(v => !!v.svgTpl);
-        for (const v of this._customVertices) {
-            if (!v.svgTpl) continue;
-            const rendered = format(v.svgTpl, v as Record<string, any>);
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            g.innerHTML = rendered;
-            svgEl.appendChild(g);
-            const bbox = g.getBBox();
-            const padding = 4;
-            v._svgTplWidth = bbox.width + padding;
-            v._svgTplHeight = bbox.height + padding;
-            v._svgTplConcrete = rendered;
-            svgEl.removeChild(g);
-        }
-
-        document.body.removeChild(container);
-    }
-
-    protected postrenderCustomVertices() {
-        for (const v of this._customVertices) {
-            const nodeGroup = this._renderElement.select(`#${encodeID(String(v.id))}`);
+    protected postrenderCustomVertices(customVertices: CustomVertex[]) {
+        for (const v of customVertices) {
+            const nodeGroup = this._renderElement.select(`#${v.encodedId}`);
             if (nodeGroup.empty()) continue;
 
             const bbox = (nodeGroup.node() as SVGGraphicsElement).getBBox();
@@ -280,7 +248,7 @@ export class Widget extends SVGZoomWidget {
             const g = nodeGroup.append("g")
                 .attr("class", "svgTpl")
                 ;
-            g.html(v._svgTplConcrete);
+            g.html(v.svg);
 
             const contentBBox = (g.node() as SVGGraphicsElement).getBBox();
             const dx = cx - (contentBBox.x + contentBBox.width / 2);
@@ -289,40 +257,31 @@ export class Widget extends SVGZoomWidget {
         }
     }
 
-    async renderSVG(svg: string): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            this._selection = {};
-            const startPos = svg.indexOf("<g id=");
-            const endPos = svg.indexOf("</svg>");
-            this._renderElement.html(svg.substring(startPos, endPos)
-                .replace(/"black"/g, "var(--gv-fg)")
-                .replace(/"white"/g, "var(--gv-bg)")
-                .replace(/"whitesmoke"/g, "var(--gv-bg)")
-                .replace(/"lightgrey"/g, "var(--gv-bg)")
-                .replace(/"lightgray"/g, "var(--gv-bg)")
-            );
-            setTimeout(() => {
-                this.postrenderCustomVertices();
-                this
-                    .zoomToFit(0)
-                    ;
-
-                resolve();
-            }, 0);
-        });
+    renderSVG(svg: string) {
+        this._selection = {};
+        const startPos = svg.indexOf("<g id=");
+        const endPos = svg.lastIndexOf("</svg>");
+        this._renderElement.html(svg.substring(startPos, endPos)
+            .replace(/"black"/g, "var(--gv-fg)")
+            .replace(/"white"/g, "var(--gv-bg)")
+            .replace(/"whitesmoke"/g, "var(--gv-bg)")
+            .replace(/"lightgrey"/g, "var(--gv-bg)")
+            .replace(/"lightgray"/g, "var(--gv-bg)")
+        );
     }
 
     render(callback?: (w: Widget) => void) {
 
         return super.render(async w => {
-            this.prerenderCustomVertices(this._data.allVertices());
             const dotWriter = new DotWriter(this._data);
-            const dot = dotWriter.writeGraph();
-            if (this._prevDOT !== dot) {
-                this._prevDOT = dot;
-                const layout = await layoutCache.calcSVG(dot);
+            const dotEx = dotWriter.writeGraph();
+            if (this._prevDOT !== dotEx.dot) {
+                this._prevDOT = dotEx.dot;
+                const layout = await layoutCache.calcSVG(dotEx.dot);
                 if (isGraphvizWorkerResponse(layout)) {
-                    await this.renderSVG(layout.svg);
+                    this.renderSVG(layout.svg);
+                    this.postrenderCustomVertices(dotEx.customVertices);
+                    this.zoomToFit(0);
                 } else {
                     console.warn(`Graphviz layout failed: ${layout.error}`);
                 }

@@ -1,6 +1,6 @@
 import { EdgeT, SubgraphT, VertexT } from "@hpcc-js/util";
 
-export enum Shapes {
+export enum Shape {
     box = "box",
     polygon = "polygon",
     ellipse = "ellipse",
@@ -62,41 +62,6 @@ export enum Shapes {
     lpromoter = "lpromoter"
 };
 
-export interface Graph {
-    defaultFontname?: string;
-    defaultSubgraphFill?: string;
-    defaultSubgraphStroke?: string;
-    defaultSubgraphFontname?: string;
-    defaultVertexFill?: string;
-    defaultVertexStroke?: string;
-    defaultVertexFontname?: string;
-    defaultEdgeFill?: string;
-    defaultEdgeStroke?: string;
-    defaultEdgeFontname?: string;
-}
-
-export interface Subgraph extends SubgraphT {
-    label?: string;
-    fill?: string;
-    stroke?: string;
-    attrs?: Record<string, any>;
-}
-
-export interface Vertex extends VertexT {
-    label?: string;
-    shape?: Shapes;
-    fill?: string;
-    stroke?: string;
-    class?: string;
-    svgTpl?: string;
-    attrs?: Record<string, any>;
-
-    // For internal use only - not part of the public API
-    _svgTplWidth?: number;
-    _svgTplHeight?: number;
-    _svgTplConcrete?: string;
-}
-
 export enum EdgeStyle {
     solid = "solid",
     dashed = "dashed",
@@ -128,6 +93,41 @@ export enum ArrowType {
     vee = "vee"
 }
 
+export interface Graph {
+    defaultFontname?: string;
+    defaultSubgraphFill?: string;
+    defaultSubgraphStroke?: string;
+    defaultSubgraphFontname?: string;
+    defaultVertexFill?: string;
+    defaultVertexStroke?: string;
+    defaultVertexFontname?: string;
+    defaultEdgeFill?: string;
+    defaultEdgeStroke?: string;
+    defaultEdgeFontname?: string;
+}
+
+export interface Subgraph extends SubgraphT {
+    label?: string;
+    fill?: string;
+    stroke?: string;
+    attrs?: Record<string, any>;
+}
+
+export interface Vertex extends VertexT {
+    label?: string;
+    shape?: Shape;
+    fill?: string;
+    stroke?: string;
+    class?: string;
+    svgTpl?: string;
+    attrs?: Record<string, any>;
+
+    // For internal use only - not part of the public API
+    _svgTplWidth?: number;
+    _svgTplHeight?: number;
+    _svgTplConcrete?: string;
+}
+
 export interface Edge extends EdgeT {
     label?: string;
     style?: EdgeStyle;
@@ -136,4 +136,14 @@ export interface Edge extends EdgeT {
     fill?: string;
     stroke?: string;
     attrs?: Record<string, any>;
+}
+
+export interface CustomVertex {
+    encodedId: string;
+    svg: string;
+}
+
+export interface DotEx {
+    dot: string,
+    customVertices: CustomVertex[]
 }

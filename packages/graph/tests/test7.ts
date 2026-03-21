@@ -3,12 +3,12 @@ import { Graphviz } from "../src/index.ts";
 
 const arrowTypes = Object.values(Graphviz.ArrowType);
 const edgeStyles = Object.values(Graphviz.EdgeStyle);
-const shapes = Object.values(Graphviz.Shapes);
+const shapes = Object.values(Graphviz.Shape);
 
 // --- Subgraph 1: Arrow type combos (vertices are shape "none", labeled with arrow name) ---
 const arrowVertices: Graphviz.Vertex[] = arrowTypes.flatMap((arrow, i) => [
-    { id: `a${i}s`, label: arrow, shape: Graphviz.Shapes.none, parentID: "sgArrows" },
-    { id: `a${i}t`, label: arrow, shape: Graphviz.Shapes.none, parentID: "sgArrows" },
+    { id: `a${i}s`, label: arrow, shape: Graphviz.Shape.none, parentID: "sgArrows" },
+    { id: `a${i}t`, label: arrow, shape: Graphviz.Shape.none, parentID: "sgArrows" },
 ]);
 const arrowEdges: Graphviz.Edge[] = arrowTypes.map((arrow, i) => ({
     id: `ea${i}`,
@@ -56,7 +56,7 @@ const customVertices: Graphviz.Vertex[] = [
         </g>`
     },
     {
-        id: "c3", label: "Custom 2", parentID: "sgCustom", shape: Graphviz.Shapes.circle,
+        id: "c3", label: "Custom 2", parentID: "sgCustom", shape: Graphviz.Shape.circle,
         svgTpl: `<g>
             <circle cx="20" cy="20" r="18" fill="#4cc2ff" stroke="var(--gv-fg)" stroke-width="2"/>
             <text x="20" y="25" text-anchor="middle" font-family="arial" font-size="12" fill="white">%id%</text>
