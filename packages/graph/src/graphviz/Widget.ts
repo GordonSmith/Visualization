@@ -113,8 +113,10 @@ export class Widget extends SVGZoomWidget {
                 }
             }
         } else {
-            this._renderElement.selectAll(".node,.edge,.cluster")
-                .classed(className, true);
+            this._renderElement
+                .selectAll(".node,.edge,.cluster")
+                .classed(className, true)
+                ;
         }
         return this;
     }
@@ -128,8 +130,10 @@ export class Widget extends SVGZoomWidget {
                 }
             }
         } else {
-            this._renderElement.selectAll(".node,.edge,.cluster")
-                .classed(className, false);
+            this._renderElement
+                .selectAll(".node,.edge,.cluster")
+                .classed(className, false)
+                ;
         }
         return this;
     }
@@ -235,16 +239,18 @@ export class Widget extends SVGZoomWidget {
         super.exit(domNode, element);
     }
 
+    private static readonly _svgColorMap: Record<string, string> = {
+        '"black"': "var(--gv-fg)",
+        '"white"': "var(--gv-bg)"
+    };
+    private static readonly _svgColorRe = /"black"|"white"/g;
+
     renderSVG(svg: string) {
         this._selection = {};
         const startPos = svg.indexOf("<g id=");
         const endPos = svg.lastIndexOf("</svg>");
         this._renderElement.html(svg.substring(startPos, endPos)
-            .replace(/"black"/g, "var(--gv-fg)")
-            .replace(/"white"/g, "var(--gv-bg)")
-            .replace(/"whitesmoke"/g, "var(--gv-bg)")
-            .replace(/"lightgrey"/g, "var(--gv-bg)")
-            .replace(/"lightgray"/g, "var(--gv-bg)")
+            .replace(Widget._svgColorRe, m => Widget._svgColorMap[m])
         );
     }
 

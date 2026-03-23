@@ -1,4 +1,4 @@
-import { Graph2, scopedLogger, } from "@hpcc-js/util";
+import { type ID, Graph2, scopedLogger, } from "@hpcc-js/util";
 import type { Node, Edge, Cluster, Graph } from "./types.ts";
 
 const logger = scopedLogger("src/graphviz/Store.ts");
@@ -56,5 +56,55 @@ export class Store extends Graph2<Node, Edge, Cluster> {
         });
 
         return this;
+    }
+
+    createView(selection: ID[]): Store {
+        const view = new Store();
+        view.graph(this._graph);
+        const idSet = new Set(selection);
+
+        const addSubgraphRecursive = (sgId: ID, parent?: Cluster) => {
+            if (view.subgraphExists(sgId)) return;
+            const sg = this.subgraph(sgId);
+            view.addSubgraph(sg, parent);
+
+            for (const child of this.subgraphSubgraphs(sgId)) {
+                addSubgraphRecursive(this.id(child), sg);
+            }
+            for (const v of this.subgraphVertices(sgId)) {
+                view.addVertex(v, sg);
+            }
+            for (const e of this.subgraphEdges(sgId)) {
+                view.addEdge(e, sg);
+            }
+        };
+
+        for (const id of selection) {
+            if (this.subgraphExists(id)) {
+                addSubgraphRecursive(id);
+            } else {
+                const item = this.item(id);
+                if (item?.parentID && this.subgraphExists(this.parentID(item)!)) {
+                    addSubgraphRecursive(this.parentID(item)!);
+                }
+            }
+        }
+
+        for (const edge of this.allEdges()) {
+            if (view.edgeExists(this.id(edge))) continue;
+            const sourceVertex = this.vertex(this.sourceID(edge));
+            const targetVertex = this.vertex(this.targetID(edge));
+            if (sourceVertex && targetVertex) {
+                const sourceParentId = this.parentID(sourceVertex);
+                const targetParentId = this.parentID(targetVertex);
+                if (sourceParentId && targetParentId &&
+                    idSet.has(sourceParentId) &&
+                    idSet.has(targetParentId)) {
+                    view.addEdge(edge);
+                }
+            }
+        }
+
+        return view;
     }
 }

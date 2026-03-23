@@ -1,4 +1,3 @@
-import { ID } from "@hpcc-js/util";
 import type { Store } from "./Store.ts";
 import { type Edge, type Cluster, type Node, CLUSTER_DOT_ATTRS, EDGE_DOT_ATTRS, GRAPH_DOT_ATTRS, NODE_DOT_ATTRS } from "./types.ts";
 
@@ -31,7 +30,7 @@ export class DotWriter {
 
     protected _graph: Store;
 
-    protected _dedupVertices: { [id: ID]: boolean } = {};
+    protected _dedupVertices: { [id: string]: boolean } = {};
     protected _dedupEdges: { [scopeName: string]: boolean } = {};
     protected _dedupSubgraphs: { [scopeName: string]: boolean } = {};
 
@@ -100,7 +99,7 @@ subgraph ${subgraphName} {${attrLines}
 }`;
     }
 
-    writeGraph(selection: ID[] = []): string {
+    writeGraph(selection: string[] = []): string {
         this._dedupSubgraphs = {};
         this._dedupVertices = {};
         this._dedupEdges = {};
@@ -108,37 +107,16 @@ subgraph ${subgraphName} {${attrLines}
         const children: string[] = [];
 
         if (selection?.length) {
-            const idSet = new Set(selection);
-
-            for (const id of selection) {
-                let subgraph: Cluster | undefined;
-                if (g.subgraphExists(id)) {
-                    subgraph = g.subgraph(id);
-                } else {
-                    const item = g.item(id);
-                    if (item?.parentID && g.subgraphExists(g.parentID(item)!)) {
-                        subgraph = g.subgraph(g.parentID(item)!);
-                    }
-                }
-
-                if (subgraph) {
-                    children.push(this.writeSubgraph(subgraph));
-                }
+            const view = g.createView(selection);
+            const viewWriter = new DotWriter(view);
+            for (const sg of view.subgraphs()) {
+                children.push(viewWriter.writeSubgraph(sg));
             }
-
-            for (const edge of g.allEdges()) {
-                const sourceVertex = g.vertex(g.sourceID(edge));
-                const targetVertex = g.vertex(g.targetID(edge));
-                if (sourceVertex && targetVertex) {
-                    const sourceParentId = g.parentID(sourceVertex);
-                    const targetParentId = g.parentID(targetVertex);
-
-                    if (sourceParentId && targetParentId &&
-                        idSet.has(sourceParentId) &&
-                        idSet.has(targetParentId)) {
-                        children.push(this.writeEdge(edge));
-                    }
-                }
+            for (const vertex of view.vertices()) {
+                children.push(viewWriter.writeVertex(vertex));
+            }
+            for (const edge of view.edges()) {
+                children.push(viewWriter.writeEdge(edge));
             }
         } else {
             for (const sg of g.subgraphs()) {

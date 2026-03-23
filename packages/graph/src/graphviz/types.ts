@@ -2,28 +2,24 @@ import { EdgeT, SubgraphT, VertexT } from "@hpcc-js/util";
 
 // --- Node shapes (https://graphviz.org/doc/info/shapes.html) ---
 
-export const Shapes = [
-    "box", "polygon", "ellipse", "oval", "circle", "point", "egg", "triangle",
-    "plaintext", "plain", "diamond", "trapezium", "parallelogram", "house",
-    "pentagon", "hexagon", "septagon", "octagon", "doublecircle", "doubleoctagon",
-    "tripleoctagon", "invtriangle", "invtrapezium", "invhouse", "Mdiamond",
-    "Msquare", "Mcircle", "rect", "rectangle", "square", "star", "none",
-    "underline", "cylinder", "note", "tab", "folder", "box3d", "component",
-    "promoter", "cds", "terminator", "utr", "primersite", "restrictionsite",
-    "fivepoverhang", "threepoverhang", "noverhang", "assembly", "signature",
-    "insulator", "ribosite", "rnastab", "proteasesite", "proteinstab",
-    "rpromoter", "rarrow", "larrow", "lpromoter", "record", "Mrecord"
-] as const;
-export type Shape = typeof Shapes[number];
+export type Shape =
+    | "box" | "polygon" | "ellipse" | "oval" | "circle" | "point" | "egg" | "triangle"
+    | "plaintext" | "plain" | "diamond" | "trapezium" | "parallelogram" | "house"
+    | "pentagon" | "hexagon" | "septagon" | "octagon" | "doublecircle" | "doubleoctagon"
+    | "tripleoctagon" | "invtriangle" | "invtrapezium" | "invhouse" | "Mdiamond"
+    | "Msquare" | "Mcircle" | "rect" | "rectangle" | "square" | "star" | "none"
+    | "underline" | "cylinder" | "note" | "tab" | "folder" | "box3d" | "component"
+    | "promoter" | "cds" | "terminator" | "utr" | "primersite" | "restrictionsite"
+    | "fivepoverhang" | "threepoverhang" | "noverhang" | "assembly" | "signature"
+    | "insulator" | "ribosite" | "rnastab" | "proteasesite" | "proteinstab"
+    | "rpromoter" | "rarrow" | "larrow" | "lpromoter" | "record" | "Mrecord";
 
 // --- Arrow type (https://graphviz.org/docs/attr-types/arrowType/) ---
 
-export const ArrowTypes = [
-    "normal", "inv", "dot", "invdot", "odot", "invodot", "none", "tee",
-    "empty", "invempty", "diamond", "odiamond", "ediamond", "crow",
-    "box", "obox", "open", "halfopen", "vee"
-] as const;
-export type ArrowType = typeof ArrowTypes[number];
+export type ArrowType =
+    | "normal" | "inv" | "dot" | "invdot" | "odot" | "invodot" | "none" | "tee"
+    | "empty" | "invempty" | "diamond" | "odiamond" | "ediamond" | "crow"
+    | "box" | "obox" | "open" | "halfopen" | "vee";
 
 // --- Edge direction type (https://graphviz.org/docs/attr-types/dirType/) ---
 
@@ -31,8 +27,7 @@ export type DirType = "forward" | "back" | "both" | "none";
 
 // --- Style types (https://graphviz.org/docs/attr-types/style/) ---
 
-export const EdgeStyles = ["solid", "dashed", "dotted", "bold", "invis", "tapered"] as const;
-export type EdgeStyle = typeof EdgeStyles[number];
+export type EdgeStyle = "solid" | "dashed" | "dotted" | "bold" | "invis" | "tapered";
 
 export type NodeStyle = "solid" | "dashed" | "dotted" | "bold" | "invis" | "filled" | "striped" | "wedged" | "diagonals" | "rounded" | "radial";
 

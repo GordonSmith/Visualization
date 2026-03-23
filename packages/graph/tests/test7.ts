@@ -1,8 +1,23 @@
 import { Graphviz } from "../src/index.ts";
 
-const arrowTypes = [...Graphviz.ArrowTypes];
-const edgeStyles = [...Graphviz.EdgeStyles].filter(s => s !== "invis");
-const shapes = [...Graphviz.Shapes];
+const arrowTypes: Graphviz.ArrowType[] = [
+    "normal", "inv", "dot", "invdot", "odot", "invodot", "none", "tee",
+    "empty", "invempty", "diamond", "odiamond", "ediamond", "crow",
+    "box", "obox", "open", "halfopen", "vee"
+];
+const edgeStyles: Graphviz.EdgeStyle[] = ["solid", "dashed", "dotted", "bold", "tapered"];
+const shapes: Graphviz.Shape[] = [
+    "box", "polygon", "ellipse", "oval", "circle", "point", "egg", "triangle",
+    "plaintext", "plain", "diamond", "trapezium", "parallelogram", "house",
+    "pentagon", "hexagon", "septagon", "octagon", "doublecircle", "doubleoctagon",
+    "tripleoctagon", "invtriangle", "invtrapezium", "invhouse", "Mdiamond",
+    "Msquare", "Mcircle", "rect", "rectangle", "square", "star", "none",
+    "underline", "cylinder", "note", "tab", "folder", "box3d", "component",
+    "promoter", "cds", "terminator", "utr", "primersite", "restrictionsite",
+    "fivepoverhang", "threepoverhang", "noverhang", "assembly", "signature",
+    "insulator", "ribosite", "rnastab", "proteasesite", "proteinstab",
+    "rpromoter", "rarrow", "larrow", "lpromoter", "record", "Mrecord"
+];
 
 // --- Subgraph 1: Arrow type combos, single horizontal row of vertical (TB) examples ---
 const ARROW_COLS = arrowTypes.length;
