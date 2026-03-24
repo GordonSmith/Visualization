@@ -499,18 +499,20 @@ const GRAPH: Graphviz.Graph = {
 
 };
 
-const store = new Graphviz.Store();
+let store = new Graphviz.Store();
 store.load(VERTEX_ARR, EDGE_ARR, SUBGRAPH_ARR, GRAPH);
+
+// store = store.createView(["s26"]);
 
 export class Test7 extends Graphviz.Widget {
 
     constructor() {
         super();
         this.data({
-            vertices: VERTEX_ARR,
-            edges: EDGE_ARR,
-            subgraphs: SUBGRAPH_ARR,
-            graph: GRAPH
+            vertices: store.allVertices(),
+            edges: store.allEdges(),
+            subgraphs: store.allSubgraphs(),
+            graph: store.graph()
         });
         setTimeout(() => {
             this.setClass("unknown", ["s17", "s19", "s21", "s23", "s25", "s27", "s29", "s31"]);

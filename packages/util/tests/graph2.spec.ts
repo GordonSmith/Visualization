@@ -651,7 +651,7 @@ describe("Graph2", function () {
         const graph = new Graph2();
         const v1 = { id: "a" };
         const v2 = { id: "b" };
-        const e = { id: "e1", source: "a", target: "b" };
+        const e = { id: "e1", sourceID: "a", targetID: "b" };
 
         graph.addVertex(v1);
         graph.addVertex(v2);
@@ -665,7 +665,7 @@ describe("Graph2", function () {
         const graph = new Graph2();
         const v1 = { id: () => "a" };
         const v2 = { id: () => "b" };
-        const e = { id: () => "e1", source: () => "a", target: () => "b" };
+        const e = { id: () => "e1", sourceID: () => "a", targetID: () => "b" };
 
         graph.addVertex(v1);
         graph.addVertex(v2);
