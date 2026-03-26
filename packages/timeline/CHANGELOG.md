@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/timeline-v3.4.2...timeline-v3.5.0) (2026-03-26)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* embed dgrid-shim as a self loading resource ([#4531](https://github.com/GordonSmith/Visualization/issues/4531)) ([c37c597](https://github.com/GordonSmith/Visualization/commit/c37c5971439f2e9886faa927ac57b2ed828a7e44))
+* Expose Gantt selection method ([04fc0cc](https://github.com/GordonSmith/Visualization/commit/04fc0cce4c7749e8b4bd54e271a963f91a428b10))
+* Expose Gantt selection method ([4faf833](https://github.com/GordonSmith/Visualization/commit/4faf83336f693b7d7a651bbbe2c0ea7a63ad72eb))
+* switch to "main" from trunk ([99e2723](https://github.com/GordonSmith/Visualization/commit/99e272308e283ac58dc2c14d8236f92ba53b6960))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* **timeline:** add zoom preservation to timeline series ([#4498](https://github.com/GordonSmith/Visualization/issues/4498)) ([3b68897](https://github.com/GordonSmith/Visualization/commit/3b68897f1e49fb68764d339a962a75b7e8e2a867))
+* Upgrade timeline to v3 ([0292895](https://github.com/GordonSmith/Visualization/commit/029289500a6a79684b3147df39abc151350d3aa8))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* bump versions ([e9719b8](https://github.com/GordonSmith/Visualization/commit/e9719b875e4c65936921d2e6a0f76ab008b88114))
+* Bump versions to latest ([e200466](https://github.com/GordonSmith/Visualization/commit/e20046603a824cb5bd1a8ab2a51d6f76805bb226))
+* Bump versions to latest ([8c541d7](https://github.com/GordonSmith/Visualization/commit/8c541d75e06bfbe1030ab003b5cccf4af68bc430))
+* **eclwatch:** add a multi-scale 24-hour tick formatter ([#4482](https://github.com/GordonSmith/Visualization/issues/4482)) ([d05aacc](https://github.com/GordonSmith/Visualization/commit/d05aacccd36e56daa562cd0a49747c5fc45bbf73))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Switch to dgrid for layouts ([5ef8847](https://github.com/GordonSmith/Visualization/commit/5ef8847932da4f4b10906363b681f4a7f275c40b))
+* Switch to dgrid for layouts ([fca977d](https://github.com/GordonSmith/Visualization/commit/fca977d991ddadc4e498c59a55c255599ea6aa54))
+* **timeline:** fix tickFormat being ignored ([8d970df](https://github.com/GordonSmith/Visualization/commit/8d970dfa67326464eecf69d6dee3e52e7ec8a7d1))
+* **timeline:** fix tickFormat being ignored ([d5d13fb](https://github.com/GordonSmith/Visualization/commit/d5d13fb652e2fe6055b6bd8c4052c37d76e3cf98))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/api bumped from ^3.4.13 to ^3.5.0
+    * @hpcc-js/chart bumped from ^3.7.2 to ^3.8.0
+    * @hpcc-js/common bumped from ^3.7.3 to ^3.8.0
+    * @hpcc-js/html bumped from ^3.3.13 to ^3.4.0
+    * @hpcc-js/layout bumped from ^3.5.8 to ^3.6.0
+    * @hpcc-js/react bumped from ^3.4.13 to ^3.5.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.8.5 to ^1.9.0
+
 ## [3.4.2](https://github.com/hpcc-systems/Visualization/compare/timeline-v3.4.1...timeline-v3.4.2) (2026-03-16)
 
 

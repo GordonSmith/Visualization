@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.0](https://github.com/GordonSmith/Visualization/compare/dgrid-v3.7.3...dgrid-v3.8.0) (2026-03-26)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* embed dgrid-shim as a self loading resource ([#4531](https://github.com/GordonSmith/Visualization/issues/4531)) ([c37c597](https://github.com/GordonSmith/Visualization/commit/c37c5971439f2e9886faa927ac57b2ed828a7e44))
+* enhance Table class with dynamic column width sampling ([#4528](https://github.com/GordonSmith/Visualization/issues/4528)) ([e996827](https://github.com/GordonSmith/Visualization/commit/e996827f8625a216f247845052409147bc7bcd74))
+* implement double-click auto-fit for dgrid columns ([#4537](https://github.com/GordonSmith/Visualization/issues/4537)) ([c6345b9](https://github.com/GordonSmith/Visualization/commit/c6345b9c5b0f442e286f0e5d9be3167fe70d46f0))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade ddl-shim to v3 ([3e146cd](https://github.com/GordonSmith/Visualization/commit/3e146cdf3c973bede127514f47db7267b41c3a5a))
+* Upgrade ddl-shim to v3 ([4861665](https://github.com/GordonSmith/Visualization/commit/4861665dabe9b485c567bc40028849cfb1cb3171))
+* Upgrade eclwatch to v3 ([d8d4ae6](https://github.com/GordonSmith/Visualization/commit/d8d4ae6476b8ff0f0fca2e765db8509f7fc37363))
+* Upgrade eclwatch to v3 ([a32c104](https://github.com/GordonSmith/Visualization/commit/a32c10417922a45b450731d4331280576db8025f))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* Custom cell render fails with plain string ([5e09c02](https://github.com/GordonSmith/Visualization/commit/5e09c0262b836611905c2c234a411b1fc0aa9788))
+* Custom cell render fails with plain string ([3cd8004](https://github.com/GordonSmith/Visualization/commit/3cd80047be277304dfcf52f6274af8878f0f9cba))
+* increase the resize handle hit zone ([#4535](https://github.com/GordonSmith/Visualization/issues/4535)) ([8ae622b](https://github.com/GordonSmith/Visualization/commit/8ae622ba3947736e2ef84d8e22a8c49dafc59c03))
+* Nested datasets not rendering correctly ([6d49af1](https://github.com/GordonSmith/Visualization/commit/6d49af12123da9edd93b4fc7de15f6e44b08d394))
+* Nested datasets not rendering correctly ([71d18a4](https://github.com/GordonSmith/Visualization/commit/71d18a4958fb892b49ed56cc0332542aefee8b63))
+* optimize WUDetails call ([#4422](https://github.com/GordonSmith/Visualization/issues/4422)) ([1521608](https://github.com/GordonSmith/Visualization/commit/1521608300037f1f06beac7c423ee192e21bf7fb))
+* Paged dgrid failing in strict mode ([c2df63e](https://github.com/GordonSmith/Visualization/commit/c2df63e833b84a15485056f3a46019c54cc9da82))
+* Paged dgrid failing in strict mode ([9a738c1](https://github.com/GordonSmith/Visualization/commit/9a738c11a9e72c6204273540c0fc056b6789872b))
+* Revert arguments removal ([ee5201f](https://github.com/GordonSmith/Visualization/commit/ee5201f08361e23d87c8be5b3e2f054751efd374))
+* Revert arguments removal ([20c34f1](https://github.com/GordonSmith/Visualization/commit/20c34f17c8a49bc4a608631f4d1f7b4140b5270e))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Switch to dgrid for layouts ([5ef8847](https://github.com/GordonSmith/Visualization/commit/5ef8847932da4f4b10906363b681f4a7f275c40b))
+* Switch to dgrid for layouts ([fca977d](https://github.com/GordonSmith/Visualization/commit/fca977d991ddadc4e498c59a55c255599ea6aa54))
+* Undefined background color issue ([957d362](https://github.com/GordonSmith/Visualization/commit/957d362862c1f0679fd1930c1b1f863a064f528a))
+* update dependencies and overrides in package.json files ([#4540](https://github.com/GordonSmith/Visualization/issues/4540)) ([033f39f](https://github.com/GordonSmith/Visualization/commit/033f39f903b1dad50260934dc7c4ed6d34bb14c0))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/common bumped from ^3.7.3 to ^3.8.0
+    * @hpcc-js/dgrid-shim bumped from ^3.4.3 to ^3.5.0
+    * @hpcc-js/util bumped from ^3.5.2 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/ddl-shim bumped from ^3.3.2 to ^3.4.0
+    * @hpcc-js/esbuild-plugins bumped from ^1.8.5 to ^1.9.0
+
 ## [3.7.3](https://github.com/hpcc-systems/Visualization/compare/dgrid-v3.7.2...dgrid-v3.7.3) (2026-03-16)
 
 

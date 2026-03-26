@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.0](https://github.com/GordonSmith/Visualization/compare/eclwatch-v3.6.3...eclwatch-v3.7.0) (2026-03-26)
+
+
+### Features
+
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* **comms:** allow WUResult to set BypassCachedResult in request ([23c2d1c](https://github.com/GordonSmith/Visualization/commit/23c2d1c61c9d357115a7c5f1b5a2bcbe839b122c))
+* **comms:** allow WUResult to set BypassCachedResult in request ([0405d6c](https://github.com/GordonSmith/Visualization/commit/0405d6cc93893d066571dd84945dc40eaeee8ff4))
+* embed dgrid-shim as a self loading resource ([#4531](https://github.com/GordonSmith/Visualization/issues/4531)) ([c37c597](https://github.com/GordonSmith/Visualization/commit/c37c5971439f2e9886faa927ac57b2ed828a7e44))
+* implement double-click auto-fit for dgrid columns ([#4537](https://github.com/GordonSmith/Visualization/issues/4537)) ([c6345b9](https://github.com/GordonSmith/Visualization/commit/c6345b9c5b0f442e286f0e5d9be3167fe70d46f0))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade eclwatch to v3 ([d8d4ae6](https://github.com/GordonSmith/Visualization/commit/d8d4ae6476b8ff0f0fca2e765db8509f7fc37363))
+* Upgrade eclwatch to v3 ([a32c104](https://github.com/GordonSmith/Visualization/commit/a32c10417922a45b450731d4331280576db8025f))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* **eclwatch:** add a multi-scale 24-hour tick formatter ([#4482](https://github.com/GordonSmith/Visualization/issues/4482)) ([d05aacc](https://github.com/GordonSmith/Visualization/commit/d05aacccd36e56daa562cd0a49747c5fc45bbf73))
+* **eclwatch:** display error message in WUResult table ([888c9cb](https://github.com/GordonSmith/Visualization/commit/888c9cbbf9ad5b5056bbfa0b90aac6cc458cd6b9))
+* Nested datasets not rendering correctly ([6d49af1](https://github.com/GordonSmith/Visualization/commit/6d49af12123da9edd93b4fc7de15f6e44b08d394))
+* Nested datasets not rendering correctly ([71d18a4](https://github.com/GordonSmith/Visualization/commit/71d18a4958fb892b49ed56cc0332542aefee8b63))
+* Paged dgrid failing in strict mode ([c2df63e](https://github.com/GordonSmith/Visualization/commit/c2df63e833b84a15485056f3a46019c54cc9da82))
+* Paged dgrid failing in strict mode ([9a738c1](https://github.com/GordonSmith/Visualization/commit/9a738c11a9e72c6204273540c0fc056b6789872b))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/codemirror bumped from ^3.7.2 to ^3.8.0
+    * @hpcc-js/common bumped from ^3.7.3 to ^3.8.0
+    * @hpcc-js/comms bumped from ^3.15.2 to ^3.16.0
+    * @hpcc-js/dgrid bumped from ^3.7.3 to ^3.8.0
+    * @hpcc-js/graph bumped from ^3.7.2 to ^3.8.0
+    * @hpcc-js/layout bumped from ^3.5.8 to ^3.6.0
+    * @hpcc-js/phosphor bumped from ^3.5.2 to ^3.6.0
+    * @hpcc-js/timeline bumped from ^3.4.2 to ^3.5.0
+    * @hpcc-js/tree bumped from ^3.2.13 to ^3.3.0
+    * @hpcc-js/util bumped from ^3.5.2 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.8.5 to ^1.9.0
+
 ## [3.6.3](https://github.com/hpcc-systems/Visualization/compare/eclwatch-v3.6.2...eclwatch-v3.6.3) (2026-03-16)
 
 

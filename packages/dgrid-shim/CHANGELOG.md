@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/dgrid-shim-v3.4.3...dgrid-shim-v3.5.0) (2026-03-26)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Add dgrid ([8f35244](https://github.com/GordonSmith/Visualization/commit/8f352440d6877db1801ccbe52467ed1be92c4fe4))
+* Add dgrid ([da14281](https://github.com/GordonSmith/Visualization/commit/da14281ee8c91d6440734f6cf3cb1bfb6118a415))
+* Add maxWeight to Heat chart ([046c67a](https://github.com/GordonSmith/Visualization/commit/046c67a398f574e2200e844db5c27981ecf0d261))
+* Add maxWeight to Heat chart ([59ee802](https://github.com/GordonSmith/Visualization/commit/59ee80246e45fa5464f6fed4ed7f488ee3fca0cb))
+* implement double-click auto-fit for dgrid columns ([#4537](https://github.com/GordonSmith/Visualization/issues/4537)) ([c6345b9](https://github.com/GordonSmith/Visualization/commit/c6345b9c5b0f442e286f0e5d9be3167fe70d46f0))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* bump versions (security) ([#4513](https://github.com/GordonSmith/Visualization/issues/4513)) ([b819b17](https://github.com/GordonSmith/Visualization/commit/b819b173419e91a57e8db7a70bd9d56987fd29fc))
+* Paged dgrid failing in strict mode ([c2df63e](https://github.com/GordonSmith/Visualization/commit/c2df63e833b84a15485056f3a46019c54cc9da82))
+* Paged dgrid failing in strict mode ([9a738c1](https://github.com/GordonSmith/Visualization/commit/9a738c11a9e72c6204273540c0fc056b6789872b))
+* prevent unintended sort change on header click after column resize ([31b6e01](https://github.com/GordonSmith/Visualization/commit/31b6e01389df9687661c724289ae539535e0438a))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* Support NodeJS 24 build env. ([8894980](https://github.com/GordonSmith/Visualization/commit/88949804fd1f6b8e5a3b331b0dba9e8df47fbb26))
+* update dependencies across multiple packages ([e014d5d](https://github.com/GordonSmith/Visualization/commit/e014d5dc20e3028d7cbfbfe7b9f2fa82829f89fd))
+* update dependencies and overrides in package.json files ([#4540](https://github.com/GordonSmith/Visualization/issues/4540)) ([033f39f](https://github.com/GordonSmith/Visualization/commit/033f39f903b1dad50260934dc7c4ed6d34bb14c0))
+* update package dependencies and versions across multiple packages ([065c983](https://github.com/GordonSmith/Visualization/commit/065c9832db4e5d580f5ec9ef258faea236906021))
+
 ## [3.4.3](https://github.com/hpcc-systems/Visualization/compare/dgrid-shim-v3.4.2...dgrid-shim-v3.4.3) (2026-03-16)
 
 
