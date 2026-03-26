@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.0](https://github.com/GordonSmith/Visualization/compare/graph-v3.7.2...graph-v3.8.0) (2026-03-26)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* add keyboard navigation for select charts ([#4481](https://github.com/GordonSmith/Visualization/issues/4481)) ([be68d17](https://github.com/GordonSmith/Visualization/commit/be68d178704bb5132fe875e1a98e24ec22e3eee4))
+* Add lit-html enabled graph ([a4c4a1d](https://github.com/GordonSmith/Visualization/commit/a4c4a1d42499ca5c6443e52498024ee511ecc0e8))
+* Add lit-html enabled graph ([8dec33c](https://github.com/GordonSmith/Visualization/commit/8dec33c8391d6f5fa9717625a49a574401f1c158))
+* embed dgrid-shim as a self loading resource ([#4531](https://github.com/GordonSmith/Visualization/issues/4531)) ([c37c597](https://github.com/GordonSmith/Visualization/commit/c37c5971439f2e9886faa927ac57b2ed828a7e44))
+* Switch to esbuild and ESM first packaging ([4a426f6](https://github.com/GordonSmith/Visualization/commit/4a426f6148a882954bf77aef8972f406e34c912b))
+* Switch to esbuild and ESM first packaging ([b752510](https://github.com/GordonSmith/Visualization/commit/b752510b5074fbc9a606e4d189412798c241f414))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade graph, html and react to v3 ([b5bb00d](https://github.com/GordonSmith/Visualization/commit/b5bb00dfc2aacc8137ba028cd987ed3433ddc365))
+* Upgrade graph, html and react to v3 ([a1aa027](https://github.com/GordonSmith/Visualization/commit/a1aa02785ed97c4ee18b3a83ab341f0423956b7c))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* bump versions ([e9719b8](https://github.com/GordonSmith/Visualization/commit/e9719b875e4c65936921d2e6a0f76ab008b88114))
+* bump versions (security) ([2cc4213](https://github.com/GordonSmith/Visualization/commit/2cc4213e30aa3df57ddca85b8ded29b6de2eae8d))
+* bump versions (security) ([#4513](https://github.com/GordonSmith/Visualization/issues/4513)) ([b819b17](https://github.com/GordonSmith/Visualization/commit/b819b173419e91a57e8db7a70bd9d56987fd29fc))
+* Bump versions to latest ([e200466](https://github.com/GordonSmith/Visualization/commit/e20046603a824cb5bd1a8ab2a51d6f76805bb226))
+* Bump versions to latest ([8c541d7](https://github.com/GordonSmith/Visualization/commit/8c541d75e06bfbe1030ab003b5cccf4af68bc430))
+* Prevent React from being included in the bundle ([b132c33](https://github.com/GordonSmith/Visualization/commit/b132c33de1c11ef0b245da87db55563c518a1a0a))
+* Prevent React from being included in the bundle ([280db7a](https://github.com/GordonSmith/Visualization/commit/280db7a82c01ce1a7c5ac8713e02eb4df9609bf3))
+* Relax React peer dependency ([4fab392](https://github.com/GordonSmith/Visualization/commit/4fab392ef6c81be640d82a2efbcfbf7061cfcb21))
+* Resize markers and ensure correct colours ([2a230a8](https://github.com/GordonSmith/Visualization/commit/2a230a8f024fe29b06f85fd8247e9fe7a7e35557))
+* Resize markers and ensure correct colours ([b74d3ea](https://github.com/GordonSmith/Visualization/commit/b74d3eaef37840ce1362e7ff570ce6884e7de242))
+* Revert react back to preact ([c75ca63](https://github.com/GordonSmith/Visualization/commit/c75ca63c2cf0eaebf1d5bae22e775e86c77125f3))
+* Revert react back to preact ([9c2e0f0](https://github.com/GordonSmith/Visualization/commit/9c2e0f0cbf7c43561b7f2c0707d5fb95971bd5ef))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* update @hpcc-js/wasm-graphviz to version 1.17.0 ([e898598](https://github.com/GordonSmith/Visualization/commit/e898598912543f346a4a5e641fc6b8d5f6273342))
+* update dependencies across multiple packages ([e014d5d](https://github.com/GordonSmith/Visualization/commit/e014d5dc20e3028d7cbfbfe7b9f2fa82829f89fd))
+* update dependencies and overrides in package.json files ([#4540](https://github.com/GordonSmith/Visualization/issues/4540)) ([033f39f](https://github.com/GordonSmith/Visualization/commit/033f39f903b1dad50260934dc7c4ed6d34bb14c0))
+* update package dependencies and versions across multiple packages ([065c983](https://github.com/GordonSmith/Visualization/commit/065c9832db4e5d580f5ec9ef258faea236906021))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/api bumped from ^3.4.13 to ^3.5.0
+    * @hpcc-js/common bumped from ^3.7.3 to ^3.8.0
+    * @hpcc-js/html bumped from ^3.3.13 to ^3.4.0
+    * @hpcc-js/react bumped from ^3.4.13 to ^3.5.0
+    * @hpcc-js/util bumped from ^3.5.2 to ^3.6.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.8.5 to ^1.9.0
+
 ## [3.7.2](https://github.com/hpcc-systems/Visualization/compare/graph-v3.7.1...graph-v3.7.2) (2026-03-16)
 
 

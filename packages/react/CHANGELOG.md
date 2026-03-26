@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.0](https://github.com/GordonSmith/Visualization/compare/react-v3.4.13...react-v3.5.0) (2026-03-26)
+
+
+### Features
+
+* Add @observablehq/notebook-kit support ([f8d806c](https://github.com/GordonSmith/Visualization/commit/f8d806c68c8fd260ae83d0b2460dd5c0915da5cb))
+* Drop preact-shim and bump versions ([ac7d807](https://github.com/GordonSmith/Visualization/commit/ac7d807524d698dadbd79107ea7f03d234dd9e19))
+* Drop preact-shim and bump versions ([24044a4](https://github.com/GordonSmith/Visualization/commit/24044a4604cd3c6a481c91d1e7c21ac88790fff6))
+* Drop preact-shim and bump versions ([29f2684](https://github.com/GordonSmith/Visualization/commit/29f26841c8cfa303321bd7e86daaedc4d37168d8))
+* Drop preact-shim and bump versions ([92add6f](https://github.com/GordonSmith/Visualization/commit/92add6fffd2bbc932c134a30651577722697e14b))
+* switch to simpler version stamp method ([d828033](https://github.com/GordonSmith/Visualization/commit/d828033ec79f56c4d1579bca230bd03cf0d6328e))
+* Switch to vite for dev server and build process ([1c01a39](https://github.com/GordonSmith/Visualization/commit/1c01a392460c3ef0d7c668a772e786943c2659f3))
+* Switch to vite for dev server and build process ([fdd3cac](https://github.com/GordonSmith/Visualization/commit/fdd3cacd13aed0b2527b9d32c37a1ac7d74c6f66))
+* Upgrade graph, html and react to v3 ([b5bb00d](https://github.com/GordonSmith/Visualization/commit/b5bb00dfc2aacc8137ba028cd987ed3433ddc365))
+* Upgrade graph, html and react to v3 ([a1aa027](https://github.com/GordonSmith/Visualization/commit/a1aa02785ed97c4ee18b3a83ab341f0423956b7c))
+* Upgrade layout to v3 ([38248ea](https://github.com/GordonSmith/Visualization/commit/38248eab98392c7b0f625da9bcca1d0192be5743))
+* Upgrade layout to v3 ([cbc463a](https://github.com/GordonSmith/Visualization/commit/cbc463acb24fc2e7d0f3da93b4c0d9c6915aabd8))
+
+
+### Bug Fixes
+
+* bump typescript to version 6 ([#4551](https://github.com/GordonSmith/Visualization/issues/4551)) ([c42a5eb](https://github.com/GordonSmith/Visualization/commit/c42a5ebc63be90d7d1842238119bce0815a056a6))
+* bump versions ([e9719b8](https://github.com/GordonSmith/Visualization/commit/e9719b875e4c65936921d2e6a0f76ab008b88114))
+* bump versions (security) ([2cc4213](https://github.com/GordonSmith/Visualization/commit/2cc4213e30aa3df57ddca85b8ded29b6de2eae8d))
+* bump versions (security) ([#4513](https://github.com/GordonSmith/Visualization/issues/4513)) ([b819b17](https://github.com/GordonSmith/Visualization/commit/b819b173419e91a57e8db7a70bd9d56987fd29fc))
+* Revert react back to preact ([c75ca63](https://github.com/GordonSmith/Visualization/commit/c75ca63c2cf0eaebf1d5bae22e775e86c77125f3))
+* Revert react back to preact ([9c2e0f0](https://github.com/GordonSmith/Visualization/commit/9c2e0f0cbf7c43561b7f2c0707d5fb95971bd5ef))
+* Revert text autosize changes ([4709091](https://github.com/GordonSmith/Visualization/commit/47090910e3957381fadbe069a3087314643841b3))
+* Revert text autosize changes ([75d7693](https://github.com/GordonSmith/Visualization/commit/75d76939f7f28a767706ce83f8385250ce45624b))
+* revert vite back to the stable releases ([136469b](https://github.com/GordonSmith/Visualization/commit/136469b0070c2d3090a128361ed411818347c41c))
+* Sourcemaps out of sync ([c46b154](https://github.com/GordonSmith/Visualization/commit/c46b1546855ee4a45bc299203dea430e84912d40))
+* Sourcemaps out of sync ([cf240dc](https://github.com/GordonSmith/Visualization/commit/cf240dc9c56be036877598635af411bccf1938b9))
+* update dependencies across multiple packages ([3a6cbc2](https://github.com/GordonSmith/Visualization/commit/3a6cbc299cf704038507f0673940125615bca70c))
+* update dependencies across multiple packages ([e014d5d](https://github.com/GordonSmith/Visualization/commit/e014d5dc20e3028d7cbfbfe7b9f2fa82829f89fd))
+* update dependencies and overrides in package.json files ([#4540](https://github.com/GordonSmith/Visualization/issues/4540)) ([033f39f](https://github.com/GordonSmith/Visualization/commit/033f39f903b1dad50260934dc7c4ed6d34bb14c0))
+* vitest workspace is deprecated ([2b2584d](https://github.com/GordonSmith/Visualization/commit/2b2584db7de0f62ea43144640931fd9d412373ab))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @hpcc-js/common bumped from ^3.7.3 to ^3.8.0
+  * devDependencies
+    * @hpcc-js/esbuild-plugins bumped from ^1.8.5 to ^1.9.0
+
 ## [3.4.13](https://github.com/hpcc-systems/Visualization/compare/react-v3.4.12...react-v3.4.13) (2026-03-16)
 
 
