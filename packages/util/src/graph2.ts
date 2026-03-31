@@ -34,9 +34,9 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
     private _directed: boolean;
 
     // Direct data storage
-    private _subgraphs: { [id: ID]: Readonly<S> } = {};
-    private _vertices: { [id: ID]: Readonly<V> } = {};
-    private _edges: { [id: ID]: Readonly<E> } = {};
+    private _subgraphs: { [id: ID]: S } = {};
+    private _vertices: { [id: ID]: V } = {};
+    private _edges: { [id: ID]: E } = {};
 
     // Parent-child relationships
     private _parentOf: { [id: ID]: ID } = {};
@@ -45,8 +45,6 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
     // Edge connectivity
     private _inEdgesOf: { [id: ID]: ID[] } = {};
     private _outEdgesOf: { [id: ID]: ID[] } = {};
-    private _sourceOf: { [id: ID]: ID } = {};
-    private _targetOf: { [id: ID]: ID } = {};
 
     constructor(directed = true) {
         this._directed = directed;
@@ -60,8 +58,6 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         this._childrenOf = {};
         this._inEdgesOf = {};
         this._outEdgesOf = {};
-        this._sourceOf = {};
-        this._targetOf = {};
         return this;
     }
 
@@ -136,11 +132,11 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         return this;
     }
 
-    // protected _parentFunc = (_: S | V | E): ID => typeof _.parentID === "function" ? _.parentID() : _.parentID!;
-    // parentFunc(_: (_: S | V | E) => ID): this {
-    //     this._parentFunc = _;
-    //     return this;
-    // }
+    protected _parentFunc = (_: S | V | E): ID => typeof _.parentID === "function" ? _.parentID() : _.parentID!;
+    parentFunc(_: (_: S | V | E) => ID): this {
+        this._parentFunc = _;
+        return this;
+    }
 
     protected _sourceFunc = (_: E): ID => typeof _.sourceID === "function" ? _.sourceID() : _.sourceID!;
     sourceFunc(_: (_: E) => ID): this {
@@ -169,20 +165,20 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
     }
 
     parentID(_: S | V | E): ID | undefined {
-        return this._parentOf[this._idFunc(_)];
+        return this._parentFunc(_);
     }
 
     sourceID(_: E): ID {
-        return this._sourceOf[this._idFunc(_)];
+        return this._sourceFunc(_);
     }
 
     targetID(_: E): ID {
-        return this._targetOf[this._idFunc(_)];
+        return this._targetFunc(_);
     }
 
     // --- Internal helpers ---
 
-    protected _reparent(childId: ID, newParentId: ID | undefined): void {
+    private _reparent(childId: ID, newParentId: ID | undefined): void {
         const oldParentId = this._parentOf[childId];
         if (oldParentId === newParentId) return;
 
@@ -206,7 +202,7 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         }
     }
 
-    protected _updateEdgeConnectivity(e_id: ID, oldSource: ID, newSource: ID, oldTarget: ID, newTarget: ID): void {
+    private _updateEdgeConnectivity(e_id: ID, oldSource: ID, newSource: ID, oldTarget: ID, newTarget: ID): void {
         if (oldSource !== newSource) {
             this._removeFromArray(this._outEdgesOf[oldSource], e_id);
             this._outEdgesOf[newSource]?.push(e_id);
@@ -215,11 +211,9 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
             this._removeFromArray(this._inEdgesOf[oldTarget], e_id);
             this._inEdgesOf[newTarget]?.push(e_id);
         }
-        this._sourceOf[e_id] = newSource;
-        this._targetOf[e_id] = newTarget;
     }
 
-    protected _removeFromArray(arr: ID[] | undefined, value: ID): void {
+    private _removeFromArray(arr: ID[] | undefined, value: ID): void {
         if (!arr) return;
         const idx = arr.indexOf(value);
         if (idx >= 0) arr.splice(idx, 1);
@@ -456,18 +450,18 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
     internalOutEdges(vertexID: ID): E[] {
         const vParent = this.vertexParent(vertexID);
         const vParentId = vParent !== undefined ? this.id(vParent) : undefined;
-        return (this._outEdgesOf[vertexID] ?? []).filter(eid => {
-            const targetId = this._targetOf[eid];
+        return this.outEdges(vertexID).filter(e => {
+            const targetId = this._targetFunc(e);
             if (!this.vertexExists(targetId)) return false;
             const targetParent = this.vertexParent(targetId);
             const targetParentId = targetParent !== undefined ? this.id(targetParent) : undefined;
             return vParentId === targetParentId;
-        }).map(eid => this._edges[eid]);
+        });
     }
 
     private _neighborIds(id: ID): ID[] {
-        const outIds = (this._outEdgesOf[id] ?? []).map(eid => this._targetOf[eid]);
-        const inIds = (this._inEdgesOf[id] ?? []).map(eid => this._sourceOf[eid]);
+        const outIds = (this._outEdgesOf[id] ?? []).map(eid => this._targetFunc(this._edges[eid]));
+        const inIds = (this._inEdgesOf[id] ?? []).map(eid => this._sourceFunc(this._edges[eid]));
         return [...outIds, ...inIds];
     }
 
@@ -581,8 +575,6 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         if (!this._vertices[e_source]) throw new Error(`Edge Source '${e_source}' does not exist.`);
         if (!this._vertices[e_target]) throw new Error(`Edge Target '${e_target}' does not exist.`);
         this._edges[e_id] = e;
-        this._sourceOf[e_id] = e_source;
-        this._targetOf[e_id] = e_target;
         this._outEdgesOf[e_source].push(e_id);
         this._inEdgesOf[e_target].push(e_id);
         if (parent) {
@@ -598,8 +590,8 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         const oldSources: { [id: ID]: ID } = {};
         const oldTargets: { [id: ID]: ID } = {};
         for (const id in this._edges) {
-            oldSources[id] = this._sourceOf[id];
-            oldTargets[id] = this._targetOf[id];
+            oldSources[id] = this._sourceFunc(this._edges[id]);
+            oldTargets[id] = this._targetFunc(this._edges[id]);
         }
 
         const eDiff = compare2(this.allEdges(), _edges, e => this._idFunc(e), this._updateFunc as any);
@@ -619,24 +611,22 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
         const e_id = this._idFunc(e);
         if (!this._edges[e_id]) throw new Error(`Edge '${e_id}' does not exist.`);
         this._updateEdgeConnectivity(e_id,
-            this._sourceOf[e_id], this._sourceFunc(e),
-            this._targetOf[e_id], this._targetFunc(e));
+            this._sourceFunc(this._edges[e_id]), this._sourceFunc(e),
+            this._targetFunc(this._edges[e_id]), this._targetFunc(e));
         this._edges[e_id] = e;
         return this;
     }
 
     removeEdge(id: ID): this {
         if (!this._edges[id]) throw new Error(`Edge '${id}' does not exist.`);
-        const sourceId = this._sourceOf[id];
+        const sourceId = this._sourceFunc(this._edges[id]);
         if (!this._vertices[sourceId]) throw new Error(`Edge Source'${sourceId}' does not exist.`);
         this._removeFromArray(this._outEdgesOf[sourceId], id);
-        const targetId = this._targetOf[id];
+        const targetId = this._targetFunc(this._edges[id]);
         if (!this._vertices[targetId]) throw new Error(`Edge Target'${targetId}' does not exist.`);
         this._removeFromArray(this._inEdgesOf[targetId], id);
         this._reparent(id, undefined);
         delete this._edges[id];
-        delete this._sourceOf[id];
-        delete this._targetOf[id];
         return this;
     }
 
@@ -722,6 +712,7 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
     }
 
     dijkstra(source: ID, target: ID): { ids: ID[], len: number } {
+        const edges = this.allEdges();
         const Q = new Set<string | number>();
         const prev: { [key: string]: string } = {};
         const dist: { [key: string]: number } = {};
@@ -740,9 +731,9 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
             return u;
         }
 
-        for (const eid in this._edges) {
-            const v1 = this._sourceOf[eid];
-            const v2 = this._targetOf[eid];
+        for (let i = 0; i < edges.length; i++) {
+            const v1 = this._sourceFunc(edges[i]);
+            const v2 = this._targetFunc(edges[i]);
             const len = 1;
 
             Q.add(v1);
@@ -800,7 +791,7 @@ export class Graph2<V extends VertexT, E extends EdgeT, S extends SubgraphT> {
             ancestors.push(vid);
             const outEdgeIds = this._outEdgesOf[vid] ?? [];
             for (const eid of outEdgeIds) {
-                const targetId = this._targetOf[eid];
+                const targetId = this._targetFunc(this._edges[eid]);
                 if (ancestors.indexOf(targetId) < 0) {
                     visit(targetId, [...ancestors]);
                 }
