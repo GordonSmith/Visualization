@@ -188,7 +188,9 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
 
     const allPlugins = [
         packageVersionPlugin({ pkg, buildVersion }),
-        cssInjectedByJsPlugin(),
+        cssInjectedByJsPlugin({
+            topExecutionPriority: false
+        }),
         ...additionalPlugins
     ];
 
@@ -222,21 +224,17 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
                 ...defaultLibConfig,
                 ...(configOverrides.build?.lib || {})
             },
-            rollupOptions: {
+            rolldownOptions: {
                 external: allExternals,
                 output: {
                     globals,
-                },
-                ...(configOverrides.build?.rollupOptions || {})
-            },
-            rolldownOptions: {
-                output: {
                     keepNames: true,
                 },
+                ...(configOverrides.build?.rolldownOptions || {})
             },
             minify: "oxc",
             sourcemap: true,
-            ...(configOverrides.build ? Object.fromEntries(Object.entries(configOverrides.build).filter(([key]) => key !== "lib" && key !== "rollupOptions" && key !== "rolldownOptions")) : {})
+            ...(configOverrides.build ? Object.fromEntries(Object.entries(configOverrides.build).filter(([key]) => key !== "lib" && key !== "rolldownOptions")) : {})
         },
         resolve: {
             alias,

@@ -13,7 +13,7 @@ export default defineConfig({
             name: pkg.name,
             fileName: "index",
         },
-        rollupOptions: {
+        rolldownOptions: {
             external,
             output: {
                 globals,
