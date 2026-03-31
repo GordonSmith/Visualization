@@ -1,9 +1,9 @@
 import { configDefaults, defineConfig, ViteUserConfig } from "vitest/config";
+import { playwright } from "@vitest/browser-playwright";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-import { viteStaticCopy } from "vite-plugin-static-copy";
 import { packageVersionPlugin } from "./package-version-plugin.ts";
-import { readFileSync } from "fs";
-import { resolve, dirname } from "path";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync } from "fs";
+import { resolve, dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const alias = {
@@ -151,15 +151,15 @@ export const browserConfig = defineConfig({
         ],
         browser: {
             enabled: true,
-            provider: "playwright",
+            provider: playwright({
+                launchOptions: {
+                    args: ["--disable-web-security"],
+                }
+            }),
             instances: [{
                 name: "chromium",
                 browser: "chromium",
                 headless: true,
-                //@ts-expect-error
-                launch: {
-                    args: ["--disable-web-security"],
-                }
             }],
             screenshotFailures: false,
         },
@@ -188,26 +188,26 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
 
     const allPlugins = [
         packageVersionPlugin({ pkg, buildVersion }),
-        cssInjectedByJsPlugin({
-            topExecutionPriority: false
-        }),
+        cssInjectedByJsPlugin(),
         ...additionalPlugins
     ];
 
     if (includeFontAwesome) {
-        allPlugins.push(
-            viteStaticCopy({
-                targets: [
-                    {
-                        src: "../../node_modules/font-awesome/fonts",
-                        dest: "../font-awesome"
-                    }, {
-                        src: "../../node_modules/font-awesome/css",
-                        dest: "../font-awesome",
+        allPlugins.push({
+            name: "copy-font-awesome",
+            writeBundle() {
+                const faRoot = resolve(process.cwd(), "../../node_modules/font-awesome");
+                const destRoot = resolve(process.cwd(), "font-awesome");
+                for (const subdir of ["fonts", "css"]) {
+                    const srcDir = join(faRoot, subdir);
+                    const destDir = join(destRoot, subdir);
+                    mkdirSync(destDir, { recursive: true });
+                    for (const file of readdirSync(srcDir)) {
+                        copyFileSync(join(srcDir, file), join(destDir, file));
                     }
-                ]
-            })
-        );
+                }
+            }
+        });
     }
 
     const defaultLibConfig = {
@@ -229,24 +229,18 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
                 },
                 ...(configOverrides.build?.rollupOptions || {})
             },
-            // Preserve class names and function names in minified output
-            minify: "terser",
-            terserOptions: {
-                keep_classnames: true,
-                mangle: {
-                    keep_classnames: true,
-                }
+            rolldownOptions: {
+                output: {
+                    keepNames: true,
+                },
             },
+            minify: "oxc",
             sourcemap: true,
-            ...(configOverrides.build ? Object.fromEntries(Object.entries(configOverrides.build).filter(([key]) => key !== "lib" && key !== "rollupOptions")) : {})
+            ...(configOverrides.build ? Object.fromEntries(Object.entries(configOverrides.build).filter(([key]) => key !== "lib" && key !== "rollupOptions" && key !== "rolldownOptions")) : {})
         },
         resolve: {
             alias,
             ...(configOverrides.resolve || {})
-        },
-        esbuild: {
-            keepNames: true,
-            ...(configOverrides.esbuild || {})
         },
         plugins: allPlugins,
         test: {
