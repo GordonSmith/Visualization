@@ -97,7 +97,7 @@ export class ChartPanel<T extends Widget = Widget> extends Border2 implements IH
 
     protected _carousel = new Carousel();
     protected _table = new Table();
-    protected _widget: T;
+    declare protected _widget: T;
 
     protected _hideLegendToggleList = ["dgrid_Table", "dgrid2_Table"];
 
