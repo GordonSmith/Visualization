@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #placeholder,
+        #placeholder2 {
+            width: 100%;
+            height: 800px;
+            background-color: #fff;
+            margin-top: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="../common/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body onresize="doResize()">
+    <h1>Marshaller - Dashboard</h1>
+    <div id="placeholder"></div>
+    <script type="module">
+        import { Dashboard } from "./src/index.ts";
+
+        const ddl = {
+            version: "2.2.1",
+            createdBy: {
+                name: "@hpcc-js/marshaller",
+                version: "3.0.0"
+            },
+            datasources: [],
+            dataviews: [],
+            properties: {}
+        };
+
+        window.__widget = new Dashboard()
+            .target("placeholder")
+            .render()
+            ;
+    </script>
+
+    <h1>Marshaller - DDL Editor</h1>
+    <div id="placeholder2"></div>
+    <script type="module">
+        import { DDLEditor } from "./src/index.ts";
+
+        const sampleDDL = {
+            version: "2.2.1",
+            createdBy: {
+                name: "@hpcc-js/marshaller",
+                version: "3.0.0"
+            },
+            datasources: [],
+            dataviews: [],
+            properties: {}
+        };
+
+        new DDLEditor()
+            .target("placeholder2")
+            .ddl(sampleDDL)
+            .render()
+            ;
+    </script>
+
+    <script>
+        function doResize() {
+            window.__widget?.resize()?.render();
+        }
+    </script>
+</body>
+
+</html>
