@@ -332,7 +332,7 @@ value
 `;
 
     const notebook = omd2notebookKit(omd2);
-    const definitions = compileKit(notebook);
+    const definitions = compileNotebook(notebook);
     const runtime = new NotebookRuntime();
     runtime.render(definitions, element);
 }
@@ -358,7 +358,7 @@ mo = 38 + 40;
 `;
 
     const notebook = ojs2notebookKit(ojs);
-    const definitions = compileKit(notebook);
+    const definitions = compileNotebook(notebook);
     const runtime = new NotebookRuntime();
     runtime.render(definitions, element);
 }

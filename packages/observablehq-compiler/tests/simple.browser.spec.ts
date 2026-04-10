@@ -1,6 +1,8 @@
-import { Library, Runtime, Inspector } from "@observablehq/runtime";
+import { Runtime } from "@observablehq/runtime";
+import { Library } from "@observablehq/stdlib";
+import { Inspector } from "@observablehq/inspector";
 import { describe, it, expect } from "vitest";
-import { compile, download, ohq, ojs2notebook } from "@hpcc-js/observablehq-compiler";
+import { compile, download, ohq, ojs2notebook } from "../src/index.ts";
 import { fa } from "./File Attachments.ts";
 import { imports } from "./Introduction to Imports.ts";
 import { timechart } from "./Observable TimeChart.ts";

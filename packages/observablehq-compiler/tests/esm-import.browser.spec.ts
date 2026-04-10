@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { Library, Runtime } from "@observablehq/runtime";
-import { compile, ohq } from "@hpcc-js/observablehq-compiler";
+import { Runtime } from "@observablehq/runtime";
+import { Library } from "@observablehq/stdlib";
+import { compile, ohq } from "../src/index.ts";
 
 describe("observablehq-compiler", function () {
     it("esm imports", async () => {

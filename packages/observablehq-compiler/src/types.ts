@@ -158,7 +158,6 @@ export namespace ohq {
     }
 
     export interface Runtime {
-        fileAttachments(func: (name: string) => ohq.File): any;
         module(define?, inspector?: InspectorFactory): Module;
         dispose(): void;
     }

@@ -4,6 +4,7 @@ import { ohq, splitModule } from "./observable-shim.ts";
 import { parseCell, ParsedImportCell } from "./cst.ts";
 import { Writer } from "./writer.ts";
 import { encodeBacktick, fetchEx, ojs2notebook, omd2notebook } from "./util.ts";
+import { FileAttachments } from "@observablehq/stdlib";
 
 //  Inspector Factory  ---
 export type InspectorFactoryEx = (name: string | undefined, id: string | number) => Inspector;
@@ -273,7 +274,11 @@ export function notebook(_files: ohq.File[] = [], _cells: CellFunc[] = [], { bas
 
     const retVal = (runtime: ohq.Runtime, inspector?: InspectorFactoryEx): ohq.Module => {
         const main = runtime.module();
-        main.builtin("FileAttachment", runtime.fileAttachments(name => {
+        //  Polyfill for pre-compiled ObservableHQ notebooks that expect runtime.fileAttachments (removed in v6)  ---
+        if (!(runtime as any).fileAttachments) {
+            (runtime as any).fileAttachments = FileAttachments;
+        }
+        main.builtin("FileAttachment", FileAttachments(name => {
             return fileAttachments.get(name) ?? { url: new URL(fixRelativeUrl(name, baseUrl)), mimeType: null };
         }));
         main.builtin("fetchEx", fetchEx);
