@@ -1,25 +1,25 @@
-import { publish } from "../../publish.ts";
 import { Area, Bar, Bubble, Column, Contour, HexBin, Line, Pie, Radar, RadialBar, Scatter, Step, WordCloud } from "@hpcc-js/chart";
 import { Database, EntityRectList, InputField, PropertyExt, Widget } from "@hpcc-js/common";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { Table } from "@hpcc-js/dgrid";
 import { FieldForm } from "@hpcc-js/form";
-import { AdjacencyGraph } from "@hpcc-js/graph";
+import { AdjacencyGraph, DataGraph } from "@hpcc-js/graph";
 import { ChoroplethCounties, ChoroplethStates, Leaflet } from "@hpcc-js/map";
 import { isArray } from "@hpcc-js/util";
 import { HipiePipeline } from "../activities/hipiepipeline.ts";
 import { ComputedField, Mappings, MultiField } from "../activities/project.ts";
+import { ElementContainer } from "./element.ts";
 import { VizChartPanel } from "./vizChartPanel.ts";
 
 export type VizType = "Table" | "FieldForm" |
     "Area" | "Bubble" | "Bar" | "Column" | "Contour" | "HexBin" | "Line" | "Pie" | "WordCloud" | "Radar" | "RadialBar" | "Scatter" | "Step" |
     "USCountiesChoropleth" | "USStatesChoropleth" | "ClusterPins" |
-    "EntityRectList" | "AdjacencyGraph";
-const VizTypeMap: { [key: string]: new (...args: any[]) => {} } = {
+    "EntityRectList" | "AdjacencyGraph" | "DataGraph";
+const VizTypeMap: { [key: string]: new (...args: any[]) => object } = {
     Table, FieldForm,
     Area, Bubble, Bar, Column, Contour, HexBin, Line, Pie, Radar, RadialBar, Scatter, Step, WordCloud,
     USCountiesChoropleth: ChoroplethCounties, USStatesChoropleth: ChoroplethStates, ClusterPins: Leaflet.ClusterPins,
-    EntityRectList, AdjacencyGraph
+    EntityRectList, AdjacencyGraph, DataGraph
 };
 export const VizTypeSet = [];
 for (const key in VizTypeMap) {
@@ -59,8 +59,7 @@ function typeInputs(type: VizType): InputField[] {
 }
 
 export class Visualization extends PropertyExt {
-    declare title: publish<this, string>;
-    declare description: publish<this, string>;
+
     _visibility: DDL2.VisibilityType;
     visibility(): DDL2.VisibilityType;
     visibility(_: DDL2.VisibilityType): this;
@@ -93,7 +92,7 @@ export class Visualization extends PropertyExt {
         }
         return this;
     }
-    declare mappings: publish<this, Mappings>;
+
     _chartPanel: VizChartPanel;
     chartPanel(): VizChartPanel;
     chartPanel(_: VizChartPanel): this;
@@ -101,7 +100,7 @@ export class Visualization extends PropertyExt {
         if (!arguments.length) return this._chartPanel;
         this._chartPanel = _;
         this._chartPanel
-            .on("click", (row: any, col: string, sel: boolean) => this.click(row, col, sel))
+            .on("click", (row: any, col: string, sel: boolean, more) => this.click(row, col, sel, more))
             .on("vertex_click", (row: any, col: string, sel: boolean) => this.vertex_click(row, col, sel))
             ;
         for (const key in VizTypeMap) {
@@ -114,12 +113,16 @@ export class Visualization extends PropertyExt {
     }
 
     protected _hipiePipeline: HipiePipeline;
-    constructor(hipiePipeline: HipiePipeline) {
+    constructor(protected _ec: ElementContainer, hipiePipeline: HipiePipeline) {
         super();
         this._hipiePipeline = hipiePipeline;
         this.mappings(new Mappings());
         this.chartPanel(new VizChartPanel());
         this.typeChanged();
+    }
+
+    visualizationIDs(): string[] {
+        return this._ec.elementIDs().filter(id => id !== this.id());
     }
 
     _prevChartType;
@@ -193,16 +196,31 @@ export class Visualization extends PropertyExt {
     }
 
     _prevFields: ReadonlyArray<DDL2.IField> = [];
+    _prevLinkFields: ReadonlyArray<DDL2.IField> = [];
     _prevData: ReadonlyArray<object> = [];
     refreshData(): Promise<void> {
         const mappings = this.mappings();
 
         const fields = mappings.outFields();
-        const dbfields = this.toDBFields(fields);
-        const fieldsChanged = this._prevFields !== fields;
+        const dbFields = this.toDBFields(fields);
+        let linkFields: ReadonlyArray<DDL2.IField>;
+        let dbLinkFields = [];
+        const se = this._ec.element(this.secondaryDataviewID());
+        if (se) {
+            linkFields = se.mappings().outFields();
+            dbLinkFields = this.toDBFields(linkFields);
+        }
+
+        const fieldsChanged = this._prevFields !== fields || this._prevLinkFields !== linkFields;
         if (fieldsChanged) {
             this._prevFields = fields;
-            this.chartPanel().fields(dbfields.filter(f => f.id() !== "__lparam"));
+            if (this.chartType() === "DataGraph") {
+                const dataGraph = this.chartPanel().widget() as DataGraph;
+                dataGraph.vertexColumns(dbFields.map(f => f.label()));
+                dataGraph.edgeColumns(dbLinkFields.map(f => f.label()));
+            } else {
+                this.chartPanel().fields(dbFields.filter(f => f.id() !== "__lparam"));
+            }
         } else {
             console.warn(`***${this.id()} Immutable Fields***`);
         }
@@ -211,8 +229,18 @@ export class Visualization extends PropertyExt {
         const dataChanged = this._prevData !== data;
         if (dataChanged) {
             this._prevData = data;
-            const mappedData = this.toDBData(dbfields, data);
-            this.chartPanel().data(mappedData);
+            const mappedData = this.toDBData(dbFields, data);
+            if (this.chartType() === "DataGraph") {
+                const dataGraph = this.chartPanel().widget() as DataGraph;
+                dataGraph.vertices(mappedData);
+                if (se) {
+                    const linkData = se.mappings().outData();
+                    const mappedLinkData = this.toDBData(dbLinkFields, linkData);
+                    dataGraph.edges(mappedLinkData);
+                }
+            } else {
+                this.chartPanel().data(mappedData);
+            }
         } else {
             console.warn(`${this.id()} Immutable Data!`);
         }
@@ -273,33 +301,59 @@ export class Visualization extends PropertyExt {
         });
     }
 
-    refresh(): Promise<void> {
-        if (this.chartPanel().startProgress) {
-            this.chartPanel().startProgress();
+    exec(): Promise<void[]> {
+        const promises = [];
+        if (this.secondaryDataviewID_exists()) {
+            const secondaryElementID = this.secondaryDataviewID();
+            const secondaryElement = this._ec.element(secondaryElementID);
+            if (secondaryElement) {
+                promises.push(secondaryElement.visualization().exec());
+            }
         }
+
         const mappings = this.mappings();
         mappings.sourceActivity(this._hipiePipeline);
-        return mappings.refreshMeta().then(() => {
+        promises.push(mappings.refreshMeta().then(() => {
             return mappings.exec();
-        }).then(() => {
-            if (this.chartPanel().finishProgress) {
-                this.chartPanel().finishProgress();
-            }
+        }));
+
+        return Promise.all(promises);
+    }
+
+    refresh(): Promise<void> {
+        this.chartPanel().startProgress && this.chartPanel().startProgress();
+        return this.exec().then(() => {
+            this.chartPanel().finishProgress && this.chartPanel().finishProgress();
             return this.refreshData();
         });
     }
 
     //  Events  ---
-    click(row: any, col: string, sel: boolean) {
+    click(row: any, col: string, sel: boolean, more?) {
     }
+
     vertex_click(row: any, col: string, sel: boolean) {
     }
 }
 Visualization.prototype._class += " Visualization";
 
+export interface Visualization {
+    title(): string;
+    title(_: string): this;
+    description(): string;
+    description(_: string): this;
+    secondaryDataviewID(): string;
+    secondaryDataviewID(_: string): this;
+    secondaryDataviewID_exists(): boolean;
+    secondaryDataviewID_valid(): boolean;
+    mappings(): Mappings;
+    mappings(_: Mappings): this;
+}
+
 Visualization.prototype.publishProxy("title", "_chartPanel");
 Visualization.prototype.publishProxy("description", "_chartPanel");
 Visualization.prototype.publish("_visibility", DDL2.VisibilitySet[0], "set", "Type", DDL2.VisibilitySet);
 Visualization.prototype.publish("_chartType", "Table", "set", "Type", VizTypeSet);
+Visualization.prototype.publish("secondaryDataviewID", null, "set", "Secondary Data View (e.g. graph edges)", function (this: Visualization) { return this.visualizationIDs(); }, { optional: true });
 Visualization.prototype.publish("mappings", null, "widget", "Mappings", undefined, { render: false, internal: true });
 Visualization.prototype.publish("_chartPanel", [], "widget", "Widget");

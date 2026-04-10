@@ -1,4 +1,3 @@
-import { publish } from "../publish.ts";
 import { JSONEditor } from "@hpcc-js/codemirror";
 import { Button, PropertyExt, SelectionBar, SelectionButton, Spacer } from "@hpcc-js/common";
 import { DatasourceTable } from "@hpcc-js/dgrid";
@@ -96,8 +95,6 @@ class PipelinePanel extends ChartPanel {
             this._pipelineButton = sb;
             this.title(sb.label()).render();
         });
-
-    declare disableActivities: publish<this, string[]>;
 
     constructor(owner: PipelineSplitPanel) {
         super();
@@ -329,6 +326,11 @@ class PipelinePanel extends ChartPanel {
 }
 PipelinePanel.prototype._class += " marshaller_PipelinePanel";
 
+interface PipelinePanel {
+    disableActivities(): string[];
+    disableActivities(_: string[]): this;
+}
+
 class DDLPreview extends ChartPanel {
 
     private _save = new Button().faChar("fa-save").tooltip("Save")
@@ -406,8 +408,6 @@ export class PipelineSplitPanel extends SplitPanel {
     private _rhsDDLPreview = new DDLPreview();
     private _rhsDataPreview = new DatasourceTable().pagination(true);
 
-    declare disableActivities: publish<this, string[]>;
-
     constructor() {
         super();
         this._previewPanel
@@ -447,11 +447,15 @@ export class PipelineSplitPanel extends SplitPanel {
                     .invalidate()
                     .lazyRender()
                     ;
+                this._rhsDDLPreview
+                    .lazyRender()
+                    ;
             });
+        } else {
+            this._rhsDDLPreview
+                .lazyRender()
+                ;
         }
-        this._rhsDDLPreview
-            .lazyRender()
-            ;
     }
 
     //  Events  ---
@@ -459,6 +463,11 @@ export class PipelineSplitPanel extends SplitPanel {
     }
 }
 
+
+export interface PipelineSplitPanel {
+    disableActivities(): string[];
+    disableActivities(_: string[]): this;
+}
 
 PipelinePanel.prototype.publish("disableActivities", [], "array", "Disabled pipeline items");
 

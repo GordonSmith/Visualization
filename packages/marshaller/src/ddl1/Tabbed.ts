@@ -85,7 +85,7 @@ export class Tabbed extends TabbedLayout {
     }
 
     //  HipieDDLMixin  ---
-    declare _marshallerRender: (BaseClass, callback) => this;
+    _marshallerRender: (BaseClass, callback) => this;
 }
 Tabbed.prototype.mixin(HipieDDLMixin);
 Tabbed.prototype._class += " marshaller_Tabbed";

@@ -3,6 +3,7 @@ import { Activity } from "./activity.ts";
 import { Databomb } from "./databomb.ts";
 import { Form } from "./form.ts";
 import { LogicalFile } from "./logicalfile.ts";
+import { RestResult, RestService } from "./rest.ts";
 import { RoxieResult, RoxieService } from "./roxie.ts";
 import { WU, WUResult } from "./wuresult.ts";
 
@@ -15,8 +16,8 @@ export class Datasource extends Activity {
     }
 }
 
-export type DatasourceRefType = Databomb | Form | LogicalFile | RoxieResult | WUResult;
-export type DatasourceType = Databomb | Form | LogicalFile | RoxieService | WU;
+export type DatasourceRefType = Databomb | Form | LogicalFile | RoxieResult | WUResult | RestResult;
+export type DatasourceType = Databomb | Form | LogicalFile | RoxieService | WU | RestService;
 
 export class DatasourceRef extends Activity {
     _datasource: DatasourceRefType;
@@ -42,11 +43,10 @@ export class DatasourceRef extends Activity {
 
     toDDL(): DDL2.IDatabombRef {
         return {
-            id: this.id()
+            id: this.datasource().id()
         };
     }
 }
 DatasourceRef.prototype._class += " DatasourceRef";
-
 
 DatasourceRef.prototype.publish("_datasource", null, "widget", "Datasource Reference", null, { internal: true });

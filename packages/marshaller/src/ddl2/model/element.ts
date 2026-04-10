@@ -1,4 +1,3 @@
-import { publish } from "../../publish.ts";
 import { PropertyExt, Widget } from "@hpcc-js/common";
 import { IOptionsSend } from "@hpcc-js/comms";
 import { DDL2 } from "@hpcc-js/ddl-shim";
@@ -63,7 +62,6 @@ export class Element extends PropertyExt {
 
     // @publishProxy("_MultiChartPanel")
     // title: publish<this, string>;
-    declare hipiePipeline: publish<this, HipiePipeline>;
     _visualization: Visualization;
     visualization(): Visualization;
     visualization(_: Visualization): this;
@@ -71,9 +69,13 @@ export class Element extends PropertyExt {
         if (!arguments.length) return this._visualization;
         this._visualization = _;
         this._visualization
-            .on("click", (_row: object | object[], col: string, sel: boolean) => {
-                const row: any[] = isArray(_row) ? _row : [_row];
-                this.selection(sel ? row.map(r => r.__lparam || r) : []);
+            .on("click", (_row: object | object[], col: string, sel: boolean, more?) => {
+                if (more && more.selection) {
+                    this.selection(sel ? more.selection.map(r => r.__lparam || r) : []);
+                } else {
+                    const row: any[] = isArray(_row) ? _row : [_row];
+                    this.selection(sel ? row.map(r => r.__lparam || r) : []);
+                }
             })
             .on("vertex_click", (_row: object | object[], col: string, sel: boolean) => {
                 const row: any[] = isArray(_row) ? _row : [_row];
@@ -82,7 +84,6 @@ export class Element extends PropertyExt {
             ;
         return this;
     }
-    declare state: publish<this, State>;
 
     constructor(private _ec: ElementContainer) {
         super();
@@ -95,7 +96,7 @@ export class Element extends PropertyExt {
         }
         const view = new HipiePipeline(this._ec, this._id);
         this.hipiePipeline(view);
-        this._vizChartPanel = new Visualization(this.hipiePipeline())
+        this._vizChartPanel = new Visualization(this._ec, this.hipiePipeline())
             .id(`viz_${vizID}`)
             .title(`Element ${vizID}`)
             ;
@@ -143,6 +144,14 @@ export class Element extends PropertyExt {
             .activities(activities)
             ;
         return this;
+    }
+
+    updatedBy(): string[] {
+        const retVal = this.hipiePipeline().updatedBy();
+        if (this.visualization().secondaryDataviewID_exists()) {
+            retVal.push(this.visualization().secondaryDataviewID());
+        }
+        return retVal;
     }
 
     dataProps(): PropertyExt {
@@ -226,6 +235,18 @@ export class Element extends PropertyExt {
 }
 Element.prototype._class += " Viz";
 
+export interface Element {
+    hipiePipeline(): HipiePipeline;
+    hipiePipeline(_: HipiePipeline): this;
+    state(): State;
+    state(_: State): this;
+}
+
+Element.prototype.publish("hipiePipeline", null, "widget", "Data View");
+Element.prototype.publish("_visualization", null, "widget", "Visualization");
+Element.prototype.publish("state", null, "widget", "State");
+
+
 export interface IPersist {
     ddl: DDL2.Schema;
     layout: any;
@@ -241,9 +262,6 @@ export class ElementContainer extends PropertyExt {
 
     private _datasources: DatasourceRefType[] = [emptyDatabomb];
     private _elements: Element[] = [];
-
-    declare samples: publish<this, number>;
-    declare sampleSize: publish<this, number>;
 
     constructor() {
         super();
@@ -321,7 +339,7 @@ export class ElementContainer extends PropertyExt {
 
     filteredBy(elemID: string): Element[] {
         return this._elements.filter(otherViz => {
-            const filterIDs = otherViz.hipiePipeline().updatedBy();
+            const filterIDs = otherViz.updatedBy();
             return filterIDs.indexOf(elemID) >= 0;
         });
     }
@@ -381,10 +399,12 @@ export class ElementContainer extends PropertyExt {
 }
 ElementContainer.prototype._class += " dashboard_ElementContainer";
 
-
-Element.prototype.publish("hipiePipeline", null, "widget", "Data View");
-Element.prototype.publish("_visualization", null, "widget", "Visualization");
-Element.prototype.publish("state", null, "widget", "State");
+export interface ElementContainer {
+    samples(): number;
+    samples(_: number): this;
+    sampleSize(): number;
+    sampleSize(_: number): this;
+}
 
 ElementContainer.prototype.publish("samples", 10, "number", "Number of samples");
 ElementContainer.prototype.publish("sampleSize", 100, "number", "Sample size");

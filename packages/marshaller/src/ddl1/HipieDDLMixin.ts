@@ -344,30 +344,41 @@ export class HipieDDLMixin extends PropertyExt {
         return retVal;
     }
     //  HipieDDLMixin abstract methods  ---
-    declare content: () => this;
-    declare populateContent: () => this;
-    declare clearContent: (value?) => this;
-
-    declare ddlUrl: { (): string; (_: string): HipieDDLMixin };
-    declare ddlUrl_exists: () => boolean;
-    declare databomb: { (): string; (_: string): HipieDDLMixin };
-    declare databomb_exists: () => boolean;
-    declare proxyMappings: { (): object; (_: object): HipieDDLMixin };
-    declare proxyMappings_exists: () => boolean;
-    declare timeout: { (): number; (_: number): HipieDDLMixin };
-    declare timeout_exists: () => boolean;
-    declare clearDataOnUpdate: { (): boolean; (_: boolean): HipieDDLMixin };
-    declare clearDataOnUpdate_exists: () => boolean;
-    declare propogateClear: { (): boolean; (_: boolean): HipieDDLMixin };
-    declare propogateClear_exists: () => boolean;
-    declare missingDataString: { (): string; (_: string): HipieDDLMixin };
-    declare missingDataString_exists: () => boolean;
-    declare autoCloseFlyout: { (): boolean; (_: boolean): HipieDDLMixin };
-    declare autoCloseFlyout_exists: () => boolean;
-    declare disableModals: { (): boolean; (_: boolean): HipieDDLMixin };
+    content: () => this;
+    populateContent: () => this;
+    clearContent: (value?) => this;
 }
 HipieDDLMixin.prototype.mixin(PropertyExt);
 HipieDDLMixin.prototype._class += " marshaller_HipieDDLMixin";
+
+export interface HipieDDLMixin {
+    ddlUrl(): string;
+    ddlUrl(_: string): this;
+    ddlUrl_exists(): boolean;
+    databomb(): string;
+    databomb(_: string): this;
+    databomb_exists(): boolean;
+    proxyMappings(): object;
+    proxyMappings(_: object): this;
+    proxyMappings_exists(): boolean;
+    timeout(): number;
+    timeout(_: number): this;
+    timeout_exists(): boolean;
+    clearDataOnUpdate(): boolean;
+    clearDataOnUpdate(_: boolean): this;
+    clearDataOnUpdate_exists(): boolean;
+    propogateClear(): boolean;
+    propogateClear(_: boolean): this;
+    propogateClear_exists(): boolean;
+    missingDataString(): string;
+    missingDataString(_: string): this;
+    missingDataString_exists(): boolean;
+    autoCloseFlyout(): boolean;
+    autoCloseFlyout(_: boolean): this;
+    autoCloseFlyout_exists(): boolean;
+    disableModals(): boolean;
+    disableModals(_: boolean): this;
+}
 
 HipieDDLMixin.prototype.publish("ddlUrl", "", "string", "DDL URL", null, { tags: ["Private"] });
 HipieDDLMixin.prototype.publish("databomb", "", "string", "Data Bomb", null, { tags: ["Private"] });

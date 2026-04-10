@@ -5,6 +5,7 @@ import { Databomb } from "./activities/databomb.ts";
 import { DSPicker } from "./activities/dspicker.ts";
 import { Form } from "./activities/form.ts";
 import { LogicalFile } from "./activities/logicalfile.ts";
+import { RestResult, RestResultRef } from "./activities/rest.ts";
 import { RoxieResult, RoxieResultRef } from "./activities/roxie.ts";
 import { WUResult } from "./activities/wuresult.ts";
 import { Element, ElementContainer, State } from "./model/element.ts";
@@ -115,7 +116,7 @@ export class GraphAdapter {
         } else if (dsDetails instanceof RoxieResultRef) {
             const serverID = `${dsDetails.url()}`;
             const server: Subgraph = this.createSubgraph(serverID, `${serverID}`);
-            const surfaceID = dsDetails.roxieServiceID(); // `${dsDetails.url()}/${dsDetails.querySet()}`;
+            const surfaceID = dsDetails.serviceID(); // `${dsDetails.url()}/${dsDetails.querySet()}`;
             const surface: Subgraph = this.createSubgraph(surfaceID, dsDetails.querySet());
             this.hierarchy.push({ parent: server, child: surface });
             const roxieID = surfaceID;
@@ -133,7 +134,7 @@ export class GraphAdapter {
         } else if (dsDetails instanceof RoxieResult) {
             const serverID = `${dsDetails.service().url()}`;
             const server: Subgraph = this.createSubgraph(serverID, `${serverID}`);
-            const querySetID = dsDetails.roxieServiceID();
+            const querySetID = dsDetails.serviceID();
             const querySet: Subgraph = this.createSubgraph(querySetID, dsDetails.service().querySet());
             this.hierarchy.push({ parent: server, child: querySet });
             const queryID = `${querySetID}/${dsDetails.service().queryID()}`;
@@ -145,6 +146,38 @@ export class GraphAdapter {
                 child: this.createVertex(resultID, dsDetails.resultName(), { activity: dsDetails })
             });
             this.createEdge(queryID, resultID);
+            return resultID;
+        } else if (dsDetails instanceof RestResultRef) {
+            const serverID = `${dsDetails.url()}`;
+            const server: Subgraph = this.createSubgraph(serverID, `${serverID}`);
+            const surfaceID = dsDetails.serviceID();
+            const surface: Subgraph = this.createSubgraph(surfaceID, dsDetails.action());
+            this.hierarchy.push({ parent: server, child: surface });
+            const roxieID = surfaceID;
+            this.hierarchy.push({
+                parent: surface,
+                child: this.createVertex(roxieID, dsDetails.action())
+            });
+            const roxieResultID = `${surfaceID}/${dsDetails.resultName()}`;
+            this.hierarchy.push({
+                parent: surface,
+                child: this.createVertex(roxieResultID, dsDetails.resultName(), { activity: dsDetails })
+            });
+            this.createEdge(roxieID, roxieResultID);
+            return roxieResultID;
+        } else if (dsDetails instanceof RestResult) {
+            const serverID = `${dsDetails.service().url()}`;
+            const server: Subgraph = this.createSubgraph(serverID, `${serverID}`);
+            const serviceID = dsDetails.serviceID();
+            const actionID = `${serverID}/${dsDetails.service().action()}`;
+            const action: Subgraph = this.createSubgraph(serviceID, dsDetails.service().action());
+            this.hierarchy.push({ parent: server, child: action });
+            const resultID = `${actionID}/${dsDetails.resultName()}`;
+            this.hierarchy.push({
+                parent: action,
+                child: this.createVertex(resultID, dsDetails.resultName(), { activity: dsDetails })
+            });
+            this.createEdge(actionID, resultID);
             return resultID;
         } else if (dsDetails instanceof Form) {
             const id = dsDetails.hash();
@@ -232,6 +265,16 @@ export class GraphAdapter {
             });
             prevID = stateVertexID;
             lastID[pipeline.id()] = prevID;
+        }
+
+        // Mapping Secondary Sources  ---
+        for (const view of this._ec.elements()) {
+            const visualization = view.visualization();
+            const secondaryElement = this._ec.element(visualization.secondaryDataviewID());
+            if (secondaryElement) {
+                const mappings = secondaryElement.visualization().mappings();
+                this.createEdge(mappings.id(), `${visualization.id()}-viz`);
+            }
         }
 
         for (const viz of this._ec.elements()) {

@@ -1,4 +1,3 @@
-import { publish } from "../../publish.ts";
 import { PropertyExt } from "@hpcc-js/common";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { hashSum } from "@hpcc-js/util";
@@ -7,10 +6,6 @@ import { Activity, IActivityError, ReferencedFields } from "./activity.ts";
 
 export class SortColumn extends PropertyExt {
     private _owner: Sort;
-
-    declare fieldID: publish<this, string>;
-    declare fieldID_valid: () => boolean;
-    declare descending: publish<this, boolean>;
 
     validate(prefix: string): IActivityError[] {
         const retVal: IActivityError[] = [];
@@ -77,11 +72,17 @@ export class SortColumn extends PropertyExt {
 }
 SortColumn.prototype._class += " SortColumn";
 
+export interface SortColumn {
+    fieldID(): string;
+    fieldID(_: string): this;
+    fieldID_valid(): boolean;
+    descending(): boolean;
+    descending(_: boolean): this;
+}
+
 //  ===========================================================================
 export class Sort extends Activity {
     static Column = SortColumn;
-
-    declare column: publish<this, SortColumn[]>;
 
     validate(): IActivityError[] {
         let retVal: IActivityError[] = [];
@@ -170,6 +171,10 @@ export class Sort extends Activity {
 }
 Sort.prototype._class += " Sort";
 
+export interface Sort {
+    column(): SortColumn[];
+    column(_: SortColumn[]): this;
+}
 
 SortColumn.prototype.publish("fieldID", null, "set", "Sort Field", function (this: SortColumn) { return this.fieldIDs(); }, {
         optional: true,

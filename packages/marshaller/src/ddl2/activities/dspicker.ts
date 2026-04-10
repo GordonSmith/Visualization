@@ -5,6 +5,7 @@ import { Databomb, emptyDatabomb } from "./databomb.ts";
 import { DatasourceRef, DatasourceRefType } from "./datasource.ts";
 import { Form } from "./form.ts";
 import { LogicalFile } from "./logicalfile.ts";
+import { RestResult, RestResultRef } from "./rest.ts";
 import { HipieResultRef, RoxieResult, RoxieService } from "./roxie.ts";
 import { WUResult, WUResultRef } from "./wuresult.ts";
 
@@ -45,10 +46,12 @@ export class DSPicker extends ActivitySelection {
             this.selection(new DatasourceRef().datasource(ds));
         } else if (ds instanceof RoxieService) {
             this.selection(new DatasourceRef().datasource(ds));
-        } else if (ds instanceof RoxieResult) {
-            this.selection(new HipieResultRef(this._ec).datasource(ds));
         } else if (ds instanceof WUResult) {
             this.selection(new WUResultRef().datasource(ds));
+        } else if (ds instanceof RoxieResult) {
+            this.selection(new HipieResultRef(this._ec).datasource(ds));
+        } else if (ds instanceof RestResult) {
+            this.selection(new RestResultRef(this._ec).datasource(ds));
         }
     }
 

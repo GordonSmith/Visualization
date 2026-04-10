@@ -1,4 +1,3 @@
-import { publish } from "../../publish.ts";
 import { PropertyExt } from "@hpcc-js/common";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { hashSum } from "@hpcc-js/util";
@@ -8,9 +7,6 @@ import { Activity, IActivityError, ReferencedFields } from "./activity.ts";
 
 export class GroupByColumn extends PropertyExt {
     private _owner: GroupBy;
-
-    declare label: publish<this, string>;
-    declare label_valid: () => boolean;
 
     validate(prefix: string): IActivityError[] {
         const retVal: IActivityError[] = [];
@@ -64,6 +60,12 @@ export class GroupByColumn extends PropertyExt {
 }
 GroupByColumn.prototype._class += " GroupByColumn";
 
+export interface GroupByColumn {
+    label(): string;
+    label(_: string): this;
+    label_valid(): boolean;
+}
+
 //  ===========================================================================
 export type AggrFuncCallback = (item: any) => number;
 export type AggrFunc = (leaves: any[], callback: AggrFuncCallback) => number;
@@ -85,13 +87,6 @@ const d3Aggr: { [key: string]: AggrFunc } = {
 export type AggregateType = "count" | "min" | "max" | "sum" | "mean" | "median" | "variance" | "deviation";
 export class AggregateField extends PropertyExt {
     private _owner: GroupBy;
-
-    declare fieldID: publish<this, string>;
-    declare aggrType: publish<this, AggregateType>;
-    declare aggrColumn: publish<this, string>;
-    declare aggrColumn_valid: () => boolean;
-    declare baseCountColumn: publish<this, string>;
-    declare baseCountColumn_valid: () => boolean;
 
     disableAggrColumn(): boolean {
         return !this.fieldID() || !this.aggrType() || this.aggrType() === "count";
@@ -204,13 +199,21 @@ export class AggregateField extends PropertyExt {
 }
 AggregateField.prototype._class += " AggregateField";
 
+export interface AggregateField {
+    fieldID(): string;
+    fieldID(_: string): this;
+    aggrType(): AggregateType;
+    aggrType(_: AggregateType): this;
+    aggrColumn(): string;
+    aggrColumn(_: string): this;
+    aggrColumn_valid(): boolean;
+    baseCountColumn(): string;
+    baseCountColumn(_: string): this;
+    baseCountColumn_valid(): boolean;
+}
+
 //  ===========================================================================
 export class GroupBy extends Activity {
-
-    declare column: publish<this, GroupByColumn[]>;
-    declare computedFields: publish<this, AggregateField[]>;
-    declare details: publish<this, boolean>;
-    declare fullDetails: publish<this, boolean>;
 
     validate(): IActivityError[] {
         let retVal: IActivityError[] = [];
@@ -419,6 +422,16 @@ export class GroupBy extends Activity {
 }
 GroupBy.prototype._class += " GroupBy";
 
+export interface GroupBy {
+    column(): GroupByColumn[];
+    column(_: GroupByColumn[]): this;
+    computedFields(): AggregateField[];
+    computedFields(_: AggregateField[]): this;
+    details(): boolean;
+    details(_: boolean): this;
+    fullDetails(): boolean;
+    fullDetails(_: boolean): this;
+}
 
 GroupByColumn.prototype.publish("label", undefined, "set", "Field", function (this: GroupByColumn) { return this.columns(); }, {
         optional: true,

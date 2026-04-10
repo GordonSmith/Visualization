@@ -145,21 +145,11 @@ export class JavaScriptAdapter {
         ;`);
                     break;
                 case "hipie":
-                    retVal.push(`    export const ${id} = new marshaller.HipieRequest(ec)
-        .url("${datasource.url}")
-        .querySet("${datasource.querySet}")
-        .queryID("${datasource.queryID}")
-        .resultName("${outputID}")
-        .requestFields(${stringify(datasource.inputs)})
-        .requestFieldRefs(${stringify((datasourceRef as DDL2.IRoxieServiceRef).request)})
-        .responseFields(${stringify(datasource.outputs[outputID].fields)})
-        ;`);
-                    break;
                 case "roxie":
                     const serviceID = this.safeID(view.datasource.id);
                     if (!this._dedup[serviceID]) {
                         this._dedup[serviceID] = true;
-                        retVal.push(`    export const ${serviceID} = new marshaller.RoxieService()
+                        retVal.push(`    export const ${serviceID} = new marshaller.RoxieService(ec)
         .url("${datasource.url}")
         .querySet("${datasource.querySet}")
         .queryID("${datasource.queryID}")
@@ -190,12 +180,14 @@ export class JavaScriptAdapter {
                     break;
                 case "form":
                     {
-                        const payload = {};
+                        const fromFields: string[] = [];
                         for (const field of datasource.fields) {
-                            payload[field.id] = field.default || "";
+                            fromFields.push(`new marshaller.FormField().fieldID("${field.id}").default("${field.default || ""}")`);
                         }
                         retVal.push(`    export const ${id} = new marshaller.Form()
-        .payload(${JSON.stringify(payload)})
+        .formFields([
+            ${fromFields.join(",\n            ")}
+        ])
         ;`);
                     }
                     break;
@@ -282,6 +274,10 @@ const ${dataview.id} = new marshaller.Element(ec)
         ${updates.join("\n        ")}
     }, true)
     ;
+${dataview.id}.visualization()
+    .visibility("${dataview.visualization.visibility}")
+    .secondaryDataviewID("${dataview.visualization.secondaryDataviewID || ""}")
+    ;
 ec.append(${dataview.id});
 `;
     }
@@ -317,7 +313,7 @@ ec.append(${dataview.id});
     createJavaScript(): string {
         const widgets = this.writeWidgets();
 
-        return `// tslint:disable
+        return `\
 ${widgets.widgetImports}
 import * as marshaller from "@hpcc-js/marshaller";
 
@@ -345,12 +341,10 @@ for (const error of errors) {
 
 export const dashboard = new marshaller.Dashboard(ec)
     .target("placeholder")
-    .render(w => {
-        (w as marshaller.Dashboard)
-            .layoutObj(${stringify(this._dashboard.layout())})
-            .hideSingleTabs(true)
-            ;
-    })
+    .titleVisible(false)
+    .hideSingleTabs(true)
+    .layoutObj(${stringify(this._dashboard.layout())})
+    .render()
     ;
 
 // @ts-ignore

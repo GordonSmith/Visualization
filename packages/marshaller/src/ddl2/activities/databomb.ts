@@ -21,7 +21,7 @@ function fieldType(field: any): DDL2.IFieldType {
     return "string";
 }
 
-function rowToFields(row: object, _jsonData): DDL2.IField[] {
+export function rowToFields(row: object, _jsonData): DDL2.IField[] {
     //  TODO:  This heuristic will fail if there are empty nested rows in the first row...
     const retVal: DDL2.IField[] = [];
     for (const key in row) {
@@ -77,18 +77,17 @@ export class Databomb extends Datasource {
         };
     }
 
-    fromDDL(ddl: DDL2.IDatabomb): this {
-        const retVal = this
-            .id(ddl.id)
+    fromDDL(ddl: DDL2.IDatabomb, skipID = false): this {
+        (skipID ? this : this.id(ddl.id))
             .format(ddl.format)
             .payload(ddl.payload)
             .databombFields(ddl.fields.map(FormField.fromDDL))
             ;
-        return retVal;
+        return this;
     }
 
-    static fromDDL(ddl: DDL2.IDatabomb): Databomb {
-        return new Databomb().fromDDL(ddl);
+    static fromDDL(ddl: DDL2.IDatabomb, skipID = false): Databomb {
+        return new Databomb().fromDDL(ddl, skipID);
     }
 
     validFields(): FormField[] {

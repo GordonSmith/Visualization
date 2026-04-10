@@ -1,4 +1,3 @@
-import { publish } from "../../publish.ts";
 import { PropertyExt, Utility } from "@hpcc-js/common";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { hashSum, isArray } from "@hpcc-js/util";
@@ -6,11 +5,6 @@ import { Activity, IActivityError, ReferencedFields } from "./activity.ts";
 
 export class ComputedMapping extends PropertyExt {
     protected _owner: ComputedField;
-
-    declare value: publish<this, any>;
-    declare value_valid: () => boolean;
-    declare newValue: publish<this, any>;
-    declare newValue_valid: () => boolean;
 
     validate(prefix: string): IActivityError[] {
         const retVal: IActivityError[] = [];
@@ -67,6 +61,15 @@ export class ComputedMapping extends PropertyExt {
 }
 ComputedMapping.prototype._class += " ComputedMapping";
 
+export interface ComputedMapping {
+    value(): any;
+    value(_: any): this;
+    value_valid(): boolean;
+    newValue(): any;
+    newValue(_: any): this;
+    newValue_valid(): boolean;
+}
+
 export type ComputedType = "=" | "*" | "/" | "+" | "-" | "scale" | "template" | "map";
 
 export interface IComputedFieldOwner extends PropertyExt {
@@ -76,18 +79,6 @@ export interface IComputedFieldOwner extends PropertyExt {
 
 export class ComputedField extends PropertyExt {
     private _owner: IComputedFieldOwner;
-
-    declare label: publish<this, string>;
-    declare type: publish<this, ComputedType>;
-    declare column1: publish<this, string>;
-    declare column1_valid: () => boolean;
-    declare column2: publish<this, string>;
-    declare column2_valid: () => boolean;
-    declare constValue: publish<this, number>;
-    declare template: publish<this, string>;
-    declare default: publish<this, any>;
-    declare mapping: publish<this, ComputedMapping[]>;
-    declare childField: publish<this, ComputedField[]>;
 
     disableColumn1(): boolean {
         return !this.label() || ["=", "*", "/", "+", "-", "scale", "map"].indexOf(this.type()) < 0;
@@ -413,12 +404,33 @@ export class ComputedField extends PropertyExt {
     }
 }
 ComputedField.prototype._class += " ComputedField";
+
+export interface ComputedField {
+    label(): string;
+    label(_: string): this;
+    type(): ComputedType;
+    type(_: ComputedType): this;
+    column1(): string;
+    column1(_: string): this;
+    column1_valid(): boolean;
+    column2(): string;
+    column2(_: string): this;
+    column2_valid(): boolean;
+    constValue(): number;
+    constValue(_: number): this;
+    template(): string;
+    template(_: string): this;
+    default(): any;
+    default(_: any): this;
+    mapping(): ComputedMapping[];
+    mapping(_: ComputedMapping[]): this;
+    childField(): ComputedField[];
+    childField(_: ComputedField[]): this;
+}
+
 //  ===========================================================================
 export class MultiField extends PropertyExt implements IComputedFieldOwner {
     private _owner: IComputedFieldOwner;
-
-    declare label: publish<this, string>;
-    declare multiFields: publish<this, ComputedField[]>;
 
     constructor() {
         super();
@@ -489,14 +501,20 @@ export class MultiField extends PropertyExt implements IComputedFieldOwner {
     }
 }
 MultiField.prototype._class += " MultiField";
+
+export interface MultiField {
+    label(): string;
+    label(_: string): this;
+    multiFields(): ComputedField[];
+    multiFields(_: ComputedField[]): this;
+}
+
 //  ===========================================================================
 export class ProjectBase extends Activity {
     static ComputedField = ComputedField;
 
     _includeLParam = false;
     _trim = false;
-
-    declare computedFields: publish<this, Array<ComputedField | MultiField>>;
 
     validate(): IActivityError[] {
         let retVal: IActivityError[] = [];
@@ -766,5 +784,10 @@ ComputedField.prototype.publish("childField", [], "propertyArray", "Child Fields
 
 MultiField.prototype.publish("label", "", "string", "Label");
 MultiField.prototype.publish("multiFields", [], "propertyArray", "Multi Fields", null, { autoExpand: ComputedField });
+
+export interface ProjectBase {
+    computedFields(): Array<ComputedField | MultiField>;
+    computedFields(_: Array<ComputedField | MultiField>): this;
+}
 
 ProjectBase.prototype.publish("computedFields", [], "propertyArray", "Computed Fields", null, { autoExpand: ComputedField });

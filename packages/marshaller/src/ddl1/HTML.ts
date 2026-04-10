@@ -3,8 +3,8 @@ import { HipieDDLMixin } from "./HipieDDLMixin.ts";
 
 export class HTML extends Grid {
     _ddlDashboards: any[];
-    declare surfacePadding_default: (n: number) => void;
-    declare _marshallerRender: (...args: any[]) => any;
+    surfacePadding_default: (n: number) => void;
+    _marshallerRender: (...args: any[]) => any;
 
     constructor() {
         super();

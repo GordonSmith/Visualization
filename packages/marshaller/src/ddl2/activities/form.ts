@@ -1,4 +1,3 @@
-import { publish } from "../../publish.ts";
 import { PropertyExt } from "@hpcc-js/common";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { Datasource } from "./datasource.ts";
@@ -7,17 +6,6 @@ type IField = DDL2.IFieldBoolean | DDL2.IFieldNumber | DDL2.IFieldString | DDL2.
 
 export class FormField extends PropertyExt {
     protected _owner: Form;
-
-    declare type: publish<this, "boolean" | "number" | "string" | "dataset">;
-
-    declare fieldID: publish<this, string>;
-
-    declare default: publish<this, boolean | number | string | any[]>;
-
-    declare value: publish<this, boolean | number | string>;
-    declare value_exists: () => boolean;
-
-    declare childFields: publish<this, FormField[]>;
 
     disableChildField(): boolean {
         return this.type() !== "dataset";
@@ -72,10 +60,13 @@ export class FormField extends PropertyExt {
         }
         return cell => cell;
     }
+
+    calcValue() {
+        return this.value_exists() ? this.value() : this.default();
+    }
 }
 
 export class Form extends Datasource {
-    declare formFields: publish<this, FormField[]>;
 
     constructor() {
         super();
@@ -89,16 +80,15 @@ export class Form extends Datasource {
         };
     }
 
-    fromDDL(ddl: DDL2.IForm): this {
-        this
-            .id(ddl.id)
+    fromDDL(ddl: DDL2.IForm, skipID = false): this {
+        (skipID ? this : this.id(ddl.id))
             .formFields(ddl.fields.map(FormField.fromDDL))
             ;
         return this;
     }
 
-    static fromDDL(ddl: DDL2.IForm): Form {
-        return new Form().fromDDL(ddl);
+    static fromDDL(ddl: DDL2.IForm, skipID = false): Form {
+        return new Form().fromDDL(ddl, skipID);
     }
 
     validFields(): FormField[] {
@@ -131,19 +121,8 @@ export class Form extends Datasource {
 
     computeData(): ReadonlyArray<object> {
         const retVal = {};
-        this.validFields().map(f => {
-            switch (f.type()) {
-                case "boolean":
-                    retVal[f.fieldID()] = f.value_exists() ? f.value() : f.default();
-                    break;
-                case "number":
-                    retVal[f.fieldID()] = f.value_exists() ? f.value() : f.default();
-                    break;
-                case "string":
-                default:
-                    retVal[f.fieldID()] = f.value_exists() ? f.value() : f.default();
-                    break;
-            }
+        this.validFields().forEach(f => {
+            retVal[f.fieldID()] = f.calcValue();
         });
         return [retVal];
     }
@@ -155,6 +134,24 @@ export class Form extends Datasource {
 }
 Form.prototype._class += " Form";
 
+export interface FormField {
+    type(): "boolean" | "number" | "string" | "dataset";
+    type(_: "boolean" | "number" | "string" | "dataset"): this;
+    fieldID(): string;
+    fieldID(_: string): this;
+    default(): boolean | number | string | any[];
+    default(_: boolean | number | string | any[]): this;
+    value(): boolean | number | string;
+    value(_: boolean | number | string): this;
+    value_exists(): boolean;
+    childFields(): FormField[];
+    childFields(_: FormField[]): this;
+}
+
+export interface Form {
+    formFields(): FormField[];
+    formFields(_: FormField[]): this;
+}
 
 FormField.prototype.publish("type", "string", "set", "FormField Type", ["boolean", "number", "string", "dataset"]);
 FormField.prototype.publish("fieldID", "", "string", "FormField Label");

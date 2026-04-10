@@ -8,6 +8,7 @@ import { DatasourceRefType } from "./activities/datasource.ts";
 import { DSPicker } from "./activities/dspicker.ts";
 import { Form, FormField } from "./activities/form.ts";
 import { LogicalFile } from "./activities/logicalfile.ts";
+import { RestField, RestResult, RestService } from "./activities/rest.ts";
 import { RoxieResult, RoxieService } from "./activities/roxie.ts";
 import { WU, WUResult } from "./activities/wuresult.ts";
 import { ElementContainer } from "./model/element.ts";
@@ -38,35 +39,24 @@ export class DSTable extends ChartPanel {
         .on("click", () => {
             if (this._selectedDS2) {
                 if (this._selectedDS2 instanceof Databomb) {
-                    this.add(new Databomb()
-                        .format(this._selectedDS2.format())
-                        .payload(this._selectedDS2.payload())
-                    );
+                    this.add(Databomb.fromDDL(this._selectedDS2.toDDL(), true));
                 } else if (this._selectedDS2 instanceof Form) {
-                    this.add(new Form()
-                        .fromDDL(this._selectedDS2.toDDL())
-                    );
+                    this.add(Form.fromDDL(this._selectedDS2.toDDL(), true));
                 } else if (this._selectedDS2 instanceof LogicalFile) {
-                    this.add(new LogicalFile(this._ec)
-                        .url(this._selectedDS2.url())
-                        .logicalFile(this._selectedDS2.logicalFile())
+                    this.add(LogicalFile.fromDDL(this._ec, this._selectedDS2.toDDL(), true));
+                } else if (this._selectedDS2 instanceof RestResult) {
+                    this.add(new RestResult(this._ec)
+                        .service(RestService.fromDDL(this._ec, this._selectedDS2.service().toDDL(), true))
+                        .resultName(this._selectedDS2.resultName())
                     );
                 } else if (this._selectedDS2 instanceof WUResult) {
                     this.add(new WUResult(this._ec)
-                        .wu(new WU(this._ec)
-                            .url(this._selectedDS2.wu().url())
-                            .wuid(this._selectedDS2.wu().wuid())
-                        )
+                        .wu(WU.fromDDL(this._ec, this._selectedDS2.wu().toDDL(), true))
                         .resultName(this._selectedDS2.resultName())
                     );
                 } else if (this._selectedDS2 instanceof RoxieResult) {
-                    const rs = this._selectedDS2.service();
                     this.add(new RoxieResult(this._ec)
-                        .service(new RoxieService(this._ec)
-                            .url(rs.url())
-                            .querySet(rs.querySet())
-                            .queryID(rs.queryID())
-                        )
+                        .service(RoxieService.fromDDL(this._ec, this._selectedDS2.service().toDDL(), true))
                         .resultName(this._selectedDS2.resultName())
                     );
                 } else {
@@ -86,6 +76,16 @@ export class DSTable extends ChartPanel {
             d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/candidate-2.x.x/utils/data/data/stats.csv").then(csv => {
                 this.add(new Databomb().format("csv").payload(csv));
             });
+            this.add(new RestResult(this._ec)
+                .service(new RestService(this._ec)
+                    .url("https://cmsapi.pulselive.com/")
+                    .action("rugby/rankings/mru")
+                    .requestFields([
+                        new RestField().fieldID("xxx"),
+                        new RestField().fieldID("date")
+                    ]))
+                .resultName("entries")
+            );
             this.add(new WUResult(this._ec)
                 .wu(new WU(this._ec).url("http://localhost:8010").wuid("W20190802-112509"))
                 .resultName("Result 1")
@@ -171,6 +171,13 @@ export class DSTable extends ChartPanel {
             }
         });
 
+        commands.addCommand("add_rest", {
+            label: "Rest",
+            execute: () => {
+                this.add(new RestResult(this._ec));
+            }
+        });
+
         commands.addCommand("add_databomb", {
             label: "Databomb",
             execute: () => {
@@ -189,6 +196,7 @@ export class DSTable extends ChartPanel {
         this._contextMenu.addItem({ command: "add_wu_result", selector: ".common_Button" });
         this._contextMenu.addItem({ command: "add_logicalfile", selector: ".common_Button" });
         this._contextMenu.addItem({ command: "add_roxie", selector: ".common_Button" });
+        this._contextMenu.addItem({ command: "add_rest", selector: ".common_Button" });
         this._contextMenu.addItem({ command: "add_databomb", selector: ".common_Button" });
         this._contextMenu.addItem({ command: "add_form", selector: ".common_Button" });
     }

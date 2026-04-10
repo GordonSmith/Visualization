@@ -1,13 +1,9 @@
-import { publish } from "../../publish.ts";
 import { Result } from "@hpcc-js/comms";
 import { DDL2 } from "@hpcc-js/ddl-shim";
 import { ElementContainer } from "../model/element.ts";
 import { ESPResult } from "./wuresult.ts";
 
 export class LogicalFile extends ESPResult {
-
-    declare url: publish<this, string>;
-    declare logicalFile: publish<this, string>;
 
     constructor(_ec: ElementContainer) {
         super(_ec);
@@ -23,20 +19,20 @@ export class LogicalFile extends ESPResult {
         };
     }
 
-    fromDDL(ddl: DDL2.ILogicalFile): this {
-        return this
-            .id(ddl.id)
+    fromDDL(ddl: DDL2.ILogicalFile, skipID = false): this {
+        (skipID ? this : this.id(ddl.id))
             .url(ddl.url)
             .logicalFile(ddl.logicalFile)
             ;
+        return this;
     }
 
-    static fromDDL(ec: ElementContainer, ddl: DDL2.ILogicalFile): LogicalFile {
-        return new LogicalFile(ec).fromDDL(ddl);
+    static fromDDL(ec: ElementContainer, ddl: DDL2.ILogicalFile, skipID = false): LogicalFile {
+        return new LogicalFile(ec).fromDDL(ddl, skipID);
     }
 
     _createResult(): Result {
-        return Result.attachLogicalFile({ baseUrl: this.url(), hookSend: this._ec.hookSend() }, "", this.logicalFile());
+        return Result.attachLogicalFile({ baseUrl: this.url(), hookSend: this._ec.hookSend() }, this.nodeGroup(), this.logicalFile());
     }
 
     sourceHash(): string {
@@ -57,6 +53,14 @@ export class LogicalFile extends ESPResult {
 }
 LogicalFile.prototype._class += " LogicalFile";
 
-
+export interface LogicalFile {
+    url(): string;
+    url(_: string): this;
+    nodeGroup(): string;
+    nodeGroup(_: string): this;
+    logicalFile(): string;
+    logicalFile(_: string): this;
+}
 LogicalFile.prototype.publish("url", "", "string", "ESP Url (http://x.x.x.x:8010)");
+LogicalFile.prototype.publish("nodeGroup", "", "string", "Node Group");
 LogicalFile.prototype.publish("logicalFile", "", "string", "Logical File Name");

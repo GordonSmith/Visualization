@@ -80,14 +80,17 @@ export class Graph extends GraphWidget {
         alert("Comms Error:\n" + source + "\n" + error);
     }
 
-    declare content: { (): any[]; (_: any[]): Graph };
-    declare content_exists: () => boolean;
-
     //  HipieDDLMixin  ---
-    declare _marshallerRender: (BaseClass, callback) => this;
+    _marshallerRender: (BaseClass, callback) => this;
 }
 Graph.prototype.mixin(HipieDDLMixin);
 Graph.prototype._class += " marshaller_Graph";
+
+export interface Graph {
+   content(): any[];
+   content(_: any[]): this;
+   content_exists: () => boolean;
+}
 
 // TODO Still Needed?:  Graph.prototype.publish("visualizeRoxie", false, "boolean", "Show Roxie Data Sources", null, { tags: ["Private"] });
 Graph.prototype.publish("content", [], "widgetArray", "widgets", null, { tags: ["Basic"] });
