@@ -603,7 +603,11 @@ ChartPanel.prototype.publishProxy("progress_blurColor", "_progressBar", "blurCol
 ChartPanel.prototype.publishProxy("progress_blurOpacity", "_progressBar", "blurOpacity");
 
 ChartPanel.prototype.widget = function (_?) {
-    if (!arguments.length) return this._widget;
+    console.log("AAAwidget:  " + (_ ? _.classID() : _), arguments.length);
+    if (!arguments.length) {
+        return this._widget;
+    }
+    console.log("BBBwidget:  " + (_ ? _.classID() : _), arguments.length);
     this._carousel.widgets([_, this._table]);
     this._widget = _;
     this._widget

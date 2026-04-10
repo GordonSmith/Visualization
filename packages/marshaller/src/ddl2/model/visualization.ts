@@ -104,6 +104,12 @@ export class Visualization extends PropertyExt {
             .on("click", (row: any, col: string, sel: boolean) => this.click(row, col, sel))
             .on("vertex_click", (row: any, col: string, sel: boolean) => this.vertex_click(row, col, sel))
             ;
+        for (const key in VizTypeMap) {
+            if (this._chartPanel.widget() instanceof VizTypeMap[key]) {
+                this._chartType = key as VizType;
+                break;
+            }
+        }
         return this;
     }
 
@@ -198,7 +204,7 @@ export class Visualization extends PropertyExt {
             this._prevFields = fields;
             this.chartPanel().fields(dbfields.filter(f => f.id() !== "__lparam"));
         } else {
-            console.log(`***${this.id()} Immutable Fields***`);
+            console.warn(`***${this.id()} Immutable Fields***`);
         }
 
         const data = mappings.outData();
@@ -208,7 +214,7 @@ export class Visualization extends PropertyExt {
             const mappedData = this.toDBData(dbfields, data);
             this.chartPanel().data(mappedData);
         } else {
-            console.log(`${this.id()} Immutable Data!`);
+            console.warn(`${this.id()} Immutable Data!`);
         }
 
         if (fieldsChanged || dataChanged) {
@@ -268,13 +274,17 @@ export class Visualization extends PropertyExt {
     }
 
     refresh(): Promise<void> {
-        this.chartPanel().startProgress && this.chartPanel().startProgress();
+        if (this.chartPanel().startProgress) {
+            this.chartPanel().startProgress();
+        }
         const mappings = this.mappings();
         mappings.sourceActivity(this._hipiePipeline);
         return mappings.refreshMeta().then(() => {
             return mappings.exec();
         }).then(() => {
-            this.chartPanel().finishProgress && this.chartPanel().finishProgress();
+            if (this.chartPanel().finishProgress) {
+                this.chartPanel().finishProgress();
+            }
             return this.refreshData();
         });
     }
@@ -286,7 +296,6 @@ export class Visualization extends PropertyExt {
     }
 }
 Visualization.prototype._class += " Visualization";
-
 
 Visualization.prototype.publishProxy("title", "_chartPanel");
 Visualization.prototype.publishProxy("description", "_chartPanel");

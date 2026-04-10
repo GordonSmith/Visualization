@@ -44,6 +44,34 @@
             ]
         },
         {
+            "name": "index.html?mode=dashy",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://localhost:5520/index.html?mode=dashy",
+            "runtimeArgs": [
+                "--disable-web-security"
+            ],
+            "webRoot": "${workspaceFolder}",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "name": "index.html?mode=dashPOC",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://localhost:5520/index.html?mode=dashPOC",
+            "runtimeArgs": [
+                "--disable-web-security"
+            ],
+            "webRoot": "${workspaceFolder}",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        },
+        {
             "name": "index-preview.html",
             "request": "launch",
             "type": "msedge",

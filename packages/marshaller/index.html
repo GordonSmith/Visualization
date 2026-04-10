@@ -2,80 +2,39 @@
 <html>
 
 <head>
-    <title>Home</title>
+    <title>@hpcc-js/marshaller</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
+            padding: 0px;
+            margin: 8px;
+            overflow: hidden;
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        #placeholder,
-        #placeholder2 {
+        #placeholder {
             width: 100%;
-            height: 800px;
-            background-color: #fff;
-            margin-top: 20px;
+            height: 100vh;
         }
     </style>
-    <link rel="stylesheet" href="../common/font-awesome/css/font-awesome.min.css">
+    <script type="module">
+        import "@hpcc-js/common/font-awesome/css/font-awesome.min.css";
+    </script>
 </head>
 
-<body onresize="doResize()">
-    <h1>Marshaller - Dashboard</h1>
+<body>
     <div id="placeholder"></div>
     <script type="module">
-        import { Dashboard } from "./src/index.ts";
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get("mode") || "dashboard";
 
-        const ddl = {
-            version: "2.2.1",
-            createdBy: {
-                name: "@hpcc-js/marshaller",
-                version: "3.0.0"
-            },
-            datasources: [],
-            dataviews: [],
-            properties: {}
-        };
-
-        window.__widget = new Dashboard()
-            .target("placeholder")
-            .render()
-            ;
-    </script>
-
-    <h1>Marshaller - DDL Editor</h1>
-    <div id="placeholder2"></div>
-    <script type="module">
-        import { DDLEditor } from "./src/index.ts";
-
-        const sampleDDL = {
-            version: "2.2.1",
-            createdBy: {
-                name: "@hpcc-js/marshaller",
-                version: "3.0.0"
-            },
-            datasources: [],
-            dataviews: [],
-            properties: {}
-        };
-
-        new DDLEditor()
-            .target("placeholder2")
-            .ddl(sampleDDL)
-            .render()
-            ;
-    </script>
-
-    <script>
-        function doResize() {
-            window.__widget?.resize()?.render();
+        if (mode === "dashy") {
+            const { loadDashy } = await import("./tests/dashy-demo.ts");
+            loadDashy("placeholder");
+        } else if (mode === "dashPOC") {
+            const { loadDashboard } = await import("./tests/dashPOC.ts");
+            loadDashboard("placeholder");
+        } else {
+            const { loadDashboard } = await import("./tests/dashy-demo.ts");
+            loadDashboard("placeholder");
         }
     </script>
 </body>

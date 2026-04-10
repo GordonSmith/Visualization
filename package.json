@@ -64,11 +64,8 @@
     "nx": {
       "minimatch": "10.2.3"
     },
-    "esbuild": "$esbuild",
     "tar": "7.5.11",
-    "tmp": "0.2.5",
-    "typescript": "$typescript",
-    "vite": "$vite"
+    "tmp": "0.2.5"
   },
   "repository": {
     "type": "git",

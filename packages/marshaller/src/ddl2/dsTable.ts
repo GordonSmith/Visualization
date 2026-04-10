@@ -70,20 +70,20 @@ export class DSTable extends ChartPanel {
                         .resultName(this._selectedDS2.resultName())
                     );
                 } else {
-                    console.log("Unknown datasoure type");
+                    console.warn("Unknown datasoure type");
                 }
             }
         });
 
     private _addSamples = new Button().faChar("fa-database").tooltip("Add Samples")
         .on("click", () => {
-            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/master/utils/data/data/airports.csv").then(csv => {
+            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/candidate-2.x.x/utils/data/data/airports.csv").then(csv => {
                 this.add(new Databomb().format("csv").payload(csv));
             });
-            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/master/utils/data/data/carriers.csv").then(csv => {
+            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/candidate-2.x.x/utils/data/data/carriers.csv").then(csv => {
                 this.add(new Databomb().format("csv").payload(csv));
             });
-            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/master/utils/data/data/stats.csv").then(csv => {
+            d3Text("https://raw.githubusercontent.com/hpcc-systems/Visualization/candidate-2.x.x/utils/data/data/stats.csv").then(csv => {
                 this.add(new Databomb().format("csv").payload(csv));
             });
             this.add(new WUResult(this._ec)
