@@ -20,15 +20,8 @@ export type DatasourceRefType = Databomb | Form | LogicalFile | RoxieResult | WU
 export type DatasourceType = Databomb | Form | LogicalFile | RoxieService | WU | RestService;
 
 export class DatasourceRef extends Activity {
-    _datasource: DatasourceRefType;
-    datasource(): DatasourceRefType;
-    datasource(_: DatasourceRefType): this;
-    datasource(_?: DatasourceRefType): this | DatasourceRefType {
-        if (!arguments.length) return this._datasource;
-        this._datasource = _;
-        this.sourceActivity(_);
-        return this;
-    }
+    _origDatasource;
+    declare _datasource: DatasourceRefType;
 
     constructor() {
         super();
@@ -49,4 +42,18 @@ export class DatasourceRef extends Activity {
 }
 DatasourceRef.prototype._class += " DatasourceRef";
 
-DatasourceRef.prototype.publish("_datasource", null, "widget", "Datasource Reference", null, { internal: true });
+export interface DatasourceRef {
+    datasource(): DatasourceRefType;
+    datasource(_: DatasourceRefType): this;
+}
+
+DatasourceRef.prototype.publish("datasource", null, "widget", "Datasource Reference", null, { internal: true });
+
+DatasourceRef.prototype._origDatasource = DatasourceRef.prototype.datasource;
+DatasourceRef.prototype.datasource = function (this: DatasourceRef, _?) {
+    const retVal = DatasourceRef.prototype._origDatasource.apply(this, arguments);
+    if (_ !== undefined) {
+        this.sourceActivity(_);
+    }
+    return retVal;
+};

@@ -152,27 +152,11 @@ export interface ESPResult {
 
 export class WUResult extends ESPResult {
 
-    _wu: WU;
-    wu(): WU;
-    wu(_: WU): this;
-    wu(_?: WU): this | WU {
-        if (!arguments.length) return this._wu;
-        this._wu = _;
-        this._wu.refreshMeta();
-        return this;
-    }
+    _origWu;
+    _origResultName;
 
-    _resultName: string;
-    resultName(_: string): this;
-    resultName(): string;
-    resultName(_?: string): string | this {
-        if (_ === void 0) return this._resultName;
-        if (this._resultName !== _) {
-            this._resultName = _;
-            this.responseFields([]);
-        }
-        return this;
-    }
+    declare _wu: WU;
+    declare _resultName: string;
 
     constructor(_ec: ElementContainer) {
         super(_ec);
@@ -241,26 +225,16 @@ export class WUResult extends ESPResult {
 }
 WUResult.prototype._class += " WUResult";
 
-export class WU extends Datasource {
-    _url: string;
-    url(): string;
-    url(_: string): this;
-    url(_?: string): this | string {
-        if (!arguments.length) return this._url;
-        this._url = _;
-        this.refreshMeta();
-        return this;
-    }
+export interface WUResult {
+    wu(): WU;
+    wu(_: WU): this;
+    resultName(): string;
+    resultName(_: string): this;
+}
 
-    _wuid: string;
-    wuid(): string;
-    wuid(_: string): this;
-    wuid(_?: string): this | string {
-        if (!arguments.length) return this._wuid;
-        this._wuid = _;
-        this.refreshMeta();
-        return this;
-    }
+export class WU extends Datasource {
+    _origUrl;
+    _origWuid;
 
     protected _workunit: Workunit;
     protected _outputs: { [id: string]: WUResult } = {};
@@ -364,6 +338,13 @@ export class WU extends Datasource {
 }
 WU.prototype._class += " WU";
 
+export interface WU {
+    url(): string;
+    url(_: string): this;
+    wuid(): string;
+    wuid(_: string): this;
+}
+
 export class WUResultRef extends DatasourceRef {
 
     datasource(): WUResult;
@@ -393,10 +374,47 @@ WUResultRef.prototype._class += " WUResultRef";
 ESPResult.prototype.publish("samples", 10, "number", "Number of samples");
 ESPResult.prototype.publish("sampleSize", 100, "number", "Sample size");
 
-WUResult.prototype.publish("_wu", null, "widget", "Workunit");
-WUResult.prototype.publish("_resultName", "", "set", "Result Name", function (this: WUResult): string[] {
+WUResult.prototype.publish("wu", null, "widget", "Workunit");
+WUResult.prototype.publish("resultName", "", "set", "Result Name", function (this: WUResult): string[] {
     return this._wu !== undefined ? this._wu.resultNames() : [];
 });
 
-WU.prototype.publish("_url", "", "string", "ESP Url (http://x.x.x.x:8010)");
-WU.prototype.publish("_wuid", "", "string", "Workunit ID");
+WUResult.prototype._origWu = WUResult.prototype.wu;
+WUResult.prototype.wu = function (this: WUResult, _?) {
+    const retVal = WUResult.prototype._origWu.apply(this, arguments);
+    if (_ !== undefined) {
+        this._wu.refreshMeta();
+    }
+    return retVal;
+};
+
+WUResult.prototype._origResultName = WUResult.prototype.resultName;
+WUResult.prototype.resultName = function (this: WUResult, _?) {
+    const prev = this._resultName;
+    const retVal = WUResult.prototype._origResultName.apply(this, arguments);
+    if (_ !== undefined && prev !== _) {
+        this.responseFields([]);
+    }
+    return retVal;
+};
+
+WU.prototype.publish("url", "", "string", "ESP Url (http://x.x.x.x:8010)");
+WU.prototype.publish("wuid", "", "string", "Workunit ID");
+
+WU.prototype._origUrl = WU.prototype.url;
+WU.prototype.url = function (this: WU, _?) {
+    const retVal = WU.prototype._origUrl.apply(this, arguments);
+    if (_ !== undefined) {
+        this.refreshMeta();
+    }
+    return retVal;
+};
+
+WU.prototype._origWuid = WU.prototype.wuid;
+WU.prototype.wuid = function (this: WU, _?) {
+    const retVal = WU.prototype._origWuid.apply(this, arguments);
+    if (_ !== undefined) {
+        this.refreshMeta();
+    }
+    return retVal;
+};

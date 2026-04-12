@@ -11,65 +11,19 @@ import { Sort } from "./sort.ts";
 
 export class HipiePipeline extends ActivityPipeline {
 
-    _datasource: DSPicker | DatasourceRefType;
-    datasource(): DSPicker | DatasourceRefType;
-    datasource(_: DSPicker | DatasourceRefType): this;
-    datasource(_?: DSPicker | DatasourceRefType): DSPicker | DatasourceRefType | this {
-        if (!arguments.length) return this._datasource;
-        this._datasource = _;
-        this.updateSequence();
-        return this;
-    }
+    _origDatasource;
+    _origFilters;
+    _origProject;
+    _origGroupBy;
+    _origSort;
+    _origLimit;
 
-    _filters: Filters;
-    filters(): Filters;
-    filters(_: Filters): this;
-    filters(_?: Filters): Filters | this {
-        if (!arguments.length) return this._filters;
-        this._filters = _;
-        this.updateSequence();
-        return this;
-    }
-
-    _project: Project;
-    project(): Project;
-    project(_: Project): this;
-    project(_?: Project): Project | this {
-        if (!arguments.length) return this._project;
-        this._project = _;
-        this.updateSequence();
-        return this;
-    }
-
-    _groupBy: GroupBy;
-    groupBy(): GroupBy;
-    groupBy(_: GroupBy): this;
-    groupBy(_?: GroupBy): GroupBy | this {
-        if (!arguments.length) return this._groupBy;
-        this._groupBy = _;
-        this.updateSequence();
-        return this;
-    }
-
-    _sort: Sort;
-    sort(): Sort;
-    sort(_: Sort): this;
-    sort(_?: Sort): Sort | this {
-        if (!arguments.length) return this._sort;
-        this._sort = _;
-        this.updateSequence();
-        return this;
-    }
-
-    _limit: Limit;
-    limit(): Limit;
-    limit(_: Limit): this;
-    limit(_?: Limit): Limit | this {
-        if (!arguments.length) return this._limit;
-        this._limit = _;
-        this.updateSequence();
-        return this;
-    }
+    declare _datasource: DSPicker | DatasourceRefType;
+    declare _filters: Filters;
+    declare _project: Project;
+    declare _groupBy: GroupBy;
+    declare _sort: Sort;
+    declare _limit: Limit;
 
     constructor(private _ec: ElementContainer, viewID: string) {
         super();
@@ -106,10 +60,42 @@ export class HipiePipeline extends ActivityPipeline {
     }
 }
 
+export interface HipiePipeline {
+    datasource(): DSPicker | DatasourceRefType;
+    datasource(_: DSPicker | DatasourceRefType): this;
+    filters(): Filters;
+    filters(_: Filters): this;
+    project(): Project;
+    project(_: Project): this;
+    groupBy(): GroupBy;
+    groupBy(_: GroupBy): this;
+    sort(): Sort;
+    sort(_: Sort): this;
+    limit(): Limit;
+    limit(_: Limit): this;
+}
 
-HipiePipeline.prototype.publish("_datasource", null, "widget", "Data Source 2");
-HipiePipeline.prototype.publish("_filters", null, "widget", "Client Filters");
-HipiePipeline.prototype.publish("_project", null, "widget", "Project");
-HipiePipeline.prototype.publish("_groupBy", null, "widget", "Group By");
-HipiePipeline.prototype.publish("_sort", null, "widget", "Sort");
-HipiePipeline.prototype.publish("_limit", null, "widget", "Limit output");
+HipiePipeline.prototype.publish("datasource", null, "widget", "Data Source 2");
+HipiePipeline.prototype.publish("filters", null, "widget", "Client Filters");
+HipiePipeline.prototype.publish("project", null, "widget", "Project");
+HipiePipeline.prototype.publish("groupBy", null, "widget", "Group By");
+HipiePipeline.prototype.publish("sort", null, "widget", "Sort");
+HipiePipeline.prototype.publish("limit", null, "widget", "Limit output");
+
+function wrapHipiePipelineProperty(prop: string) {
+    const origKey = `_orig${prop.charAt(0).toUpperCase() + prop.slice(1)}`;
+    HipiePipeline.prototype[origKey] = HipiePipeline.prototype[prop];
+    HipiePipeline.prototype[prop] = function (_?) {
+        const retVal = HipiePipeline.prototype[origKey].apply(this, arguments);
+        if (_ !== undefined) {
+            this.updateSequence();
+        }
+        return retVal;
+    };
+}
+wrapHipiePipelineProperty("datasource");
+wrapHipiePipelineProperty("filters");
+wrapHipiePipelineProperty("project");
+wrapHipiePipelineProperty("groupBy");
+wrapHipiePipelineProperty("sort");
+wrapHipiePipelineProperty("limit");

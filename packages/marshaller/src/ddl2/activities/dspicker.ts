@@ -13,24 +13,11 @@ let dsPickerID = 0;
 export class DSPicker extends ActivitySelection {
     private _nullDatasource = emptyDatabomb;
 
-    _datasourceID: string; // DDL2.IDatasourceType;
-    datasourceID(): string;
-    datasourceID(_: string): this;
-    datasourceID(_?: string): this | string {
-        if (!arguments.length) return this._datasourceID;
-        if (this._datasourceID !== _) {
-            this._datasourceID = _;
-            this.refreshRef(_);
-        }
-        return this;
-    }
+    _origDatasourceID;
+    _origDatasourceRef;
 
-    _datasourceRef: DatasourceRef;
-    datasourceRef(): DatasourceRef;
-    datasourceRef(_: DatasourceRef): this;
-    datasourceRef(_?: DatasourceRef): this | DatasourceRef {
-        return super.selection.apply(this, arguments);
-    }
+    declare _datasourceID: string; // DDL2.IDatasourceType;
+    declare _datasourceRef: DatasourceRef;
 
     datasource(): DatasourceRefType {
         return this.datasourceRef().datasource();
@@ -102,6 +89,27 @@ export class DSPicker extends ActivitySelection {
 }
 DSPicker.prototype._class += " DSPicker";
 
+export interface DSPicker {
+    datasourceID(): string;
+    datasourceID(_: string): this;
+    datasourceRef(): DatasourceRef;
+    datasourceRef(_: DatasourceRef): this;
+}
 
-DSPicker.prototype.publish("_datasourceID", "", "set", "Activity", function (this: DSPicker) { return this.datasourceIDs(); }, { optional: false });
-DSPicker.prototype.publish("_datasourceRef", "", "widget", "Activity");
+DSPicker.prototype.publish("datasourceID", "", "set", "Activity", function (this: DSPicker) { return this.datasourceIDs(); }, { optional: false });
+DSPicker.prototype.publish("datasourceRef", "", "widget", "Activity");
+
+DSPicker.prototype._origDatasourceID = DSPicker.prototype.datasourceID;
+DSPicker.prototype.datasourceID = function (this: DSPicker, _?) {
+    const prev = this._datasourceID;
+    const retVal = DSPicker.prototype._origDatasourceID.apply(this, arguments);
+    if (_ !== undefined && prev !== _) {
+        this.refreshRef(_);
+    }
+    return retVal;
+};
+
+DSPicker.prototype._origDatasourceRef = DSPicker.prototype.datasourceRef;
+DSPicker.prototype.datasourceRef = function (this: DSPicker, _?) {
+    return ActivitySelection.prototype.selection.apply(this, arguments);
+};

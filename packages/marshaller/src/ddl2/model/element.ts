@@ -60,30 +60,10 @@ let vizID = 0;
 export class Element extends PropertyExt {
     private _vizChartPanel: Visualization;
 
-    // @publishProxy("_MultiChartPanel")
-    // title: publish<this, string>;
-    _visualization: Visualization;
-    visualization(): Visualization;
-    visualization(_: Visualization): this;
-    visualization(_?: Visualization): Visualization | this {
-        if (!arguments.length) return this._visualization;
-        this._visualization = _;
-        this._visualization
-            .on("click", (_row: object | object[], col: string, sel: boolean, more?) => {
-                if (more && more.selection) {
-                    this.selection(sel ? more.selection.map(r => r.__lparam || r) : []);
-                } else {
-                    const row: any[] = isArray(_row) ? _row : [_row];
-                    this.selection(sel ? row.map(r => r.__lparam || r) : []);
-                }
-            })
-            .on("vertex_click", (_row: object | object[], col: string, sel: boolean) => {
-                const row: any[] = isArray(_row) ? _row : [_row];
-                this.selection(sel ? row.map(r => r.__lparam || r) : []);
-            })
-            ;
-        return this;
-    }
+    _origVisualization;
+
+    declare _visualization: Visualization;
+
 
     constructor(private _ec: ElementContainer) {
         super();
@@ -238,13 +218,37 @@ Element.prototype._class += " Viz";
 export interface Element {
     hipiePipeline(): HipiePipeline;
     hipiePipeline(_: HipiePipeline): this;
+    visualization(): Visualization;
+    visualization(_: Visualization): this;
     state(): State;
     state(_: State): this;
 }
 
 Element.prototype.publish("hipiePipeline", null, "widget", "Data View");
-Element.prototype.publish("_visualization", null, "widget", "Visualization");
+Element.prototype.publish("visualization", null, "widget", "Visualization");
 Element.prototype.publish("state", null, "widget", "State");
+
+Element.prototype._origVisualization = Element.prototype.visualization;
+Element.prototype.visualization = function (this: Element, _?) {
+    const retVal = Element.prototype._origVisualization.apply(this, arguments);
+    if (_ !== undefined) {
+        this._visualization
+            .on("click", (_row: object | object[], col: string, sel: boolean, more?) => {
+                if (more && more.selection) {
+                    this.selection(sel ? more.selection.map(r => r.__lparam || r) : []);
+                } else {
+                    const row: any[] = isArray(_row) ? _row : [_row];
+                    this.selection(sel ? row.map(r => r.__lparam || r) : []);
+                }
+            })
+            .on("vertex_click", (_row: object | object[], col: string, sel: boolean) => {
+                const row: any[] = isArray(_row) ? _row : [_row];
+                this.selection(sel ? row.map(r => r.__lparam || r) : []);
+            })
+            ;
+    }
+    return retVal;
+};
 
 
 export interface IPersist {

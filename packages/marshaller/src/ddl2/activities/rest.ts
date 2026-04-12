@@ -141,15 +141,10 @@ RestService.prototype._class += " RestService";
 
 export class RestResult extends Datasource {
 
-    _service: RestService;
-    service(): RestService;
-    service(_: RestService): this;
-    service(_?: RestService): this | RestService {
-        if (!arguments.length) return this._service;
-        this._service = _;
-        this._service.refreshMeta();
-        return this;
-    }
+    _origService;
+
+    declare _service: RestService;
+
 
     constructor(private _ec: ElementContainer) {
         super();
@@ -375,15 +370,6 @@ export class RestResultRef extends DatasourceRef {
         return this.datasource().resultName();
     }
 
-    _request: Param[];
-    request(): Param[];
-    request(_: Param[]): this;
-    request(_?: Param[]): Param[] | this {
-        if (!arguments.length) return this._request;
-        this._request = _;
-        return this;
-    }
-
     validate(): IActivityError[] {
         let retVal: IActivityError[] = [];
         for (const filter of this.validParams()) {
@@ -544,12 +530,23 @@ RestService.prototype.publish("mode", "get", "set", "Request mode", ["get", "pos
 RestService.prototype.publish("requestFields", [], "propertyArray", "Multi Fields", null, { autoExpand: RestField });
 
 export interface RestResult {
+    service(): RestService;
+    service(_: RestService): this;
     resultName(): string;
     resultName(_: string): this;
 }
 
-RestResult.prototype.publish("_service", null, "widget", "Rest service");
+RestResult.prototype.publish("service", null, "widget", "Rest service");
 RestResult.prototype.publish("resultName", "", "string", "Result Name");
+
+RestResult.prototype._origService = RestResult.prototype.service;
+RestResult.prototype.service = function (this: RestResult, _?) {
+    const retVal = RestResult.prototype._origService.apply(this, arguments);
+    if (_ !== undefined) {
+        this._service.refreshMeta();
+    }
+    return retVal;
+};
 
 export interface Param {
     localField(): string;
@@ -594,4 +591,4 @@ export interface RestResultRef {
     request(_: Param[]): this;
 }
 
-RestResultRef.prototype.publish("_request", [], "propertyArray", "Request Fields");
+RestResultRef.prototype.publish("request", [], "propertyArray", "Request Fields");

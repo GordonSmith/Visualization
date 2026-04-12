@@ -187,15 +187,10 @@ RoxieService.prototype.publish("ignoreHipieResponse", false, "boolean", "Ignore 
 
 export class RoxieResult extends Datasource {
 
-    _service: RoxieService;
-    service(): RoxieService;
-    service(_: RoxieService): this;
-    service(_?: RoxieService): this | RoxieService {
-        if (!arguments.length) return this._service;
-        this._service = _;
-        this._service.refreshMeta();
-        return this;
-    }
+    _origService;
+
+    declare _service: RoxieService;
+
 
     constructor(private _ec: ElementContainer) {
         super();
@@ -266,14 +261,25 @@ export class RoxieResult extends Datasource {
 RoxieResult.prototype._class += " RoxieResult";
 
 export interface RoxieResult {
+    service(): RoxieService;
+    service(_: RoxieService): this;
     resultName(): string;
     resultName(_: string): this;
 }
 
-RoxieResult.prototype.publish("_service", null, "widget", "Roxie service");
+RoxieResult.prototype.publish("service", null, "widget", "Roxie service");
 RoxieResult.prototype.publish("resultName", "", "set", "Result Name", function (this: RoxieResult): string[] {
     return this._service !== undefined ? this._service.resultNames() : [];
 });
+
+RoxieResult.prototype._origService = RoxieResult.prototype.service;
+RoxieResult.prototype.service = function (this: RoxieResult, _?) {
+    const retVal = RoxieResult.prototype._origService.apply(this, arguments);
+    if (_ !== undefined) {
+        this._service.refreshMeta();
+    }
+    return retVal;
+};
 
 export class RoxieResultRef extends DatasourceRef {
 
@@ -303,15 +309,6 @@ export class RoxieResultRef extends DatasourceRef {
 
     resultName(): string {
         return this.datasource().resultName();
-    }
-
-    _request: Param[];
-    request(): Param[];
-    request(_: Param[]): this;
-    request(_?: Param[]): Param[] | this {
-        if (!arguments.length) return this._request;
-        this._request = _;
-        return this;
     }
 
     validate(): IActivityError[] {
@@ -478,7 +475,12 @@ export class RoxieResultRef extends DatasourceRef {
 }
 RoxieResultRef.prototype._class += " RoxieResultRef";
 
-RoxieResultRef.prototype.publish("_request", [], "propertyArray", "Request Fields");
+export interface RoxieResultRef {
+    request(): Param[];
+    request(_: Param[]): this;
+}
+
+RoxieResultRef.prototype.publish("request", [], "propertyArray", "Request Fields");
 
 export class HipieResultRef extends RoxieResultRef {
 
