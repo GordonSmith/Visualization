@@ -371,7 +371,7 @@ function keysOf<K extends string>(record: Record<K, true>): K[] {
 
 // Keys inherited from base graph types — not DOT attributes
 type BaseKeys = "id" | "parentID";
-type NodeCustomKeys = "svgContent" | "svgWidth" | "svgHeight";
+type NodeCustomKeys = "svgContent" | "htmlContent" | "svgWidth" | "svgHeight";
 type EdgeBaseKeys = BaseKeys | "sourceID" | "targetID";
 
 // Write-only attributes are set by layout engines, not user input

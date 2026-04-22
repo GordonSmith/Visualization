@@ -1,4 +1,4 @@
-import { d3Event, SVGZoomWidget } from "@hpcc-js/common";
+import { Button, d3Event, SVGZoomWidget } from "@hpcc-js/common";
 import { Store } from "./Store.ts";
 import type { Node, Edge, Cluster, Graph, CustomVertex } from "./types.ts";
 import { DotWriter } from "./DotWriter.ts";
@@ -6,31 +6,32 @@ import { layoutCache, isGraphvizWorkerResponse } from "./layout.ts";
 
 import "./Widget.css";
 
-class Rect {
-
-    left: number;
-    top: number;
-    right: number;
-    bottom: number;
-
-    toStruct() {
-        return { x: this.left, y: this.top, width: this.right - this.left, height: this.bottom - this.top };
+function elementBBox(element: SVGGraphicsElement, renderElement: SVGGraphicsElement) {
+    const bbox = element.getBBox();
+    const elementCTM = element.getCTM();
+    const renderCTM = renderElement.getCTM();
+    if (!elementCTM || !renderCTM) return bbox;
+    const matrix = renderCTM.inverse().multiply(elementCTM);
+    const svg = renderElement.ownerSVGElement ?? renderElement.closest("svg") as unknown as SVGSVGElement;
+    if (!svg) return bbox;
+    const corners = [
+        [bbox.x, bbox.y],
+        [bbox.x + bbox.width, bbox.y],
+        [bbox.x, bbox.y + bbox.height],
+        [bbox.x + bbox.width, bbox.y + bbox.height],
+    ];
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const [cx, cy] of corners) {
+        const pt = svg.createSVGPoint();
+        pt.x = cx;
+        pt.y = cy;
+        const t = pt.matrixTransform(matrix);
+        if (t.x < minX) minX = t.x;
+        if (t.y < minY) minY = t.y;
+        if (t.x > maxX) maxX = t.x;
+        if (t.y > maxY) maxY = t.y;
     }
-
-    extend(rect: SVGRect) {
-        if (this.left === undefined || this.left > rect.x) {
-            this.left = rect.x;
-        }
-        if (this.top === undefined || this.top > rect.y + rect.height) {
-            this.top = rect.y + rect.height;
-        }
-        if (this.right === undefined || this.right < rect.x + rect.width) {
-            this.right = rect.x + rect.width;
-        }
-        if (this.bottom === undefined || this.bottom < rect.y) {
-            this.bottom = rect.y;
-        }
-    }
+    return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
 }
 
 export interface Data {
@@ -44,14 +45,21 @@ export class Widget extends SVGZoomWidget {
 
     protected _data: Store = new Store();
     protected _selection: { [id: string]: boolean } = {};
+    private _zoomToSelectionButton = new Button().faChar("fa-arrows-alt").tooltip("Zoom to Fit").on("click", () => this.zoomToSelection());
+    private _zoomToSelectionWidthButton = new Button().faChar("fa-arrows-h").tooltip("Zoom to Fit Width").on("click", () => this.zoomToSelectionWidth());
+    private _recenterSelectionButton = new Button().faChar("fa-crosshairs").tooltip("Recenter").on("click", () => this.centerOnSelection());
 
     constructor() {
         super();
         this._drawStartPos = "origin";
-        this.showToolbar(false);
+        this.showToolbar(true);
 
         this._iconBar
-            .buttons([])
+            .buttons([
+                this._zoomToSelectionButton,
+                this._zoomToSelectionWidthButton,
+                this._recenterSelectionButton,
+            ])
             ;
     }
 
@@ -144,31 +152,34 @@ export class Widget extends SVGZoomWidget {
     }
 
     itemBBox(scopeID: string) {
-        const rect = new Rect();
         const elem = this._renderElement.select(`#${scopeID}`);
         const node = elem.node() as SVGGraphicsElement;
         if (node) {
-            rect.extend(node.getBBox());
+            return elementBBox(node, this._renderElement.node() as SVGGraphicsElement);
         }
-
-        const bbox = rect.toStruct();
-        const renderBBox = this._renderElement.node().getBBox();
-        bbox.y += renderBBox.height;
-        return bbox;
+        return { x: 0, y: 0, width: 0, height: 0 };
     }
 
     selectionBBox() {
-        const rect = new Rect();
-        this.selection().filter(sel => !!sel).forEach(sel => {
+        const selection = this.selection().filter(sel => !!sel);
+        if (!selection.length) {
+            return this.getRenderElementBBox();
+        }
+        const renderNode = this._renderElement.node() as SVGGraphicsElement;
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        selection.forEach(sel => {
             const elem = this._renderElement.select(`#${sel}`);
-            if (elem?.node()) {
-                rect.extend((elem.node() as SVGGraphicsElement).getBBox());
+            const node = elem.node() as SVGGraphicsElement;
+            if (node) {
+                const b = elementBBox(node, renderNode);
+                if (b.x < minX) minX = b.x;
+                if (b.y < minY) minY = b.y;
+                if (b.x + b.width > maxX) maxX = b.x + b.width;
+                if (b.y + b.height > maxY) maxY = b.y + b.height;
             }
         });
-        const bbox = rect.toStruct();
-        const renderBBox = this._renderElement.node().getBBox();
-        bbox.y += renderBBox.height;
-        return bbox;
+        if (!isFinite(minX)) return this.getRenderElementBBox();
+        return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
     }
 
     _selectionChanged(broadcast = false) {
@@ -178,6 +189,7 @@ export class Widget extends SVGZoomWidget {
                 return !!context._selection[this.id];
             })
             ;
+
         if (broadcast) {
             this.selectionChanged();
         }
@@ -210,6 +222,12 @@ export class Widget extends SVGZoomWidget {
         return this;
     }
 
+    zoomToSelectionWidth(transitionDuration?: number) {
+        const bbox = this.selectionBBox();
+        this.zoomToBBox({ x: bbox.x, y: bbox.y + bbox.height / 2, width: bbox.width, height: 1 }, transitionDuration);
+        return this;
+    }
+
     enter(domNode, element) {
         super.enter(domNode, element);
         const context = this;
@@ -235,6 +253,21 @@ export class Widget extends SVGZoomWidget {
                             context.clearSelection();
                         }
                         context.toggleSelection(target.id, true);
+                        return;
+                    }
+                    target = target.parentElement as unknown as SVGElement;
+                }
+                // Clicked on empty background — clear selection
+                context.clearSelection(true);
+            })
+            .on("dblclick", function () {
+                const event = d3Event();
+                event.stopPropagation();
+                event.preventDefault();
+                let target = event.target as SVGElement;
+                while (target && target !== event.currentTarget) {
+                    if (target.classList.contains("node") || target.classList.contains("edge") || target.classList.contains("cluster")) {
+                        context.zoomToItem(target.id);
                         return;
                     }
                     target = target.parentElement as unknown as SVGElement;

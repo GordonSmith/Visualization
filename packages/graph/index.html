@@ -17,20 +17,13 @@
         }
 
         #placeholder,
-        #placeholder1,
         #placeholder2,
         #placeholder3,
-        #placeholder4,
-        #placeholder5 {
+        #placeholder4 {
             width: 100%;
             height: 500px;
             background-color: #fff;
             margin-top: 20px;
-        }
-
-        .graph_GraphvizWidget.graph_GraphvizWidget {
-            --gv-running-stroke: light-dark(#ff5900, #ffa726);
-            --gv-running-fill: light-dark(#ffdca2, #3a2a1b);
         }
     </style>
     <script type="module">
@@ -40,15 +33,6 @@
 
 <body onresize="doResize()">
     <h1>ESM Quick Test</h1>
-    <div id="placeholder1"></div>
-    <script type="module">
-        import { Test7 as Test } from "./tests/index.ts";
-
-        new Test()
-            .target("placeholder1")
-            .render()
-            ;
-    </script>
     <div id="placeholder2"></div>
     <script type="module">
         import { Test6 as Test } from "./tests/index.ts";
@@ -76,15 +60,6 @@
 
         new Test()
             .target("placeholder4")
-            .render()
-            ;
-    </script>
-    <div id="placeholder5"></div>
-    <script type="module">
-        import { Test8 as Test } from "./tests/index.ts";
-
-        new Test()
-            .target("placeholder5")
             .render()
             ;
     </script>
