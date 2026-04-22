@@ -98,12 +98,17 @@
     paint-order: stroke fill;
 }
 
-/* Keep edge strokes readable at any zoom level */
-.graph_GraphvizWidget .edge>path,
-.graph_GraphvizWidget .edge>polygon,
-.graph_GraphvizWidget .edge>ellipse,
-.graph_GraphvizWidget .edge>polyline {
+/* Keep node and cluster outlines visible when zoomed out */
+.graph_GraphvizWidget .node>path,
+.graph_GraphvizWidget .node>polygon,
+.graph_GraphvizWidget .node>ellipse,
+.graph_GraphvizWidget .node>polyline,
+.graph_GraphvizWidget .cluster>path,
+.graph_GraphvizWidget .cluster>polygon,
+.graph_GraphvizWidget .cluster>ellipse,
+.graph_GraphvizWidget .cluster>polyline {
     vector-effect: non-scaling-stroke;
+    stroke-width: 0.75px;
 }
 
 .graph_GraphvizWidget .node.selected:not(:has(path, polygon, ellipse, polyline))>text {
