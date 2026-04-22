@@ -20,7 +20,8 @@
         #placeholder1,
         #placeholder2,
         #placeholder3,
-        #placeholder4 {
+        #placeholder4,
+        #placeholder5 {
             width: 100%;
             height: 500px;
             background-color: #fff;
@@ -75,6 +76,15 @@
 
         new Test()
             .target("placeholder4")
+            .render()
+            ;
+    </script>
+    <div id="placeholder5"></div>
+    <script type="module">
+        import { Test8 as Test } from "./tests/index.ts";
+
+        new Test()
+            .target("placeholder5")
             .render()
             ;
     </script>

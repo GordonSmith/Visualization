@@ -71,40 +71,29 @@ const shapeRowEdges = shapeRowSubgraphs.slice(0, -1).map((_, i): Graphviz.Edge =
 }));
 
 // --- Subgraph 3: Custom SVG content vertices ---
-// const customVertices: Graphviz.Node[] = [
-//     {
-//         id: "c1", label: "Custom 1", parentID: "sgCustom",
-//         svgTpl: `<g>
-//             <circle cx="18" cy="13" r="9" fill="white" fill-opacity="0.25"/>
-//             <path d="M14,11 L18,7 L22,11 M18,7 L18,18 M13,18 L23,18" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-//             <text x="34" y="17" font-family="arial" font-size="11" font-weight="bold" fill="white">%label%</text>
-//             <text x="14" y="42" font-family="arial" font-size="10" fill="var(--gv-fg)">ID: %id%</text>
-//             <text x="14" y="58" font-family="arial" font-size="9" fill="#888">Ready</text>
-//             <circle cx="164" cy="56" r="6" fill="#0e7a0d"/>
-//             <path d="M161,56 L163,58 L167,54" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-//         </g>`
-//     },
-//     {
-//         id: "c2", label: "Custom 3", parentID: "sgCustom", stroke: "white",
-//         svgTpl: `<g>
-//             <rect x="0" y="0" width="640" height="480" rx="8" fill="#f9dede" stroke="transparent" stroke-width="2"/>
-//             <text x="60" y="20" text-anchor="middle" font-family="arial" font-size="11" fill="#242424">%label%</text>
-//             <text x="60" y="38" text-anchor="middle" font-family="arial" font-size="10" fill="#666">ID: %id%</text>
-//         </g>`
-//     },
-//     {
-//         id: "c3", label: "Custom 2", parentID: "sgCustom", shape: "circle",
-//         svgTpl: `<g>
-//             <circle cx="20" cy="20" r="18" fill="#4cc2ff" stroke="var(--gv-fg)" stroke-width="2"/>
-//             <text x="20" y="25" text-anchor="middle" font-family="arial" font-size="12" fill="white">%id%</text>
-//         </g>`
-//     },
-
-// ];
-// const customEdges: Graphviz.Edge[] = [
-//     { id: "ec1", sourceID: "c1", targetID: "c2" },
-//     { id: "ec2", sourceID: "c2", targetID: "c3" },
-// ];
+const customVertices: Graphviz.Node[] = [
+    {
+        id: "c1", label: "Custom Rect", parentID: "sgCustom",
+        svgWidth: 180, svgHeight: 60,
+        svgContent: `<g>
+            <rect x="0" y="0" width="180" height="60" rx="8" fill="#f9dede" stroke="#c00" stroke-width="2"/>
+            <text x="90" y="25" text-anchor="middle" font-family="arial" font-size="12" font-weight="bold" fill="#242424">Custom Rect</text>
+            <text x="90" y="45" text-anchor="middle" font-family="arial" font-size="10" fill="#666">ID: c1</text>
+        </g>`
+    },
+    {
+        id: "c2", label: "Custom Circle", parentID: "sgCustom", shape: "circle",
+        svgWidth: 80, svgHeight: 80,
+        svgContent: `<g>
+            <circle cx="40" cy="40" r="38" fill="#4cc2ff" stroke="var(--gv-fg)" stroke-width="2"/>
+            <text x="40" y="36" text-anchor="middle" font-family="arial" font-size="11" font-weight="bold" fill="white">Custom</text>
+            <text x="40" y="52" text-anchor="middle" font-family="arial" font-size="11" fill="white">Circle</text>
+        </g>`
+    },
+];
+const customEdges: Graphviz.Edge[] = [
+    { id: "ec1", sourceID: "c1", targetID: "c2" },
+];
 
 // Invisible edge to rank sgArrows above sgShapes
 const clusterOrderEdge: Graphviz.Edge = {
@@ -474,8 +463,8 @@ const examplesSubgraphs: Graphviz.Cluster[] = [
     { id: "sgExProj", label: "Project Dependencies", parentID: "sgExamples" },
 ];
 
-const VERTEX_ARR: Graphviz.Node[] = [...arrowVertices, ...shapeVertices, ...examplesVertices];
-const EDGE_ARR: Graphviz.Edge[] = [...arrowEdges, ...shapeRowEdges, clusterOrderEdge, ...examplesEdges];
+const VERTEX_ARR: Graphviz.Node[] = [...arrowVertices, ...shapeVertices, ...customVertices, ...examplesVertices];
+const EDGE_ARR: Graphviz.Edge[] = [...arrowEdges, ...shapeRowEdges, clusterOrderEdge, ...customEdges, ...examplesEdges];
 
 const SUBGRAPH_ARR: Graphviz.Cluster[] = [
     { id: "sgArrows", label: "Arrow Types" },

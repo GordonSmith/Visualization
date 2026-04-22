@@ -1,6 +1,6 @@
 import { d3Event, SVGZoomWidget } from "@hpcc-js/common";
 import { Store } from "./Store.ts";
-import type { Node, Edge, Cluster, Graph } from "./types.ts";
+import type { Node, Edge, Cluster, Graph, CustomVertex } from "./types.ts";
 import { DotWriter } from "./DotWriter.ts";
 import { layoutCache, isGraphvizWorkerResponse } from "./layout.ts";
 
@@ -254,16 +254,38 @@ export class Widget extends SVGZoomWidget {
         );
     }
 
+    protected postrenderCustomVertices(customVertices: CustomVertex[]) {
+        for (const v of customVertices) {
+            const nodeGroup = this._renderElement.select(`#${v.id}`);
+            if (nodeGroup.empty()) continue;
+
+            const bbox = (nodeGroup.node() as SVGGraphicsElement).getBBox();
+            const cx = bbox.x + bbox.width / 2;
+            const cy = bbox.y + bbox.height / 2;
+
+            const g = nodeGroup.append("g")
+                .attr("class", "svgContent")
+                ;
+            g.html(v.svg);
+
+            const contentBBox = (g.node() as SVGGraphicsElement).getBBox();
+            const dx = cx - (contentBBox.x + contentBBox.width / 2);
+            const dy = cy - (contentBBox.y + contentBBox.height / 2);
+            g.attr("transform", `translate(${dx},${dy})`);
+        }
+    }
+
     render(callback?: (w: Widget) => void) {
 
         return super.render(async w => {
             const dotWriter = new DotWriter(this._data);
-            const dot = dotWriter.writeGraph();
+            const { dot, customVertices } = dotWriter.writeGraph();
             if (this._prevDOT !== dot) {
                 this._prevDOT = dot;
                 const layout = await layoutCache.calcSVG(dot);
                 if (isGraphvizWorkerResponse(layout)) {
                     this.renderSVG(layout.svg);
+                    this.postrenderCustomVertices(customVertices);
                     this.zoomToFit(0);
                 } else {
                     console.warn(`Graphviz layout failed: ${layout.error}, ${layout.errorDot}`);

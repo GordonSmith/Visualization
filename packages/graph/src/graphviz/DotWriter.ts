@@ -1,5 +1,5 @@
 import type { Store } from "./Store.ts";
-import { type Edge, type Cluster, type Node, CLUSTER_DOT_ATTRS, EDGE_DOT_ATTRS, GRAPH_DOT_ATTRS, NODE_DOT_ATTRS } from "./types.ts";
+import { type DotResult, type CustomVertex, type Edge, type Cluster, type Node, CLUSTER_DOT_ATTRS, EDGE_DOT_ATTRS, GRAPH_DOT_ATTRS, NODE_DOT_ATTRS } from "./types.ts";
 
 function formatDotValue(name: string, value: unknown): string {
     if (typeof value === "boolean") return `${value}`;
@@ -33,6 +33,7 @@ export class DotWriter {
     protected _dedupVertices: { [id: string]: boolean } = {};
     protected _dedupEdges: { [scopeName: string]: boolean } = {};
     protected _dedupSubgraphs: { [scopeName: string]: boolean } = {};
+    protected _customVertices: CustomVertex[] = [];
 
     constructor(graph: Store) {
         this._graph = graph;
@@ -43,6 +44,16 @@ export class DotWriter {
         const vId = g.id(v);
         if (this._dedupVertices[vId] === true) return "";
         this._dedupVertices[vId] = true;
+
+        if (v.svgContent && v.svgWidth && v.svgHeight) {
+            this._customVertices.push({ id: vId, svg: v.svgContent });
+            const w = v.svgWidth / 72;
+            const h = v.svgHeight / 72;
+            const shape = v.shape ?? "rectangle";
+            const colorAttr = v.color ? ` color="${v.color}"` : "";
+            const fillcolorAttr = v.fillcolor ? ` fillcolor="${v.fillcolor}"` : "";
+            return `"${vId}" [id="${vId}" label="" shape="${shape}" fixedsize=true width=${w} height=${h}${colorAttr}${fillcolorAttr}]`;
+        }
 
         const nodeAttrs = collectAttrs(v as unknown as Record<string, unknown>, NODE_DOT_ATTRS);
         const allAttrs = [`id="${vId}"`, ...nodeAttrs];
@@ -96,10 +107,11 @@ subgraph ${subgraphName} {${attrLines}
 }`;
     }
 
-    writeGraph(selection: string[] = []): string {
+    writeGraph(selection: string[] = []): DotResult {
         this._dedupSubgraphs = {};
         this._dedupVertices = {};
         this._dedupEdges = {};
+        this._customVertices = [];
         const g = this._graph;
         const children: string[] = [];
 
@@ -115,6 +127,7 @@ subgraph ${subgraphName} {${attrLines}
             for (const edge of view.edges()) {
                 children.push(viewWriter.writeEdge(edge));
             }
+            this._customVertices.push(...viewWriter._customVertices);
         } else {
             for (const sg of g.subgraphs()) {
                 children.push(this.writeSubgraph(sg));
@@ -156,11 +169,15 @@ subgraph ${subgraphName} {${attrLines}
 
         const strictPrefix = graph.strict ? "strict " : "";
 
-        return `\
+        const dot = `\
 ${strictPrefix}${graph.type ?? "digraph"} G {
 ${graphDefaultLine}${nodeDefaultLine}${edgeDefaultLine}
     ${children.join("\n")}
 ${graphAttrLines}
 }`;
+        return {
+            dot,
+            customVertices: this._customVertices
+        };
     }
 }

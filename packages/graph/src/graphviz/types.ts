@@ -69,6 +69,11 @@ export interface Node {
     parentID?: string;
     id: string;
 
+    // Custom SVG content (not DOT attributes)
+    svgContent?: string;
+    svgWidth?: number;
+    svgHeight?: number;
+
     // Graphviz node attributes
     area?: number;
     class?: string;
@@ -365,6 +370,7 @@ function keysOf<K extends string>(record: Record<K, true>): K[] {
 
 // Keys inherited from base graph types — not DOT attributes
 type BaseKeys = "id" | "parentID";
+type NodeCustomKeys = "svgContent" | "svgWidth" | "svgHeight";
 type EdgeBaseKeys = BaseKeys | "sourceID" | "targetID";
 
 // Write-only attributes are set by layout engines, not user input
@@ -376,7 +382,7 @@ type GraphExcluded = "type" | "strict" | "nodeDefaults" | "edgeDefaults" | "grap
 // DOT attribute key types — derived from interfaces minus excluded keys.
 // If a new property is added to an interface, the corresponding record below
 // will fail to compile until the key is added (or explicitly excluded).
-export type NodeDotAttr = Exclude<keyof Node, BaseKeys | NodeWriteOnly>;
+export type NodeDotAttr = Exclude<keyof Node, BaseKeys | NodeCustomKeys | NodeWriteOnly>;
 export type EdgeDotAttr = Exclude<keyof Edge, EdgeBaseKeys | EdgeWriteOnly>;
 export type ClusterDotAttr = Exclude<keyof Cluster, BaseKeys | ClusterWriteOnly>;
 export type GraphDotAttr = Exclude<keyof Graph, GraphExcluded>;
@@ -629,4 +635,16 @@ export const GRAPH_DOT_ATTRS: GraphDotAttr[] = keysOf<GraphDotAttr>({
     voro_margin: true,
     xdotversion: true,
 });
+
+// --- Custom vertex support ---
+
+export interface CustomVertex {
+    id: string;
+    svg: string;
+}
+
+export interface DotResult {
+    dot: string;
+    customVertices: CustomVertex[];
+}
 
