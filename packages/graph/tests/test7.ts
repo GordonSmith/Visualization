@@ -74,25 +74,80 @@ const shapeRowEdges = shapeRowSubgraphs.slice(0, -1).map((_, i): Graphviz.Edge =
 const customVertices: Graphviz.Node[] = [
     {
         id: "c1", label: "Custom Rect", parentID: "sgCustom",
-        svgWidth: 180, svgHeight: 60,
+        svgWidth: 180, svgHeight: 80,
         svgContent: `<g>
-            <rect x="0" y="0" width="180" height="60" rx="8" fill="#f9dede" stroke="#c00" stroke-width="2"/>
-            <text x="90" y="25" text-anchor="middle" font-family="arial" font-size="12" font-weight="bold" fill="#242424">Custom Rect</text>
-            <text x="90" y="45" text-anchor="middle" font-family="arial" font-size="10" fill="#666">ID: c1</text>
+            <rect x="0" y="0" width="180" height="80" rx="8" fill="#f9dede" stroke="#c00" stroke-width="2"/>
+            <text x="90" y="22" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#242424">Custom Rect</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">ID: c1</text>
+            <rect x="10" y="52" width="72" height="20" rx="4" fill="#2e7d32" stroke="#1b5e20" stroke-width="1" data-action="approve" style="cursor:pointer"/>
+            <text x="46" y="66" text-anchor="middle" font-family="Arial" font-size="10" fill="white" pointer-events="none">Approve</text>
+            <rect x="98" y="52" width="72" height="20" rx="4" fill="#c62828" stroke="#7f0000" stroke-width="1" data-action="reject" style="cursor:pointer"/>
+            <text x="134" y="66" text-anchor="middle" font-family="Arial" font-size="10" fill="white" pointer-events="none">Reject</text>
         </g>`
     },
     {
-        id: "c2", label: "Custom Circle", parentID: "sgCustom", shape: "circle",
+        id: "c2", label: "Custom Circle", parentID: "sgCustom",
         svgWidth: 80, svgHeight: 80,
         svgContent: `<g>
-            <circle cx="40" cy="40" r="38" fill="#4cc2ff" stroke="var(--gv-fg)" stroke-width="2"/>
-            <text x="40" y="36" text-anchor="middle" font-family="arial" font-size="11" font-weight="bold" fill="white">Custom</text>
-            <text x="40" y="52" text-anchor="middle" font-family="arial" font-size="11" fill="white">Circle</text>
+            <circle cx="40" cy="32" r="28" fill="#4cc2ff" stroke="var(--gv-fg)" stroke-width="2"/>
+            <text x="40" y="28" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold" fill="white">Custom</text>
+            <text x="40" y="42" text-anchor="middle" font-family="Arial" font-size="11" fill="white">Circle</text>
+            <rect x="15" y="62" width="50" height="16" rx="4" fill="#0277bd" stroke="#01579b" stroke-width="1" data-action="info" style="cursor:pointer"/>
+            <text x="40" y="74" text-anchor="middle" font-family="Arial" font-size="9" fill="white" pointer-events="none">Info</text>
         </g>`
+    },
+    {
+        id: "c3", label: "Pipeline Stage", parentID: "sgCustom",
+        svgWidth: 200, svgHeight: 90,
+        svgContent: `<g>
+            <rect x="0" y="0" width="200" height="90" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+            <text x="100" y="20" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#1b5e20">Pipeline Stage</text>
+            <text x="100" y="36" text-anchor="middle" font-family="Arial" font-size="10" fill="#555">Status: Idle</text>
+            <rect x="8" y="54" width="55" height="20" rx="4" fill="#1565c0" stroke="#0d47a1" stroke-width="1" data-action="run" style="cursor:pointer"/>
+            <text x="35" y="68" text-anchor="middle" font-family="Arial" font-size="10" fill="white" pointer-events="none">Run</text>
+            <rect x="73" y="54" width="54" height="20" rx="4" fill="#f57f17" stroke="#e65100" stroke-width="1" data-action="skip" style="cursor:pointer"/>
+            <text x="100" y="68" text-anchor="middle" font-family="Arial" font-size="10" fill="white" pointer-events="none">Skip</text>
+            <rect x="137" y="54" width="55" height="20" rx="4" fill="#6a1b9a" stroke="#4a148c" stroke-width="1" data-action="reset" style="cursor:pointer"/>
+            <text x="164" y="68" text-anchor="middle" font-family="Arial" font-size="10" fill="white" pointer-events="none">Reset</text>
+        </g>`
+    },
+];
+// --- Subgraph 3b: Custom HTML content vertices (foreignObject) ---
+const htmlVertices: Graphviz.Node[] = [
+    {
+        id: "h1", label: "HTML Card", parentID: "sgHtmlContent",
+        svgWidth: 200, svgHeight: 100,
+        htmlContent: `\
+<div style="box-sizing:border-box;width:200px;height:100px;padding:8px;font-family:Arial,sans-serif;background:#fff8e1;border:2px solid #f9a825;border-radius:8px;">
+  <div style="font-weight:bold;font-size:13px;color:#e65100;margin-bottom:4px;">HTML Card</div>
+  <div style="font-size:11px;color:#555;margin-bottom:8px;">Rich content via &lt;foreignObject&gt;</div>
+  <div style="display:flex;gap:6px;">
+    <button data-action="edit" style="flex:1;padding:3px 0;font-size:11px;background:#1565c0;color:#fff;border:none;border-radius:4px;cursor:pointer;">Edit</button>
+    <button data-action="delete" style="flex:1;padding:3px 0;font-size:11px;background:#c62828;color:#fff;border:none;border-radius:4px;cursor:pointer;">Delete</button>
+  </div>
+</div>`
+    },
+    {
+        id: "h2", label: "HTML Progress", parentID: "sgHtmlContent",
+        svgWidth: 200, svgHeight: 90,
+        htmlContent: `\
+<div style="box-sizing:border-box;width:200px;height:90px;padding:8px;font-family:Arial,sans-serif;background:#e8f5e9;border:2px solid #388e3c;border-radius:8px;">
+  <div style="font-weight:bold;font-size:12px;color:#1b5e20;margin-bottom:6px;">Build Progress</div>
+  <div style="font-size:10px;color:#555;margin-bottom:4px;">Compiling… 68%</div>
+  <div style="background:#c8e6c9;border-radius:4px;height:10px;overflow:hidden;">
+    <div style="width:68%;height:100%;background:#2e7d32;"></div>
+  </div>
+  <div style="margin-top:8px;display:flex;gap:6px;">
+    <button data-action="cancel" style="flex:1;padding:3px 0;font-size:11px;background:#b71c1c;color:#fff;border:none;border-radius:4px;cursor:pointer;">Cancel</button>
+    <button data-action="details" style="flex:1;padding:3px 0;font-size:11px;background:#0277bd;color:#fff;border:none;border-radius:4px;cursor:pointer;">Details</button>
+  </div>
+</div>`
     },
 ];
 const customEdges: Graphviz.Edge[] = [
     { id: "ec1", sourceID: "c1", targetID: "c2" },
+    { id: "ec2", sourceID: "c2", targetID: "c3" },
+    { id: "ec3", sourceID: "h1", targetID: "h2" },
 ];
 
 // Invisible edge to rank sgArrows above sgShapes
@@ -401,6 +456,43 @@ const exProjEdges: Graphviz.Edge[] = [
     { id: "exProj_e5", sourceID: "exProj_cook", targetID: "exProj_eat" },
 ];
 
+// --- Subgraph 4: Hyperlinks & Tooltips ---
+const hyperlinkVertices: Graphviz.Node[] = [
+    {
+        id: "hl_url_blank", label: "GitHub\n(URL, target=_blank)", shape: "box", parentID: "sgHyperlinks",
+        URL: "https://github.com", target: "_blank",
+        tooltip: "Opens GitHub in a new tab",
+        fillcolor: "#ddeeff", style: "filled"
+    },
+    {
+        id: "hl_href_blank", label: "Graphviz Docs\n(href, target=_blank)", shape: "ellipse", parentID: "sgHyperlinks",
+        href: "https://graphviz.org", target: "_blank",
+        tooltip: "Graphviz documentation — opens in a new tab",
+        fillcolor: "#ddffdd", style: "filled"
+    },
+    {
+        id: "hl_url_same", label: "Node Attrs Docs\n(URL, no target)", shape: "diamond", parentID: "sgHyperlinks",
+        URL: "https://graphviz.org/doc/info/attrs.html",
+        tooltip: "Opens in the same tab (default)",
+        fillcolor: "#fff0dd", style: "filled"
+    },
+    {
+        id: "hl_tooltip_only", label: "Hover me\n(tooltip only)", shape: "box", parentID: "sgHyperlinks",
+        tooltip: "This node has a tooltip but no hyperlink",
+        fillcolor: "#f0f0f0", style: "filled"
+    },
+];
+const hyperlinkEdges: Graphviz.Edge[] = [
+    {
+        id: "hl_e1", sourceID: "hl_url_blank", targetID: "hl_href_blank",
+        label: "edge URL",
+        edgeURL: "https://graphviz.org/doc/info/attrs.html#k:edgeURL", target: "_blank",
+        edgetooltip: "This edge also has a URL"
+    },
+    { id: "hl_e2", sourceID: "hl_href_blank", targetID: "hl_url_same" },
+    { id: "hl_e3", sourceID: "hl_url_same", targetID: "hl_tooltip_only" },
+];
+
 // --- Combine all example data ---
 const examplesVertices: Graphviz.Node[] = [
     ...exDottedVertices,
@@ -463,13 +555,15 @@ const examplesSubgraphs: Graphviz.Cluster[] = [
     { id: "sgExProj", label: "Project Dependencies", parentID: "sgExamples" },
 ];
 
-const VERTEX_ARR: Graphviz.Node[] = [...arrowVertices, ...shapeVertices, ...customVertices, ...examplesVertices];
-const EDGE_ARR: Graphviz.Edge[] = [...arrowEdges, ...shapeRowEdges, clusterOrderEdge, ...customEdges, ...examplesEdges];
+const VERTEX_ARR: Graphviz.Node[] = [...arrowVertices, ...shapeVertices, ...customVertices, ...htmlVertices, ...hyperlinkVertices, ...examplesVertices];
+const EDGE_ARR: Graphviz.Edge[] = [...arrowEdges, ...shapeRowEdges, clusterOrderEdge, ...customEdges, ...hyperlinkEdges, ...examplesEdges];
 
 const SUBGRAPH_ARR: Graphviz.Cluster[] = [
     { id: "sgArrows", label: "Arrow Types" },
     { id: "sgShapes", label: "Vertex Shapes" },
     { id: "sgCustom", label: "Custom SVG Content" },
+    { id: "sgHtmlContent", label: "Custom HTML Content" },
+    { id: "sgHyperlinks", label: "Hyperlinks & Tooltips" },
     ...arrowRowSubgraphs,
     ...shapeRowSubgraphs,
     ...examplesSubgraphs,
@@ -487,7 +581,7 @@ const GRAPH: Graphviz.Graph = {
 
 };
 
-let store = new Graphviz.Store();
+const store = new Graphviz.Store();
 store.load(VERTEX_ARR, EDGE_ARR, SUBGRAPH_ARR, GRAPH);
 
 // store = store.createView(["exRec_B", "s31"]);
@@ -508,5 +602,9 @@ export class Test7 extends Graphviz.Widget {
             this.setClass("failed", ["s0", "s2", "s4", "s6", "s8", "s10", "s12", "s14"]);
             this.setClass("running", ["s16", "s18", "s20", "s22", "s24", "s26", "s28", "s30"]);
         }, 2000);
+    }
+
+    vertexButtonClicked(id: string, action: string) {
+        console.info(`[Test7] Button clicked — node: "${id}", action: "${action}"`);
     }
 }

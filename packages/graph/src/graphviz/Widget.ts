@@ -218,6 +218,18 @@ export class Widget extends SVGZoomWidget {
                 const event = d3Event();
                 let target = event.target as SVGElement;
                 while (target && target !== event.currentTarget) {
+                    const action = (target as Element).getAttribute?.("data-action");
+                    if (action) {
+                        let nodeEl = target.parentElement as unknown as SVGElement;
+                        while (nodeEl && nodeEl !== event.currentTarget) {
+                            if (nodeEl.classList?.contains("node")) {
+                                context.vertexButtonClicked(nodeEl.id, action);
+                                return;
+                            }
+                            nodeEl = nodeEl.parentElement as unknown as SVGElement;
+                        }
+                        return;
+                    }
                     if (target.classList.contains("node") || target.classList.contains("edge") || target.classList.contains("cluster")) {
                         if (!event.ctrlKey) {
                             context.clearSelection();
@@ -263,15 +275,47 @@ export class Widget extends SVGZoomWidget {
             const cx = bbox.x + bbox.width / 2;
             const cy = bbox.y + bbox.height / 2;
 
-            const g = nodeGroup.append("g")
-                .attr("class", "svgContent")
+            // Make the Graphviz-rendered shape invisible so the custom content shows cleanly
+            nodeGroup.select("polygon,ellipse,path")
+                .attr("stroke", "transparent")
+                .attr("fill", "transparent")
                 ;
-            g.html(v.svg);
 
-            const contentBBox = (g.node() as SVGGraphicsElement).getBBox();
-            const dx = cx - (contentBBox.x + contentBBox.width / 2);
-            const dy = cy - (contentBBox.y + contentBBox.height / 2);
-            g.attr("transform", `translate(${dx},${dy})`);
+            if (v.html) {
+                const nodeId = v.id;
+                const fo = nodeGroup.append("foreignObject")
+                    .attr("class", "htmlContent")
+                    .attr("width", bbox.width)
+                    .attr("height", bbox.height)
+                    .attr("x", bbox.x)
+                    .attr("y", bbox.y)
+                    ;
+                const div = fo.append("xhtml:div")
+                    .attr("xmlns", "http://www.w3.org/1999/xhtml")
+                    .style("width", `${bbox.width}px`)
+                    .style("height", `${bbox.height}px`)
+                    .style("overflow", "hidden")
+                    .html(v.html)
+                    ;
+                // Attach direct listeners to action buttons — foreignObject clicks
+                // do not reliably bubble to the SVG event handler across all browsers.
+                (div.node() as HTMLElement).querySelectorAll<HTMLElement>("[data-action]").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        this.vertexButtonClicked(nodeId, btn.dataset.action!);
+                    });
+                });
+            } else if (v.svg) {
+                const g = nodeGroup.append("g")
+                    .attr("class", "svgContent")
+                    ;
+                g.html(v.svg);
+
+                const contentBBox = (g.node() as SVGGraphicsElement).getBBox();
+                const dx = cx - (contentBBox.x + contentBBox.width / 2);
+                const dy = cy - (contentBBox.y + contentBBox.height / 2);
+                g.attr("transform", `translate(${dx},${dy})`);
+            }
         }
     }
 
@@ -299,6 +343,9 @@ export class Widget extends SVGZoomWidget {
 
     //  Events  ---
     selectionChanged() {
+    }
+
+    vertexButtonClicked(id: string, action: string) {
     }
 }
 Widget.prototype._class += " graph_GraphvizWidget";

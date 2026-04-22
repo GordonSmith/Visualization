@@ -45,8 +45,8 @@ export class DotWriter {
         if (this._dedupVertices[vId] === true) return "";
         this._dedupVertices[vId] = true;
 
-        if (v.svgContent && v.svgWidth && v.svgHeight) {
-            this._customVertices.push({ id: vId, svg: v.svgContent });
+        if ((v.svgContent || v.htmlContent) && v.svgWidth && v.svgHeight) {
+            this._customVertices.push({ id: vId, svg: v.svgContent, html: v.htmlContent });
             const w = v.svgWidth / 72;
             const h = v.svgHeight / 72;
             const shape = v.shape ?? "rectangle";

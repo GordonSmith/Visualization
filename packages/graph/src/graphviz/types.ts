@@ -69,8 +69,9 @@ export interface Node {
     parentID?: string;
     id: string;
 
-    // Custom SVG content (not DOT attributes)
+    // Custom SVG/HTML content (not DOT attributes)
     svgContent?: string;
+    htmlContent?: string;
     svgWidth?: number;
     svgHeight?: number;
 
@@ -640,7 +641,8 @@ export const GRAPH_DOT_ATTRS: GraphDotAttr[] = keysOf<GraphDotAttr>({
 
 export interface CustomVertex {
     id: string;
-    svg: string;
+    svg?: string;
+    html?: string;
 }
 
 export interface DotResult {
