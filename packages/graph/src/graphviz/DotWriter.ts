@@ -19,7 +19,7 @@ function collectAttrs(
     for (const name of attrNames) {
         if (skip?.has(name)) continue;
         const value = entity[name];
-        if (value !== undefined && value !== null && value !== "") {
+        if (value !== undefined && value !== null && (value !== "" || name === "label")) {
             attrs.push(`${name}=${formatDotValue(name, value)}`);
         }
     }

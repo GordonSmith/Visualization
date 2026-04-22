@@ -98,6 +98,14 @@
     paint-order: stroke fill;
 }
 
+/* Keep edge strokes readable at any zoom level */
+.graph_GraphvizWidget .edge>path,
+.graph_GraphvizWidget .edge>polygon,
+.graph_GraphvizWidget .edge>ellipse,
+.graph_GraphvizWidget .edge>polyline {
+    vector-effect: non-scaling-stroke;
+}
+
 .graph_GraphvizWidget .node.selected:not(:has(path, polygon, ellipse, polyline))>text {
     stroke: var(--gv-select-fill);
     stroke-width: 8px;

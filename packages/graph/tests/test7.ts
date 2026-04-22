@@ -28,14 +28,14 @@ const arrowRowSubgraphs: Graphviz.Cluster[] = Array.from({ length: numArrowBlock
     { id: `sgArrowsRow${i}t`, parentID: "sgArrows", rank: "same" as const, cluster: false },
 ]).flat();
 const arrowVertices: Graphviz.Node[] = arrowTypes.flatMap((arrow, i): Graphviz.Node[] => [
-    { id: `a${i}s`, label: arrow, shape: "none", parentID: `sgArrowsRow${Math.floor(i / ARROW_COLS)}s` },
+    { id: `a${i}s`, label: "", shape: "none", parentID: `sgArrowsRow${Math.floor(i / ARROW_COLS)}s` },
     { id: `a${i}t`, label: arrow, shape: "none", parentID: `sgArrowsRow${Math.floor(i / ARROW_COLS)}t` },
 ]);
 const arrowEdges: Graphviz.Edge[] = arrowTypes.map((arrow, i): Graphviz.Edge => ({
     id: `ea${i}`,
     sourceID: `a${i}s`,
     targetID: `a${i}t`,
-    label: `${arrow} / ${edgeStyles[i % edgeStyles.length]}`,
+    label: edgeStyles[i % edgeStyles.length],
     style: edgeStyles[i % edgeStyles.length],
     arrowhead: arrow,
     arrowtail: arrow
