@@ -23,7 +23,7 @@ export function isLayoutComplete(status: LayoutStatus) {
     return status === LayoutStatus.COMPLETED || status === LayoutStatus.FAILED;
 }
 
-class LayoutCache {
+export class LayoutCache {
 
     protected _cache: { [key: string]: GraphvizWorkerEx } = {};
 

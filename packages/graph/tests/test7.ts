@@ -598,7 +598,13 @@ export class Test7 extends Graphviz.Widget {
         });
         setTimeout(() => {
             this.setClass("unknown", ["s17", "s19", "s21", "s23", "s25", "s27", "s29", "s31"]);
-            this.setClass("complete", ["s1", "s3", "s5", "s7", "s9", "s11", "s13", "s15"]);
+            this.setClass("complete", [
+                "s1", "s3", "s5", "s7", "s9", "s11", "s13", "s15",
+                // Subgraph (clusters) example — nodes, edges, clusters
+                "exSg_nd_1", "exSg_nd_2", "exSg_nd_3_a", "exSg_nd_3_l", "exSg_nd_3", "exSg_nd_3_r", "exSg_nd_4",
+                "exSg_e1", "exSg_e2", "exSg_e3", "exSg_e4", "exSg_e5", "exSg_e6",
+                "sgExSubgraph", "sgExSgClusterR",
+            ]);
             this.setClass("failed", ["s0", "s2", "s4", "s6", "s8", "s10", "s12", "s14"]);
             this.setClass("running", ["s16", "s18", "s20", "s22", "s24", "s26", "s28", "s30"]);
         }, 2000);

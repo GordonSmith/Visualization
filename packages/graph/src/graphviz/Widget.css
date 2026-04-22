@@ -89,10 +89,6 @@
     stroke: var(--_stroke);
 }
 
-.graph_GraphvizWidget :is(.unknown, .complete, .failed, .running)>:is(path, polygon, ellipse, polyline):first-of-type {
-    fill: var(--_fill);
-}
-
 /* Plain/plaintext/none nodes (text-only, no shape element) */
 .graph_GraphvizWidget .node:not(:has(path, polygon, ellipse, polyline))>text {
     paint-order: stroke fill;
@@ -118,7 +114,7 @@
 }
 
 .graph_GraphvizWidget :is(.unknown, .complete, .failed, .running):not(:has(path, polygon, ellipse, polyline))>text {
-    stroke: var(--_fill);
+    stroke: var(--_stroke);
     stroke-width: 8px;
     stroke-linejoin: round;
 }
