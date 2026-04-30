@@ -3,6 +3,14 @@ import { type DotResult, type CustomVertex, type Edge, type Cluster, type Node, 
 
 const CUSTOM_VERTEX_DPI = 72;
 
+export interface WriteGraphOptions {
+    /** Vertex/subgraph IDs to include explicitly (preserves nesting). */
+    selection?: string[];
+    /** Subgraph IDs to use as roots of a partial view. Hidden edge endpoints
+     *  become "ghost" expand-icons rendered outside the visible subgraphs. */
+    subgraphs?: string[];
+}
+
 function formatDotId(value: string): string {
     return `"${String(value).replace(/"/g, "\\\"").replace(/\r?\n/g, "\\n")}"`;
 }
@@ -135,7 +143,10 @@ subgraph ${subgraphName} {${attrLines}
 }`;
     }
 
-    writeGraph(selection: string[] = []): DotResult {
+    writeGraph(): DotResult;
+    writeGraph(selection: string[]): DotResult;
+    writeGraph(options: WriteGraphOptions): DotResult;
+    writeGraph(arg: string[] | WriteGraphOptions = []): DotResult {
         this._dedupSubgraphs = {};
         this._dedupVertices = {};
         this._dedupEdges = {};
@@ -143,7 +154,16 @@ subgraph ${subgraphName} {${attrLines}
         const g = this._graph;
         const children: string[] = [];
 
-        if (selection?.length) {
+        const options: WriteGraphOptions = Array.isArray(arg) ? { selection: arg } : arg;
+        const selection = options.selection ?? [];
+        const subgraphs = options.subgraphs ?? [];
+
+        if (subgraphs.length) {
+            const view = g.createPartialView(subgraphs);
+            const viewWriter = new DotWriter(view);
+            this.writeRootChildren(view, viewWriter, children);
+            this._customVertices.push(...viewWriter._customVertices);
+        } else if (selection.length) {
             const view = g.createView(selection);
             const viewWriter = new DotWriter(view);
             this.writeRootChildren(view, viewWriter, children);

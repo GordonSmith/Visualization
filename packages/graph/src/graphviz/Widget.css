@@ -140,3 +140,17 @@
     --_stroke: var(--gv-running-stroke);
     --_fill: var(--gv-running-fill);
 }
+
+/* Ghost / "click-to-expand" placeholder vertices for partial views */
+.graph_GraphvizWidget .node.ghost-expand>:is(path, polygon) {
+    fill: light-dark(#fff8e1, #3a2a1b);
+    stroke: light-dark(#f9a825, #ffa726);
+    stroke-dasharray: 4 2;
+    cursor: pointer;
+}
+
+.graph_GraphvizWidget .node.ghost-expand>text {
+    fill: light-dark(#6d4c00, #ffe082);
+    font-style: italic;
+    cursor: pointer;
+}

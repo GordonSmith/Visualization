@@ -156,4 +156,72 @@ export class Store extends HierarchicalGraph<Node, Edge, Cluster> {
         view.graph(this._graph);
         return view as this;
     }
+
+    /**
+     * Build a view limited to a set of "starting" subgraphs (and their full subtree).
+     *
+     * Edge handling:
+     *  - Edges where both endpoints are visible render normally.
+     *  - Edges where one endpoint is visible and the other is hidden cause the
+     *    hidden endpoint to be added as a "ghost" placeholder vertex at the root
+     *    level (outside the visible subgraphs). The ghost retains the original
+     *    vertex's id and label and is tagged with the `ghost-expand` class so it
+     *    can be styled / clicked to expand.
+     *  - Edges with both endpoints hidden are dropped.
+     */
+    createPartialView(subgraphIds: string[]): this {
+        const view = new (Object.getPrototypeOf(this).constructor)() as Store;
+
+        const subgraphMap = new Map<string, Cluster>();
+        for (const sg of this.subgraphs()) {
+            subgraphMap.set(sg.id, sg);
+        }
+
+        for (const id of subgraphIds) {
+            const sg = subgraphMap.get(String(id));
+            if (sg) {
+                this.addSubgraphTree(view, sg);
+            }
+        }
+
+        const ghostMap = new Map<string, Node>();
+        for (const edge of this.edges()) {
+            const source = this.source(edge);
+            const target = this.target(edge);
+            const sourceVisible = view.hasVertex(source);
+            const targetVisible = view.hasVertex(target);
+            if (sourceVisible && targetVisible) {
+                view.addEdge(source, target, edge);
+            } else if (sourceVisible !== targetVisible) {
+                const hidden = sourceVisible ? target : source;
+                let ghost = ghostMap.get(hidden.id);
+                if (!ghost) {
+                    const existingClass = hidden.class ? `${hidden.class} ` : "";
+                    ghost = {
+                        ...hidden,
+                        parentID: undefined,
+                        class: `${existingClass}ghost-expand`,
+                        shape: "folder",
+                        style: "filled,dashed",
+                        label: hidden.label ?? hidden.id,
+                        tooltip: hidden.tooltip ?? `Expand ${hidden.label ?? hidden.id}`,
+                        // Strip any custom SVG/HTML so the ghost renders as a simple icon
+                        svgContent: undefined,
+                        htmlContent: undefined,
+                        svgWidth: undefined,
+                        svgHeight: undefined,
+                    };
+                    ghostMap.set(hidden.id, ghost);
+                    view.addVertex(ghost);
+                }
+                const s = sourceVisible ? source : ghost;
+                const t = targetVisible ? target : ghost;
+                view.addEdge(s, t, edge);
+            }
+            // both hidden: skip
+        }
+
+        view.graph(this._graph);
+        return view as this;
+    }
 }

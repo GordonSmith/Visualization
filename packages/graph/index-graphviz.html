@@ -103,29 +103,29 @@
 <body>
     <header>
         <h1>Pure Graphviz Widget</h1>
-        <span>Light &amp; Dark</span>
+        <span>Full graph &amp; Partial view (with ghost-expand)</span>
     </header>
 
     <div class="panels">
         <div class="panel panel-light">
-            <div class="panel-label">Light</div>
+            <div class="panel-label">Full</div>
             <div id="graph-light"></div>
         </div>
         <div class="panel panel-dark">
-            <div class="panel-label">Dark</div>
+            <div class="panel-label">Partial (ghost-expand)</div>
             <div id="graph-dark"></div>
         </div>
     </div>
 
     <script type="module">
-        import { Test7, Test8 } from "./tests/index.ts";
+        import { Test9, Test9P } from "./tests/index.ts";
 
-        const light = new Test7()
+        const light = new Test9()
             .target("graph-light")
             .render()
             ;
 
-        const dark = new Test8()
+        const dark = new Test9P()
             .target("graph-dark")
             .render()
             ;

@@ -38,6 +38,37 @@ describe("Graphviz.Store", () => {
         expect(view.vertices().map(v => v.id)).to.deep.equal(["a"]);
         expect(view.edges()).to.deep.equal([]);
     });
+
+    it("builds a partial view from starting subgraphs and adds ghost-expand vertices for cross-boundary edges", () => {
+        const vertices: Node[] = [
+            { id: "a", parentID: "sg1", label: "A" },
+            { id: "b", parentID: "sg2", label: "B" },
+            { id: "c", parentID: "sg3", label: "C" },
+        ];
+        const edges: Edge[] = [
+            { id: "e_ab", sourceID: "a", targetID: "b" },   // both visible
+            { id: "e_bc", sourceID: "b", targetID: "c" },   // c hidden -> ghost
+            { id: "e_ac", sourceID: "a", targetID: "c" },   // c hidden -> reuse ghost
+        ];
+        const subgraphs: Cluster[] = [{ id: "sg1" }, { id: "sg2" }, { id: "sg3" }];
+        const store = new Store().load(vertices, edges, subgraphs);
+
+        const view = store.createPartialView(["sg1", "sg2"]);
+
+        const vIds = view.vertices().map(v => v.id).sort();
+        expect(vIds).to.deep.equal(["a", "b", "c"]);
+
+        // The "c" vertex in the view is a ghost — different object reference, no parent, ghost-expand class
+        const ghost = view.vertices().find(v => v.id === "c")!;
+        expect(ghost).to.not.equal(vertices[2]);
+        expect(ghost.parentID).to.equal(undefined);
+        expect(view.parentSubgraph(ghost)).to.equal(view.rootSubgraph());
+        expect(ghost.class).to.contain("ghost-expand");
+        expect(ghost.label).to.equal("C");
+
+        // All three edges retained (none of them had both endpoints hidden)
+        expect(view.edges().map(e => e.id).sort()).to.deep.equal(["e_ab", "e_ac", "e_bc"]);
+    });
 });
 
 describe("Graphviz.DotWriter", () => {
@@ -86,5 +117,25 @@ describe("Graphviz.DotWriter", () => {
 
         expect(dot).to.contain("\"a\" -- \"b\"");
         expect(dot).not.to.contain("\"a\" -> \"b\"");
+    });
+
+    it("renders a partial view with ghost-expand vertices outside the visible subgraphs", () => {
+        const vertices: Node[] = [
+            { id: "a", parentID: "sg1" },
+            { id: "b", parentID: "sg2" },
+        ];
+        const edges: Edge[] = [
+            { id: "e_ab", sourceID: "a", targetID: "b" },
+        ];
+        const subgraphs: Cluster[] = [{ id: "sg1" }, { id: "sg2" }];
+        const store = new Store().load(vertices, edges, subgraphs);
+
+        const { dot } = new DotWriter(store).writeGraph({ subgraphs: ["sg1"] });
+
+        expect(dot).to.contain("subgraph \"cluster_sg1\"");
+        expect(dot).not.to.contain("cluster_sg2");
+        expect(dot).to.contain("ghost-expand");
+        expect(dot).to.contain("shape=\"folder\"");
+        expect(dot).to.contain("\"a\" -> \"b\"");
     });
 });
