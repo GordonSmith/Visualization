@@ -1,13 +1,23 @@
 import type { Store } from "./Store.ts";
 import { type DotResult, type CustomVertex, type Edge, type Cluster, type Node, CLUSTER_DOT_ATTRS, EDGE_DOT_ATTRS, GRAPH_DOT_ATTRS, NODE_DOT_ATTRS } from "./types.ts";
 
+const CUSTOM_VERTEX_DPI = 72;
+
+function formatDotId(value: string): string {
+    return `"${String(value).replace(/"/g, "\\\"").replace(/\r?\n/g, "\\n")}"`;
+}
+
+function formatQuotedDotValue(value: unknown): string {
+    return `"${String(value).replace(/"/g, "\\\"").replace(/\r?\n/g, "\\n")}"`;
+}
+
 function formatDotValue(name: string, value: unknown): string {
     if (typeof value === "boolean") return `${value}`;
     if (typeof value === "number") return `${value}`;
     if (name === "label" && typeof value === "string" && value[0] === "<" && value[value.length - 1] === ">") {
         return `${value}`;
     }
-    return `"${value}"`;
+    return formatQuotedDotValue(value);
 }
 
 function collectAttrs(
@@ -39,6 +49,18 @@ export class DotWriter {
         this._graph = graph;
     }
 
+    private writeRootChildren(graph: Store, writer: DotWriter, children: string[]): void {
+        for (const sg of graph.subgraphSubgraphs(graph.rootSubgraph())) {
+            children.push(writer.writeSubgraph(sg));
+        }
+        for (const vertex of graph.subgraphVertices(graph.rootSubgraph())) {
+            children.push(writer.writeVertex(vertex));
+        }
+        for (const edge of graph.edges()) {
+            children.push(writer.writeEdge(edge));
+        }
+    }
+
     private writeVertex(v: Node): string {
         const g = this._graph;
         const vId = g.id(v);
@@ -47,18 +69,23 @@ export class DotWriter {
 
         if ((v.svgContent || v.htmlContent) && v.svgWidth && v.svgHeight) {
             this._customVertices.push({ id: vId, svg: v.svgContent, html: v.htmlContent });
-            const w = v.svgWidth / 72;
-            const h = v.svgHeight / 72;
-            const shape = v.shape ?? "rectangle";
-            const colorAttr = v.color ? ` color="${v.color}"` : "";
-            const fillcolorAttr = v.fillcolor ? ` fillcolor="${v.fillcolor}"` : "";
-            return `"${vId}" [id="${vId}" label="" shape="${shape}" fixedsize=true width=${w} height=${h}${colorAttr}${fillcolorAttr}]`;
+            const customNode: Node = {
+                ...v,
+                label: "",
+                shape: v.shape ?? "rectangle",
+                fixedsize: true,
+                width: v.svgWidth / CUSTOM_VERTEX_DPI,
+                height: v.svgHeight / CUSTOM_VERTEX_DPI
+            };
+            const customAttrs = collectAttrs(customNode as unknown as Record<string, unknown>, NODE_DOT_ATTRS);
+            const allAttrs = [`id=${formatDotValue("id", vId)}`, ...customAttrs];
+            return `${formatDotId(vId)} [${allAttrs.join(" ")}]`;
         }
 
         const nodeAttrs = collectAttrs(v as unknown as Record<string, unknown>, NODE_DOT_ATTRS);
-        const allAttrs = [`id="${vId}"`, ...nodeAttrs];
+        const allAttrs = [`id=${formatDotValue("id", vId)}`, ...nodeAttrs];
 
-        return `"${vId}" [${allAttrs.join(" ")}]`;
+        return `${formatDotId(vId)} [${allAttrs.join(" ")}]`;
     }
 
     writeEdge(e: Edge): string {
@@ -71,9 +98,10 @@ export class DotWriter {
         const targetId = g.targetID(e);
 
         const edgeAttrs = collectAttrs(e as unknown as Record<string, unknown>, EDGE_DOT_ATTRS);
-        const allAttrs = [`id="${eId}"`, ...edgeAttrs];
+        const allAttrs = [`id=${formatDotValue("id", eId)}`, ...edgeAttrs];
+        const edgeOp = g.graph().type === "graph" ? "--" : "->";
 
-        return `"${sourceId}" -> "${targetId}" [${allAttrs.join(" ")}]`;
+        return `${formatDotId(sourceId)} ${edgeOp} ${formatDotId(targetId)} [${allAttrs.join(" ")}]`;
     }
 
     writeSubgraph(sg: Cluster): string {
@@ -95,8 +123,8 @@ export class DotWriter {
         const isCluster = sg.cluster !== false;
         const skipAttrs = isCluster ? undefined : new Set(["cluster"]);
         const clusterAttrs = collectAttrs(sg as unknown as Record<string, unknown>, CLUSTER_DOT_ATTRS, skipAttrs);
-        const subgraphName = isCluster ? `cluster_${sgId}` : sgId;
-        const idAttr = isCluster ? [`id="${sgId}"`] : [];
+        const subgraphName = formatDotId(isCluster ? `cluster_${sgId}` : sgId);
+        const idAttr = isCluster ? [`id=${formatDotValue("id", sgId)}`] : [];
         const attrLines = [...idAttr, ...clusterAttrs].map(a => `\n    ${a};`).join("");
 
         return `\
@@ -118,26 +146,10 @@ subgraph ${subgraphName} {${attrLines}
         if (selection?.length) {
             const view = g.createView(selection);
             const viewWriter = new DotWriter(view);
-            for (const sg of view.subgraphs()) {
-                children.push(viewWriter.writeSubgraph(sg));
-            }
-            for (const vertex of view.vertices()) {
-                children.push(viewWriter.writeVertex(vertex));
-            }
-            for (const edge of view.edges()) {
-                children.push(viewWriter.writeEdge(edge));
-            }
+            this.writeRootChildren(view, viewWriter, children);
             this._customVertices.push(...viewWriter._customVertices);
         } else {
-            for (const sg of g.subgraphs()) {
-                children.push(this.writeSubgraph(sg));
-            }
-            for (const vertex of g.vertices()) {
-                children.push(this.writeVertex(vertex));
-            }
-            for (const edge of g.edges()) {
-                children.push(this.writeEdge(edge));
-            }
+            this.writeRootChildren(g, this, children);
         }
 
         const graph = g.graph();

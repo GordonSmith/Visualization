@@ -364,9 +364,9 @@ export interface Graph {
 // adding a property to an interface without updating the corresponding record
 // produces a TypeScript error for the missing key.
 
-/** Extracts keys from a validated Record<K, true> as a typed array. */
-function keysOf<K extends string>(record: Record<K, true>): K[] {
-    return Object.keys(record) as K[];
+/** Extracts keys from a validated Record<K, true> as an immutable typed array. */
+function attrsOf<K extends string>(record: Record<K, true>): readonly K[] {
+    return Object.freeze(Object.keys(record) as K[]);
 }
 
 // Keys inherited from base graph types — not DOT attributes
@@ -389,7 +389,7 @@ export type ClusterDotAttr = Exclude<keyof Cluster, BaseKeys | ClusterWriteOnly>
 export type GraphDotAttr = Exclude<keyof Graph, GraphExcluded>;
 
 /** Node DOT attributes (excludes inherited base keys and write-only: rects, vertices, xlp) */
-export const NODE_DOT_ATTRS: NodeDotAttr[] = keysOf<NodeDotAttr>({
+export const NODE_DOT_ATTRS: readonly NodeDotAttr[] = attrsOf<NodeDotAttr>({
     area: true,
     class: true,
     color: true,
@@ -438,7 +438,7 @@ export const NODE_DOT_ATTRS: NodeDotAttr[] = keysOf<NodeDotAttr>({
 });
 
 /** Edge DOT attributes (excludes inherited base keys and write-only: head_lp, tail_lp, lp, xlp) */
-export const EDGE_DOT_ATTRS: EdgeDotAttr[] = keysOf<EdgeDotAttr>({
+export const EDGE_DOT_ATTRS: readonly EdgeDotAttr[] = attrsOf<EdgeDotAttr>({
     arrowhead: true,
     arrowsize: true,
     arrowtail: true,
@@ -504,7 +504,7 @@ export const EDGE_DOT_ATTRS: EdgeDotAttr[] = keysOf<EdgeDotAttr>({
 });
 
 /** Cluster DOT attributes (excludes inherited base keys and write-only: bb, lheight, lp, lwidth) */
-export const CLUSTER_DOT_ATTRS: ClusterDotAttr[] = keysOf<ClusterDotAttr>({
+export const CLUSTER_DOT_ATTRS: readonly ClusterDotAttr[] = attrsOf<ClusterDotAttr>({
     area: true,
     bgcolor: true,
     class: true,
@@ -536,7 +536,7 @@ export const CLUSTER_DOT_ATTRS: ClusterDotAttr[] = keysOf<ClusterDotAttr>({
 });
 
 /** Graph DOT attributes (excludes write-only: bb, lheight, lp, lwidth; and non-DOT: type) */
-export const GRAPH_DOT_ATTRS: GraphDotAttr[] = keysOf<GraphDotAttr>({
+export const GRAPH_DOT_ATTRS: readonly GraphDotAttr[] = attrsOf<GraphDotAttr>({
     _background: true,
     beautify: true,
     bgcolor: true,

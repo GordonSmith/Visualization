@@ -1,5 +1,6 @@
 .graph_GraphvizWidget {
     --gv-bg: light-dark(#ffffff, #1a1a2e);
+    --gv-shadow: light-dark(#e6e6e6, #0d0d18);
     --gv-fg: light-dark(#242424, #e0e0e0);
     --gv-select-stroke: light-dark(#0078d4, #4cc2ff);
     --gv-select-fill: light-dark(#deecf9, #1b3a5c);
@@ -13,12 +14,12 @@
     --gv-running-stroke: light-dark(#e65100, #ffa726);
     --gv-running-fill: light-dark(#fff3e0, #3a2a1b);
 
-    background-color: var(--gv-bg);
+    background-color: var(--gv-shadow);
     stroke: var(--gv-fg);
 }
 
 .graph_GraphvizWidget rect.zoomBackground {
-    fill: var(--gv-bg) !important;
+    fill: var(--gv-shadow) !important;
     stroke: none;
 }
 

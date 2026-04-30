@@ -3,6 +3,25 @@ import type { Node, Edge, Cluster, Graph } from "./types.ts";
 
 const logger = scopedLogger("src/graphviz/Store.ts");
 
+function requireById<T extends { id: string }>(map: Map<string, T>, id: string, type: string): T {
+    const item = map.get(id);
+    if (!item) {
+        throw new Error(`Unknown ${type} ID: ${id}`);
+    }
+    return item;
+}
+
+function indexById<T extends { id: string }>(items: T[], type: string): Map<string, T> {
+    const map = new Map<string, T>();
+    for (const item of items) {
+        if (map.has(item.id)) {
+            throw new Error(`Duplicate ${type} ID: ${item.id}`);
+        }
+        map.set(item.id, item);
+    }
+    return map;
+}
+
 export class Store extends HierarchicalGraph<Node, Edge, Cluster> {
 
     protected _graph: Graph = {};
@@ -23,6 +42,10 @@ export class Store extends HierarchicalGraph<Node, Edge, Cluster> {
         return e.targetID as string;
     }
 
+    subgraphs(): Cluster[] {
+        return super.subgraphs().filter(sg => sg !== this.rootSubgraph());
+    }
+
     graph(): Graph;
     graph(_: Graph): this;
     graph(_?: Graph): Graph | this {
@@ -35,41 +58,69 @@ export class Store extends HierarchicalGraph<Node, Edge, Cluster> {
         this.clear();
         this._graph = graph;
 
-        const subgraphMap = new Map<string, Cluster>();
+        const subgraphMap = indexById(subgraphs, "subgraph");
+        const vertexMap = indexById(vertices, "vertex");
 
         subgraphs.forEach((sg: Cluster) => {
-            subgraphMap.set(sg.id, sg);
             this.addSubgraph(sg);
         });
 
         subgraphs.forEach((sg: Cluster) => {
             if (sg.parentID) {
-                const parent = subgraphMap.get(sg.parentID as string);
-                if (parent) {
-                    this.setParent(sg, parent);
-                }
+                this.setParent(sg, requireById(subgraphMap, sg.parentID, "parent subgraph"));
             }
         });
 
-        const vertexMap = new Map<string, Node>();
         vertices.forEach((v: Node) => {
-            vertexMap.set(v.id, v);
-            const parent = v.parentID ? subgraphMap.get(v.parentID as string) : undefined;
+            const parent = v.parentID ? requireById(subgraphMap, v.parentID, "parent subgraph") : undefined;
             this.addVertex(v, parent);
         });
 
         edges.forEach((e: Edge) => {
-            const source = vertexMap.get(e.sourceID as string)!;
-            const target = vertexMap.get(e.targetID as string)!;
+            const source = requireById(vertexMap, e.sourceID, "source vertex");
+            const target = requireById(vertexMap, e.targetID, "target vertex");
             this.addEdge(source, target, e);
         });
 
         return this;
     }
 
+    private addSubgraphAncestors(view: Store, sg: Cluster): void {
+        if (view.hasSubgraph(sg)) return;
+        const parent = this.parentSubgraph(sg);
+        if (parent && parent !== this.rootSubgraph()) {
+            this.addSubgraphAncestors(view, parent);
+            view.addSubgraph(sg, parent);
+        } else {
+            view.addSubgraph(sg);
+        }
+    }
+
+    private addSubgraphTree(view: Store, sg: Cluster): void {
+        this.addSubgraphAncestors(view, sg);
+        for (const child of this.subgraphSubgraphs(sg)) {
+            this.addSubgraphTree(view, child);
+        }
+        for (const vertex of this.subgraphVertices(sg)) {
+            if (!view.hasVertex(vertex)) {
+                view.addVertex(vertex, sg);
+            }
+        }
+    }
+
+    private addVertexWithAncestors(view: Store, vertex: Node): void {
+        if (view.hasVertex(vertex)) return;
+        const parent = this.parentSubgraph(vertex);
+        if (parent && parent !== this.rootSubgraph()) {
+            this.addSubgraphAncestors(view, parent);
+            view.addVertex(vertex, parent);
+        } else {
+            view.addVertex(vertex);
+        }
+    }
+
     createView(selection: string[]): this {
         const view = new (Object.getPrototypeOf(this).constructor)() as Store;
-        const idSet = new Set(selection.map(String));
 
         const subgraphMap = new Map<string, Cluster>();
         for (const sg of this.subgraphs()) {
@@ -80,32 +131,15 @@ export class Store extends HierarchicalGraph<Node, Edge, Cluster> {
             vertexMap.set(v.id, v);
         }
 
-        const addSubgraphRecursive = (sg: Cluster, parent?: Cluster) => {
-            if (view.hasSubgraph(sg)) return;
-            view.addSubgraph(sg, parent);
-            for (const child of this.subgraphSubgraphs(sg)) {
-                addSubgraphRecursive(child, sg);
-            }
-            for (const v of this.subgraphVertices(sg)) {
-                view.addVertex(v, sg);
-            }
-        };
-
         for (const id of selection) {
             const strId = String(id);
             const sg = subgraphMap.get(strId);
             if (sg) {
-                addSubgraphRecursive(sg);
+                this.addSubgraphTree(view, sg);
             } else {
                 const v = vertexMap.get(strId);
                 if (v) {
-                    const parentId = v.parentID as string | undefined;
-                    if (parentId) {
-                        const parentSg = subgraphMap.get(parentId);
-                        if (parentSg) {
-                            addSubgraphRecursive(parentSg);
-                        }
-                    }
+                    this.addVertexWithAncestors(view, v);
                 }
             }
         }

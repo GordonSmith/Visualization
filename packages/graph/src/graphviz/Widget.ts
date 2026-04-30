@@ -272,6 +272,16 @@ export class Widget extends SVGZoomWidget {
                     }
                     target = target.parentElement as unknown as SVGElement;
                 }
+                // Double-clicked on empty background — zoom to fit the entire graph
+                context.zoomToFit();
+            })
+            ;
+        this._zoomGrab
+            .on("dblclick", function () {
+                const event = d3Event();
+                event.stopPropagation();
+                event.preventDefault();
+                context.zoomToFit();
             })
             ;
     }
