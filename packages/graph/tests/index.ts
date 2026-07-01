@@ -4,3 +4,6 @@ export * from "./test3.ts";
 export * from "./test4.ts";
 export * from "./test5.ts";
 export * from "./test6.ts";
+export * from "./test7.ts";
+export * from "./test8.ts";
+export * from "./test9.ts";
