@@ -31,6 +31,7 @@
     "build-sfx-wrapper-dev": "esbuild ./src/sfx-wrapper.ts --platform=node --format=esm --bundle --sourcemap --outfile=./dist/sfx-wrapper.js",
     "build-sfx-wrapper": "npm run build-sfx-wrapper-dev -- --minify",
     "build": "run-p build-types build-ts build-sfx-wrapper",
+    "test": "vitest run",
     "lint-skypack": "npx -y @skypack/package-check",
     "lint-eslint": "eslint src/**/*.ts",
     "lint": "run-p lint-eslint lint-skypack",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@hpcc-js/wasm-base91": "1.17.0",
     "@hpcc-js/wasm-zstd": "1.17.0",
+    "@hpcc-js/vite-plugins": "^1.5.1",
     "@types/esbuild-copy-static-files": "0.1.4"
   },
   "keywords": [

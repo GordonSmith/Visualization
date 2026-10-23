@@ -16,6 +16,7 @@ export * from "./observer.ts";
 export * from "./dispatch.ts";
 export * from "./platform.ts";
 export * from "./saxParser.ts";
+export * from "./sharedPtr.ts";
 export * from "./stack.ts";
 export * from "./stateful.ts";
 export * from "./string.ts";

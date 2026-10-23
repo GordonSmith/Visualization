@@ -1,5 +1,4 @@
 import { readFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
 import { Base91 } from "@hpcc-js/wasm-base91";
 import { Zstd } from "@hpcc-js/wasm-zstd";
 import type { Plugin, PluginBuild } from "esbuild";
@@ -16,11 +15,10 @@ const DECODE_TABLE = (() => {
 function tpl(wasmJsPath: string, base91Wasm: string, base91CompressedWasm: string, wasmSize: number, compressedSize: number) {
 
     const compressed = (base91CompressedWasm.length + 8 * 1024) <= base91Wasm.length;
-    const wasmJsExists = existsSync(wasmJsPath);
 
     return `\
 ${compressed ? 'import { decompress } from "fzstd";' : ""}
-${wasmJsExists ? `import wrapper from "${wasmJsPath}";` : ""}
+import wrapper from "${wasmJsPath}";
 
 const D = new Int8Array([${DECODE_TABLE.join(",")}]);
 
@@ -56,21 +54,63 @@ function decode(s: string): Uint8Array {
 const blobStr = '${compressed ? base91CompressedWasm : base91Wasm}';
 
 let g_wasmBinary: Uint8Array | undefined;
-export default function() {
+export default function instantiate(): ReturnType<typeof wrapper> {
     g_wasmBinary ??= ${compressed ? "decompress(decode(blobStr))" : "decode(blobStr)"};
-${!wasmJsExists ? `\
-    return g_wasmBinary;
-`: `\
     return wrapper({
         wasmBinary: g_wasmBinary,
         locateFile: () => ""
     });
-`}
 }
 
 export function reset() {
     g_wasmBinary = undefined;
-} `.trim();
+}
+
+export type WasmModule = Awaited<ReturnType<typeof instantiate>>;
+
+/** Loads the embedded WASM on construction; \`dispose()\` releases it. \`M\` is the initialised module type. */
+export class WasmModuleResource<M = WasmModule> {
+    readonly ready: Promise<M>;
+    private _instance: M | undefined;
+    private _disposed = false;
+
+    constructor() {
+        this.ready = Promise.resolve().then(instantiate as () => M | Promise<M>).then(module => {
+            if (this._disposed) {
+                reset();
+            } else {
+                this._instance = module;
+            }
+            return module;
+        });
+    }
+
+    /** Creates a \`WasmModuleResource\` and waits for instantiation to finish. */
+    static async instantiate<M = WasmModule>(): Promise<WasmModuleResource<M>> {
+        const resource = new WasmModuleResource<M>();
+        await resource.ready;
+        return resource;
+    }
+
+    /** The initialised module, or \`undefined\` before loading completes and after \`dispose()\`. */
+    get instance(): M | undefined {
+        return this._instance;
+    }
+
+    dispose(): void {
+        if (this._disposed) return;
+        this._disposed = true;
+        if (this._instance) {
+            this._instance = undefined;
+            reset();
+        }
+    }
+
+    /** Enables \`using resource = new WasmModuleResource()\`. */
+    [Symbol.dispose](): void {
+        this.dispose();
+    }
+}`.trim();
 }
 
 let base91Promise: Promise<Base91> | undefined;

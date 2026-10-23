@@ -12,7 +12,8 @@
         "isolatedModules": true,
         "lib": [
             "DOM",
-            "ES2020"
+            "ES2020",
+            "ESNext.Disposable"
         ]
     }
 }

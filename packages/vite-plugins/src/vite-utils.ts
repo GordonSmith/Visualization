@@ -177,6 +177,15 @@ export const browserConfig = defineConfig({
     }
 });
 
+export function createTestViteConfig(testOverrides: ViteUserConfig["test"] = {}): ViteUserConfig {
+    return defineConfig({
+        test: {
+            projects: [nodeConfig, browserConfig],
+            ...testOverrides
+        }
+    });
+}
+
 /**
  * Strips AMD detection (`typeof define === 'function' && define.amd`) from CJS/UMD files
  * in node_modules before they are bundled.
@@ -287,11 +296,8 @@ export function createHpccViteConfig(pkg: any, options: ViteHpccConfigOptions = 
             jsx: { runtime: "classic" },
             ...(configOverrides.oxc || {})
         },
-        test: {
-            projects: [nodeConfig, browserConfig],
-            ...(configOverrides.test || {})
-        },
-        ...Object.fromEntries(Object.entries(configOverrides).filter(([key]) => !["build", "resolve", "plugins", "oxc"].includes(key)))
+        ...createTestViteConfig(configOverrides.test),
+        ...Object.fromEntries(Object.entries(configOverrides).filter(([key]) => !["build", "resolve", "plugins", "oxc", "test"].includes(key)))
     };
 
     return defineConfig(config);
